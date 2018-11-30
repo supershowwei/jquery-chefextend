@@ -1,7 +1,7 @@
 ﻿(function ($) {
     $.extend({
         http: {
-            before: function (func) {
+            prerequest: function (func) {
                 if (func) func();
 
                 return this;
