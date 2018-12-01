@@ -3,19 +3,19 @@
         model: function (setter) {
             var numberType = "data-prop-number";
 
-            var props = this.find("[data-prop],[" + numberType + "]");
+            var elements = this.find("[data-prop],[" + numberType + "]");
 
-            if (props.length === 0) return undefined;
+            if (elements.length === 0) return undefined;
 
             if (!setter) {
                 var obj = {};
 
-                $.each(props,
-                    function (index, prop) {
-                        if (prop.dataset.propNumber) {
-                            obj[prop.dataset.propNumber] = Number($(prop).val());
+                $.each(elements,
+                    function (index, element) {
+                        if (element.dataset.propNumber) {
+                            obj[element.dataset.propNumber] = Number($(element).val());
                         } else {
-                            obj[prop.dataset.prop] = $(prop).val();
+                            obj[element.dataset.prop] = $(element).val();
                         }
                     });
 
@@ -25,17 +25,17 @@
                     function (index, key) {
                         var i;
 
-                        for (i = 0; i < props.length; i++) {
-                            if (props[i].dataset.propNumber === key) {
-                                $(props[i]).val(Number(setter[key]));
+                        for (i = 0; i < elements.length; i++) {
+                            if (elements[i].dataset.propNumber === key) {
+                                $(elements[i]).val(Number(setter[key]));
                                 break;
-                            } else if (props[i].dataset.prop === key) {
-                                $(props[i]).val(setter[key]);
+                            } else if (elements[i].dataset.prop === key) {
+                                $(elements[i]).val(setter[key]);
                                 break;
                             }
                         }
 
-                        if (i < props.length) props.splice(i, 1);
+                        if (i < elements.length) elements.splice(i, 1);
                     });
             }
         }
