@@ -1,4 +1,34 @@
 ﻿(function ($) {
+    $.extend({
+        jqModel: {
+            getValue: function (element) {
+                var $element = $(element);
+
+                if ($element.is(":radio")) {
+                    return $("input[type='radio'][name='" + element.name + "']:checked").val();
+                } else if ($element.is(":checkbox")) {
+                    return $element.prop("checked");
+                } else {
+                    return element.value === undefined ? $element.text() : $element.val();
+                }
+            },
+            setValue: function (element, value) {
+                var $element = $(element);
+
+                if($element.is(":radio")) {
+                    $("input[type='radio'][name='" + element.name + "'][value='" + value + "']").prop("checked", true);
+                } else if ($element.is(":checkbox")) {
+                    $element.prop("checked", value);
+                } else {
+                    element.value === undefined ? $element.text(value) : $element.val(value);
+                }
+            },
+            toNumber: function (value) {
+                return isNaN(value) ? undefined : Number(value);
+            }
+        }
+    });
+
     $.fn.extend({
         model: function (setter) {
             var numberType = "data-prop-number";
@@ -13,9 +43,13 @@
                 $.each(elements,
                     function (index, element) {
                         if (element.dataset.propNumber) {
-                            obj[element.dataset.propNumber] = Number($(element).val());
+                            if (!obj.hasOwnProperty(element.dataset.propNumber)) {
+                                obj[element.dataset.propNumber] = $.jqModel.toNumber($.jqModel.getValue(element));
+                            }
                         } else {
-                            obj[element.dataset.prop] = $(element).val();
+                            if (!obj.hasOwnProperty(element.dataset.prop)) {
+                                obj[element.dataset.prop] = $.jqModel.getValue(element);
+                            }
                         }
                     });
 
@@ -27,10 +61,10 @@
 
                         for (i = 0; i < elements.length; i++) {
                             if (elements[i].dataset.propNumber === key) {
-                                $(elements[i]).val(Number(setter[key]));
+                                $.jqModel.setValue(elements[i], Number(setter[key]));
                                 break;
                             } else if (elements[i].dataset.prop === key) {
-                                $(elements[i]).val(setter[key]);
+                                $.jqModel.setValue(elements[i], setter[key]);
                                 break;
                             }
                         }
