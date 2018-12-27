@@ -4,40 +4,50 @@
 <head>
     <meta charset="utf-8" />
     <title>test</title>
+	<style>
+		.bb-blue { color: blue; }
+		.rrred { color: red; }
+		.bbborder { border: 1px solid powderblue; }
+	</style>
 </head>
 <body>
     <div id="formDiv">
         <h1>formDiv</h1>
-        <div><input type="text" data-prop="abcText"></div>
-        <div><input type="text" data-prop-number="abcNumber"></div>
+        <div><input type="text" c-value="abcText"></div>
+        <div><input type="text" c-value-number="abcNumber"></div>
         <div>
-            <select data-prop="bbb">
+            <select c-value="bbb">
                 <option value="2">2</option>
                 <option value="b">b</option>
                 <option value="b2">b2</option>
             </select>
-            <select data-prop-number="ccc">
+            <select c-value-number="ccc">
                 <option value="3">3</option>
                 <option value="33">33</option>
                 <option value="333">333</option>
             </select>
         </div>
         <div>
-            <input type="radio" name="kkk" value="1" data-prop="k3" />1
+            <input type="radio" name="kkk" value="1" c-value="k3" />1
             <input type="radio" name="kkk" value="a" />a
             <input type="radio" name="kkk" value="a1" />a1
         </div>
         <div>
-            <input type="radio" name="lll" value="4" data-prop-number="l3" />4
+            <input type="radio" name="lll" value="4" c-value-number="l3" />4
             <input type="radio" name="lll" value="44" />44
             <input type="radio" name="lll" value="444" />444
         </div>
         <div>
-            <input type="checkbox" data-prop="e5" />e5
-            <input type="checkbox" data-prop="f5" />f5
+            <input type="checkbox" c-checked="e5" />e5
+            <input type="checkbox" c-checked="f5" />f5
         </div>
-        <div><textarea data-prop="lastText"></textarea></div>
-        <div data-prop="good">kokoko</div>
+        <div><textarea c-value="lastText"></textarea></div>
+        <div c-text="good">kokoko</div>
+        <div c-text-number="goodnum">111</div>
+        <div c-class-bb-blue="bbblue">bbblue</div>
+        <div c-class="ccc">ccc</div>
+        <div c-style="cses">cses</div>
+        <div c-style-border="cs">cs</div>
     </div>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="../src/jquery-model.js"></script>
