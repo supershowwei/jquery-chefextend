@@ -86,8 +86,6 @@ if (!String.prototype.endsWith) {
                 $(element).attr("style", styles);
             },
             setStyle: function (element, style, value) {
-                console.log(style);
-                console.log(value);
                 $(element).css(style, value);
             },
             toNumber: function (value) {
