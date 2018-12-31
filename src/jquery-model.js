@@ -72,22 +72,6 @@ if (!String.prototype.endsWith) {
             setChecked: function (element, checked) {
                 $(element).prop("checked", checked);
             },
-            setClasses: function (element, classNames) {
-                $(element).attr("class", classNames);
-            },
-            setClass: function (element, className, show) {
-                if (show) {
-                    $(element).addClass(className);
-                } else {
-                    $(element).removeClass(className);
-                }
-            },
-            setStyles: function (element, styles) {
-                $(element).attr("style", styles);
-            },
-            setStyle: function (element, style, value) {
-                $(element).css(style, value);
-            },
             toNumber: function (value) {
                 return isNaN(value) ? undefined : Number(value);
             }
@@ -95,7 +79,7 @@ if (!String.prototype.endsWith) {
     });
 
     $.fn.extend({
-        model: function (setter) {
+        model: function (setter, value) {
             var elements = this.find(":attrStartsWith('c-')");
 
             if (elements.length === 0) return undefined;
@@ -128,6 +112,8 @@ if (!String.prototype.endsWith) {
 
                 return obj;
             } else {
+                if (value !== undefined) setter = { [setter]: value };
+
                 $.each(elements,
                     function (index, element) {
                         for (var i = 0; i < element.attributes.length; i++) {
@@ -145,14 +131,6 @@ if (!String.prototype.endsWith) {
                                 $.jqModel.setText(element, setter[propName])
                             } else if (attrName === "c-checked") {
                                 $.jqModel.setChecked(element, setter[propName]);
-                            } else if (attrName === "c-class") {
-                                $.jqModel.setClasses(element, setter[propName]);
-                            } else if (attrName.startsWith("c-class-")) {
-                                $.jqModel.setClass(element, attrName.replace("c-class-", ""), setter[propName]);
-                            } else if (attrName === "c-style") {
-                                $.jqModel.setStyles(element, setter[propName]);
-                            } else if (attrName.startsWith("c-style-")) {
-                                $.jqModel.setStyle(element, attrName.replace("c-style-", ""), setter[propName]);
                             }
                         }
                     });

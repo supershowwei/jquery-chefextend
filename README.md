@@ -28,21 +28,3 @@ radio 元件必須用 name 屬性，將相關的 radio 元件弄成一組，而 
 ##### `c-checked`
 
 c-checked 的值會成為輸出物件的屬性名稱，該元件的 checked 會成為屬性值，僅支援 checkbox 元件。
-
-※ 上述的屬性都可以支援取值與賦值，下述的屬性僅支援賦值。
-
-##### `c-style`、`c-style-*`
-
-c-style 的值為輸入物件的屬性名稱，屬性值會直接對該元件的 style 賦值，而 c-style-* 則是單一 css 樣式賦值。
-
-![](https://i.imgur.com/2VBmITy.png)
-
-![](https://i.imgur.com/4srjRtg.png)
-
-##### `c-class`、`c-class-*`
-
-c-class 的值為輸入物件的屬性名稱，屬性值會直接對該元件的 class 賦值，而 c-class-* 則是單一 class 名稱的增加或移除，c-class-* 僅支援 boolean 值。
-
-![](https://i.imgur.com/kP8g48F.png)
-
-![](https://i.imgur.com/jKfWPQr.png)
