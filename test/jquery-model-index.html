@@ -13,37 +13,37 @@
 <body>
     <div id="formDiv">
         <h1>formDiv</h1>
-        <div><input type="text" c-value="abcText"></div>
-        <div><input type="text" c-value-number="abcNumber"></div>
+        <div><input type="text" c-model="abcText"></div>
+        <div><input type="text" c-model-number="abcNumber"></div>
         <div>
-            <select c-value="bbb">
+            <select c-model="bbb">
                 <option value="2">2</option>
                 <option value="b">b</option>
                 <option value="b2">b2</option>
             </select>
-            <select c-value-number="ccc">
+            <select c-model-number="ccc">
                 <option value="3">3</option>
                 <option value="33">33</option>
                 <option value="333">333</option>
             </select>
         </div>
         <div>
-            <input type="radio" name="kkk" value="1" c-value="k3" />1
+            <input type="radio" name="kkk" value="1" c-model="k3" />1
             <input type="radio" name="kkk" value="a" />a
             <input type="radio" name="kkk" value="a1" />a1
         </div>
         <div>
-            <input type="radio" name="lll" value="4" c-value-number="l3" />4
+            <input type="radio" name="lll" value="4" c-model-number="l3" />4
             <input type="radio" name="lll" value="44" />44
             <input type="radio" name="lll" value="444" />444
         </div>
         <div>
-            <input type="checkbox" c-checked="e5" />e5
-            <input type="checkbox" c-checked="f5" />f5
+            <input type="checkbox" c-model="e5" />e5
+            <input type="checkbox" c-model="f5" />f5
         </div>
-        <div><textarea c-value="lastText"></textarea></div>
-        <div c-text="good">kokoko</div>
-        <div c-text-number="goodnum">111</div>
+        <div><textarea c-model="lastText"></textarea></div>
+        <div c-model="good">kokoko</div>
+        <div c-model-number="goodnum">111</div>
     </div>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="../src/jquery-model.js"></script>

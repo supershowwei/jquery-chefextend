@@ -4,27 +4,30 @@
 
 - `$(...).model()`：萃取出物件
 - `$(...).model({...})`：將物件資料回寫到 Element 上
+- `$(...).model("property", value)`：將單一屬性資料回寫到 Element 上
 
-#### 支援的屬性
+#### `c-model`、`c-model-number`
 
-##### `c-value`、`c-value-number`
+c-model 的值會成為輸出物件的屬性名稱，該元件的 val() 會成為屬性值，若 val() 為數字，則使用 c-model-number。
 
-c-value 的值會成為輸出物件的屬性名稱，該元件的 val() 會成為屬性值，若 val() 為數字，則使用 c-value-number。
+![](https://i.imgur.com/dVBVWLr.png)
 
-![](https://i.imgur.com/7GMYAUl.png)
+![](https://i.imgur.com/YrFErA2.png)
 
-![](https://i.imgur.com/PRKhNBy.png)
+radio 元件必須用 name 屬性，將相關的 radio 元件弄成一組，而 c-model（c-model-number）只要群組中一個成員有設定就行了。
 
-radio 元件必須用 name 屬性，將相關的 radio 元件弄成一組，而 c-value（c-value-number）只要群組中一個成員有設定就行了。
+![](https://i.imgur.com/Md1piJY.png)
 
-![](https://i.imgur.com/Xi9f2OG.png)
+![](https://i.imgur.com/5uE2HND.png)
 
-![](https://i.imgur.com/KNghZ9v.png)
+checkbox 元件僅支援 boolean 屬性
 
-##### `c-text`、`c-text-number`
+![](https://i.imgur.com/rL7jecb.png)
 
-與 c-value 及 c-value-number 相同，但對應的是該元件的 text()，不支援 radio 元件。
+![](https://i.imgur.com/dY3R5MV.png)
 
-##### `c-checked`
+支援非互動元件
 
-c-checked 的值會成為輸出物件的屬性名稱，該元件的 checked 會成為屬性值，僅支援 checkbox 元件。
+![](https://i.imgur.com/V8jjr3C.png)
+
+![](https://i.imgur.com/JYr1ol4.png)
