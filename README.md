@@ -25,9 +25,3 @@ checkbox 元件僅支援 boolean 屬性
 ![](https://i.imgur.com/rL7jecb.png)
 
 ![](https://i.imgur.com/dY3R5MV.png)
-
-支援非互動元件
-
-![](https://i.imgur.com/V8jjr3C.png)
-
-![](https://i.imgur.com/JYr1ol4.png)

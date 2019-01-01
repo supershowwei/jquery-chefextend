@@ -47,8 +47,6 @@ if (!String.prototype.endsWith) {
                     
                 if ($element.is(":checkbox")) return $element.prop("checked");
                     
-                if (element.value === undefined) return $element.text();
-                    
                 return $element.val();
             },
             setValue: function (element, value) {
@@ -58,8 +56,6 @@ if (!String.prototype.endsWith) {
                     $("input[type='radio'][name='" + element.name + "'][value='" + value + "']").prop("checked", true);
                 } else if ($element.is(":checkbox")) {
                     $element.prop("checked", value);
-                } else if (element.value === undefined) {
-                    $element.text(value);
                 } else {
                     $element.val(value);
                 }
@@ -82,6 +78,8 @@ if (!String.prototype.endsWith) {
                 $.each(elements,
                     function (index, element) {
                         for (var i = element.attributes.length - 1; i >= 0; i--) {
+                            if (element.value === undefined) break;
+
                             var attrName = element.attributes[i].name;
 
                             if (!attrName.startsWith("c-model")) continue;
@@ -100,7 +98,13 @@ if (!String.prototype.endsWith) {
 
                 return obj;
             } else {
-                if (value !== undefined) setter = { [setter]: value };
+                if (value !== undefined) {
+                    var o = {};
+
+                    o[setter] = value;
+
+                    setter = o;
+                }
 
                 $.each(elements,
                     function (index, element) {
