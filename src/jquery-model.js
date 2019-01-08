@@ -44,9 +44,9 @@ if (!String.prototype.endsWith) {
                 var $element = $(element);
 
                 if ($element.is(":radio")) return $("input[type='radio'][name='" + element.name + "']:checked").val();
-                    
+
                 if ($element.is(":checkbox")) return $element.prop("checked");
-                    
+
                 return $element.val();
             },
             setValue: function (element, value) {
@@ -59,6 +59,9 @@ if (!String.prototype.endsWith) {
                 } else {
                     $element.val(value);
                 }
+            },
+            setText: function (element, text) {
+                $(element).text(text);
             },
             toNumber: function (value) {
                 return isNaN(value) ? undefined : Number(value);
@@ -117,7 +120,11 @@ if (!String.prototype.endsWith) {
 
                             if (setter[propName] === undefined) break;
 
-                            $.jqModel.setValue(element, setter[propName]);
+                            if (element.value === undefined) {
+                                $.jqModel.setText(element, setter[propName]);
+                            } else {
+                                $.jqModel.setValue(element, setter[propName]);
+                            }
 
                             break;
                         }
