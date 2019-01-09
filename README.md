@@ -4,7 +4,7 @@
 - `$(...).model({...})`：將 JSON 物件回寫到 HTML Element 上
 - `$(...).model("property", value)`：將單一屬性資料回寫到 HTML Element 上
 
-#### 為 HTML Element 添加 `c-model`、`c-model-number` 屬性
+#### 在 HTML Element 上添加 `c-model`、`c-model-number` 屬性
 
 ```html
 <div id="formDiv">
