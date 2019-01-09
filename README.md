@@ -4,7 +4,7 @@
 - `$(...).model({...})`：將物件資料回寫到 Element 上
 - `$(...).model("property", value)`：將單一屬性資料回寫到 Element 上
 
-### 為 HTML 元素添加 `c-model`、`c-model-number` 屬性
+#### 為 HTML 元素添加 `c-model`、`c-model-number` 屬性
 
 ```html
 <div id="formDiv">
@@ -43,13 +43,13 @@
 </div>
 ```
 
-### 輸出 JSON 物件：
+#### 輸出 JSON 物件：
 
 ```
 $("#formDiv").model();
 ```
 
-### 為 HTML 元素賦值：
+#### 為 HTML 元素賦值：
 
 ```
 $("#formDiv").model({ abcText: "aaa111" });
@@ -57,7 +57,7 @@ $("#formDiv").model({ abcText: "aaa111" });
 $("#formDiv").model("abcText", "aaa111");
 ```
 
-### 注意事項
+#### 注意事項
 
 1. checkbox 元素僅支援 boolean 型態
 2. 非 :input 元素無法輸出 JSON 資料，但是可以賦值。
