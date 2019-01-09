@@ -1,10 +1,10 @@
 ## jquery-model
 
-- `$(...).model()`：萃取出物件
-- `$(...).model({...})`：將物件資料回寫到 Element 上
-- `$(...).model("property", value)`：將單一屬性資料回寫到 Element 上
+- `$(...).model()`：輸出 JSON 物件
+- `$(...).model({...})`：將 JSON 物件回寫到 HTML Element 上
+- `$(...).model("property", value)`：將單一屬性資料回寫到 HTML Element 上
 
-#### 為 HTML 元素添加 `c-model`、`c-model-number` 屬性
+#### 為 HTML Element 添加 `c-model`、`c-model-number` 屬性
 
 ```html
 <div id="formDiv">
@@ -49,7 +49,7 @@
 $("#formDiv").model();
 ```
 
-#### 為 HTML 元素賦值：
+#### 為 HTML Element 賦值：
 
 ```
 $("#formDiv").model({ abcText: "aaa111" });
@@ -59,5 +59,7 @@ $("#formDiv").model("abcText", "aaa111");
 
 #### 注意事項
 
-1. checkbox 元素僅支援 boolean 型態
-2. 非 :input 元素無法輸出 JSON 資料，但是可以賦值。
+1. radio 群組必須設定 name 的屬性值
+2. radio 群組僅需要在其中一個元件上添加 `c-model`、`c-model-number` 屬性
+3. checkbox 僅支援 boolean 型態
+4. 非 :input 元件無法輸出 JSON 資料，但是可以賦值。
