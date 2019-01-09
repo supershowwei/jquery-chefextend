@@ -53,7 +53,9 @@ $("#formDiv").model();
 
 ```
 $("#formDiv").model({ abcText: "aaa111" });
---or--
+
+or
+
 $("#formDiv").model("abcText", "aaa111");
 ```
 
