@@ -49,7 +49,7 @@
 $("#formDiv").model();
 ```
 
-#### 為 HTML Element 賦值：
+#### 給 HTML Element 賦值：
 
 ```
 $("#formDiv").model({ abcText: "aaa111" });
