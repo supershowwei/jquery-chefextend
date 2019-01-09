@@ -40,28 +40,21 @@ if (!String.prototype.endsWith) {
 
     $.extend({
         jqModel: {
-            getValue: function (element) {
-                var $element = $(element);
-
-                if ($element.is(":radio")) return $("input[type='radio'][name='" + element.name + "']:checked").val();
+            getValue: function ($element) {
+                if ($element.is(":radio")) return $("input[type='radio'][name='" + $element.attr("name") + "']:checked").val();
 
                 if ($element.is(":checkbox")) return $element.prop("checked");
 
                 return $element.val();
             },
-            setValue: function (element, value) {
-                var $element = $(element);
-
+            setValue: function ($element, value) {
                 if ($element.is(":radio")) {
-                    $("input[type='radio'][name='" + element.name + "'][value='" + value + "']").prop("checked", true);
+                    $("input[type='radio'][name='" + $element.attr("name") + "'][value='" + value + "']").prop("checked", true);
                 } else if ($element.is(":checkbox")) {
                     $element.prop("checked", value);
                 } else {
                     $element.val(value);
                 }
-            },
-            setText: function (element, text) {
-                $(element).text(text);
             },
             toNumber: function (value) {
                 return isNaN(value) ? undefined : Number(value);
@@ -80,19 +73,19 @@ if (!String.prototype.endsWith) {
 
                 $.each(elements,
                     function (index, element) {
+                        var $element = $(element);
+
+                        if (!$element.is(":input")) return;
+
                         for (var i = element.attributes.length - 1; i >= 0; i--) {
-                            if (element.value === undefined) break;
+                            var attr = element.attributes[i];
 
-                            var attrName = element.attributes[i].name;
+                            if (!attr.name.startsWith("c-model")) continue;
 
-                            if (!attrName.startsWith("c-model")) continue;
-
-                            var propName = element.attributes[i].value;
-
-                            if (attrName === "c-model") {
-                                obj[propName] = $.jqModel.getValue(element);
-                            } else if (attrName === "c-model-number") {
-                                obj[propName] = $.jqModel.toNumber($.jqModel.getValue(element));
+                            if (attr.name === "c-model") {
+                                obj[attr.value] = $.jqModel.getValue($element);
+                            } else if (attr.name === "c-model-number") {
+                                obj[attr.value] = $.jqModel.toNumber($.jqModel.getValue($element));
                             }
 
                             break;
@@ -112,18 +105,18 @@ if (!String.prototype.endsWith) {
                 $.each(elements,
                     function (index, element) {
                         for (var i = element.attributes.length - 1; i >= 0; i--) {
-                            var attrName = element.attributes[i].name;
+                            var attr = element.attributes[i];
 
-                            if (!attrName.startsWith("c-model")) continue;
+                            if (!attr.name.startsWith("c-model")) continue;
 
-                            var propName = element.attributes[i].value;
+                            if (setter[attr.value] === undefined) break;
 
-                            if (setter[propName] === undefined) break;
+                            var $element = $(element);
 
-                            if (element.value === undefined) {
-                                $.jqModel.setText(element, setter[propName]);
+                            if ($element.is(":input")) {
+                                $.jqModel.setValue($element, setter[attr.value]);
                             } else {
-                                $.jqModel.setValue(element, setter[propName]);
+                                $element.text(setter[attr.value]);
                             }
 
                             break;
