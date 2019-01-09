@@ -64,4 +64,4 @@ $("#formDiv").model("abcText", "aaa111");
 1. radio 群組必須設定 name 的屬性值
 2. radio 群組僅需要在其中一個元件上添加 `c-model`、`c-model-number` 屬性
 3. checkbox 僅支援 boolean 型態
-4. 非 :input 元件無法輸出 JSON 資料，但是可以賦值。
+4. 非 `:input` 元件無法輸出 JSON 資料，但是可以賦值。
