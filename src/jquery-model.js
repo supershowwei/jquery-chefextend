@@ -82,10 +82,10 @@ if (!String.prototype.endsWith) {
 
                             if (!attr.name.startsWith("c-model")) continue;
 
-                            if (attr.name === "c-model") {
-                                obj[attr.value] = $.jqModel.getValue($element);
-                            } else if (attr.name === "c-model-number") {
+                            if (attr.name === "c-model-number") {
                                 obj[attr.value] = $.jqModel.toNumber($.jqModel.getValue($element));
+                            } else {
+                                obj[attr.value] = $.jqModel.getValue($element);
                             }
 
                             break;
