@@ -1,10 +1,10 @@
-## jquery-model
+# jquery-model
 
 - `$(...).model()`：輸出 JSON 物件
 - `$(...).model({...})`：將 JSON 物件回寫到 HTML Element 上
 - `$(...).model("property", value)`：將單一屬性資料回寫到 HTML Element 上
 
-#### 在 HTML Element 上添加 `c-model`、`c-model-number` 屬性
+### 在 HTML Element 上添加 `c-model`、`c-model-number` 屬性
 
 ```html
 <div id="formDiv">
@@ -43,13 +43,13 @@
 </div>
 ```
 
-#### 輸出 JSON 物件：
+### 輸出 JSON 物件：
 
 ```
 $("#formDiv").model();
 ```
 
-#### 給 HTML Element 賦值：
+### 給 HTML Element 賦值：
 
 ```
 $("#formDiv").model({ abcText: "aaa111" });
@@ -59,7 +59,7 @@ or
 $("#formDiv").model("abcText", "aaa111");
 ```
 
-#### 注意事項
+### 注意事項
 
 1. radio 群組必須設定 name 的屬性值
 2. radio 群組僅需要在其中一個元件上添加 `c-model`、`c-model-number` 屬性
