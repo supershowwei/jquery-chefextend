@@ -60,7 +60,7 @@
 $("#formDiv").model();
 ```
 
-而想要將 JSON 物件回寫到 HTML 元件上，程式碼就這樣寫：
+想要將 JSON 物件回寫到 HTML 元件上，程式碼就這樣寫：
 
 ```
 $("#formDiv").model({ abcText: "aaa111" });
