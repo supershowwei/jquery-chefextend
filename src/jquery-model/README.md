@@ -1,10 +1,21 @@
 # jquery-model
 
-- `$(...).model()`：輸出 JSON 物件
-- `$(...).model({...})`：將 JSON 物件回寫到 HTML Element 上
-- `$(...).model("property", value)`：將單一屬性資料回寫到 HTML Element 上
+任何 jQuery Element 都可以透過下列步驟進行`輸出 JSON 物件`、`回寫 JSON 物件到 HTML 元件上`。
 
-### 在 HTML Element 上添加 `c-model`、`c-model-number` 屬性
+- `$(...).model()`：輸出 JSON 物件
+- `$(...).model({...})`：將 JSON 物件回寫到 HTML 元件上
+- `$(...).model("property", value)`：將單一 property 及其值回寫到 HTML 元件上
+
+## 使用說明
+
+首先在 HTML 元件上添加 `c-model` attribute，attribute 的值則指定 JSON 物件的 property 名稱，如果 property 的型態是數值則使用 `c-model-number`，這邊有幾點注意事項：
+
+1. `radio` 群必須指定 `name` attribute
+2. radio 群僅需要在其中一個元件上添加 `c-model` 或 `c-model-number` attribute
+3. `checkbox` 僅支援 boolean 型態的 property
+4. 非 `:input` 元件無法輸出 JSON 資料，但是可以賦值。
+5. 儘量將 c-model 或 c-model-number 放在最後面
+6. 在想要輸出 JSON 物件的 HTML 元件範圍內，不要重覆 property 名稱。
 
 ```html
 <div id="formDiv">
@@ -43,25 +54,16 @@
 </div>
 ```
 
-### 輸出 JSON 物件：
+以上述 HTML 內容為例，想要輸出 JSON 物件的程式碼就這樣寫：
 
 ```
 $("#formDiv").model();
 ```
 
-### 給 HTML Element 賦值：
+而想要將 JSON 物件回寫到 HTML 元件上，程式碼就這樣寫：
 
 ```
 $("#formDiv").model({ abcText: "aaa111" });
-
-or
-
+---or---
 $("#formDiv").model("abcText", "aaa111");
 ```
-
-### 注意事項
-
-1. radio 群組必須設定 name 的屬性值
-2. radio 群組僅需要在其中一個元件上添加 `c-model`、`c-model-number` 屬性
-3. checkbox 僅支援 boolean 型態
-4. 非 `:input` 元件無法輸出 JSON 資料，但是可以賦值。
