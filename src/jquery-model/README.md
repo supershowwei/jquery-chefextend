@@ -11,7 +11,7 @@
 首先在 HTML 元件上添加 `c-model` attribute，attribute 的值則指定 JSON 物件的 property 名稱，如果 property 的型態是數值則使用 `c-model-number`，這邊有幾點注意事項：
 
 1. `radio` 群必須指定 `name` attribute
-2. radio 群僅需要在其中一個元件上添加 `c-model` 或 `c-model-number` attribute
+2. radio 群僅需要在其中一個元件上添加 c-model 或 c-model-number attribute
 3. `checkbox` 僅支援 `boolean` 型態的 property
 4. 非 `:input` 元件無法輸出 JSON 資料，但是可以賦值。
 5. 儘量將 c-model 或 c-model-number 放在最後面
