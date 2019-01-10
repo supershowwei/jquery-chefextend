@@ -1,6 +1,6 @@
 # jquery-model
 
-任何 jQuery Element 都可以透過下列步驟進行`輸出 JSON 物件`、`回寫 JSON 物件到 HTML 元件上`。
+任何 jQuery 元件都可以透過下列步驟進行`輸出 JSON 物件`、`回寫 JSON 物件到 HTML 元件上`。
 
 - `$(...).model()`：輸出 JSON 物件
 - `$(...).model({...})`：將 JSON 物件回寫到 HTML 元件上
