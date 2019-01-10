@@ -12,7 +12,7 @@
 
 1. `radio` 群必須指定 `name` attribute
 2. radio 群僅需要在其中一個元件上添加 `c-model` 或 `c-model-number` attribute
-3. `checkbox` 僅支援 boolean 型態的 property
+3. `checkbox` 僅支援 `boolean` 型態的 property
 4. 非 `:input` 元件無法輸出 JSON 資料，但是可以賦值。
 5. 儘量將 c-model 或 c-model-number 放在最後面
 6. 在想要輸出 JSON 物件的 HTML 元件範圍內，不要重覆 property 名稱。
@@ -64,6 +64,8 @@ $("#formDiv").model();
 
 ```
 $("#formDiv").model({ abcText: "aaa111" });
----or---
+
+--or--
+
 $("#formDiv").model("abcText", "aaa111");
 ```
