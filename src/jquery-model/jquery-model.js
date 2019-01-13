@@ -13,6 +13,12 @@ if (!String.prototype.endsWith) {
     };
 }
 
+function findKeyElementValue($element, keyName) {
+    $keyElement = $element.find("[c-model='" + keyName + "'],[c-model-number='" + keyName + "']");
+
+    return $.jqModel.getValue($keyElement);
+}
+
 (function ($) {
     $.expr[":"].attrStartsWith = $.expr.createPseudo(function (filterParam) {
         return function (element, context, isXml) {
@@ -122,6 +128,58 @@ if (!String.prototype.endsWith) {
                             break;
                         }
                     });
+            }
+        },
+        models: function (setters, arg) {
+            var elements = this;
+            
+            if (elements.length === 0) return undefined;
+
+            if (!setters) {
+                var collection = [];
+
+                $.each(elements,
+                    function (index, element) {
+                        collection.push($(element).model());
+                    });
+
+                return collection;
+            } else {
+                if (setters.constructor === Object) setters = [setters];
+
+                if (setters.constructor === Array) {
+                    var keyName = arg;
+
+                    $.each(setters,
+                        function (index, item) {
+                            var keyValue = item[keyName].toString();
+
+                            var i = 0;
+                            for (; i < elements.length; i++) {
+                                var $element = $(elements[i]);
+
+                                var keyElementValue = findKeyElementValue($element, keyName);
+
+                                if (keyElementValue === keyValue) {
+                                    $element.model(item);
+                                    break;
+                                }
+                            }
+
+                            if (i < elements.length) elements.splice(i, 1);
+                        });
+                } else {
+                    var findKey = setters;
+                    var findValue = arg.toString();
+
+                    for (var i = 0; i < elements.length; i++) {
+                        var $element = $(elements[i]);
+
+                        var keyElementValue = findKeyElementValue($element, findKey);
+
+                        if (keyElementValue === findValue) return $element.model();
+                    }
+                }
             }
         }
     });

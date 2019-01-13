@@ -4,11 +4,19 @@
 <head>
     <meta charset="utf-8" />
     <title>test</title>
-	<style>
-		.bb-blue { color: blue; }
-		.rrred { color: red; }
-		.bbborder { border: 1px solid powderblue; }
-	</style>
+    <style>
+        .bb-blue {
+            color: blue;
+        }
+
+        .rrred {
+            color: red;
+        }
+
+        .bbborder {
+            border: 1px solid powderblue;
+        }
+    </style>
 </head>
 <body>
     <div id="formDiv">
@@ -45,7 +53,30 @@
         <div c-model="lastText"></div>
         <div c-model="abcText"></div>
     </div>
+    <ul id="list">
+        <li>
+            <div><input type="text" value="11" c-model-number="id"></div>
+            <div><input type="text" value="22" c-model="name"></div>
+            <div><input type="text" value="33" c-model-number="age"></div>
+        </li>
+        <li>
+            <input type="hidden" value="44" c-model-number="id" />
+            <div c-model-number="id">44</div>
+            <div><input type="text" value="55" c-model="name"></div>
+            <div><input type="text" value="66" c-model-number="age"></div>
+        </li>
+        <li>
+            <div><input type="text" value="444" c-model-number="id"></div>
+            <div><input type="text" value="555" c-model="name"></div>
+            <div><input type="text" value="666" c-model-number="anotherAge"></div>
+        </li>
+        <li>
+            <div><input type="text" value="77" c-model-number="id"></div>
+            <div><input type="text" value="88" c-model="name"></div>
+            <div><input type="text" value="99" c-model-number="age"></div>
+        </li>
+    </ul>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script src="../src/jquery-model.js"></script>
+    <script src="../src/jquery-model/jquery-model.js"></script>
 </body>
 </html>
