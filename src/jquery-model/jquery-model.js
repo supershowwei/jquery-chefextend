@@ -13,10 +13,8 @@ if (!String.prototype.endsWith) {
     };
 }
 
-function findKeyElementValue($element, keyName) {
-    $keyElement = $element.find("[c-model='" + keyName + "'],[c-model-number='" + keyName + "']");
-
-    return $.jqModel.getValue($keyElement);
+function findKeyElement($element, keyPropertyName) {
+    return $element.find("[c-model='" + keyPropertyName + "'],[c-model-number='" + keyPropertyName + "']");
 }
 
 (function ($) {
@@ -46,22 +44,6 @@ function findKeyElementValue($element, keyName) {
 
     $.extend({
         jqModel: {
-            getValue: function ($element) {
-                if ($element.is(":radio")) return $("input[type='radio'][name='" + $element.attr("name") + "']:checked").val();
-
-                if ($element.is(":checkbox")) return $element.prop("checked");
-
-                return $element.val();
-            },
-            setValue: function ($element, value) {
-                if ($element.is(":radio")) {
-                    $("input[type='radio'][name='" + $element.attr("name") + "'][value='" + value + "']").prop("checked", true);
-                } else if ($element.is(":checkbox")) {
-                    $element.prop("checked", value);
-                } else {
-                    $element.val(value);
-                }
-            },
             toNumber: function (value) {
                 return isNaN(value) ? undefined : Number(value);
             }
@@ -69,6 +51,22 @@ function findKeyElementValue($element, keyName) {
     });
 
     $.fn.extend({
+        getModelValue: function () {
+            if (this.is(":radio")) return $("input[type='radio'][name='" + this.attr("name") + "']:checked").val();
+
+            if (this.is(":checkbox")) return this.prop("checked");
+
+            return this.val();
+        },
+        setModelValue: function (value) {
+            if (this.is(":radio")) {
+                $("input[type='radio'][name='" + this.attr("name") + "'][value='" + value + "']").prop("checked", true);
+            } else if (this.is(":checkbox")) {
+                this.prop("checked", value);
+            } else {
+                this.val(value);
+            }
+        },
         model: function (setter, value) {
             var elements = this.find(":attrStartsWith('c-model')");
 
@@ -87,11 +85,13 @@ function findKeyElementValue($element, keyName) {
                             var attr = element.attributes[i];
 
                             if (!attr.name.startsWith("c-model")) continue;
-
-                            if (attr.name === "c-model-number") {
-                                obj[attr.value] = $.jqModel.toNumber($.jqModel.getValue($element));
-                            } else {
-                                obj[attr.value] = $.jqModel.getValue($element);
+                            
+                            if (obj[attr.value] === undefined) {
+                                if (attr.name === "c-model-number") {
+                                    obj[attr.value] = $.jqModel.toNumber($element.getModelValue());
+                                } else {
+                                    obj[attr.value] = $element.getModelValue();
+                                }
                             }
 
                             break;
@@ -115,14 +115,14 @@ function findKeyElementValue($element, keyName) {
 
                             if (!attr.name.startsWith("c-model")) continue;
 
-                            if (setter[attr.value] === undefined) break;
+                            if (setter[attr.value] !== undefined) {
+                                var $element = $(element);
 
-                            var $element = $(element);
-
-                            if ($element.is(":input")) {
-                                $.jqModel.setValue($element, setter[attr.value]);
-                            } else {
-                                $element.text(setter[attr.value]);
+                                if ($element.is(":input")) {
+                                    $element.setModelValue(setter[attr.value]);
+                                } else {
+                                    $element.text(setter[attr.value]);
+                                }
                             }
 
                             break;
@@ -144,41 +144,51 @@ function findKeyElementValue($element, keyName) {
                     });
 
                 return collection;
-            } else {
-                if (setters.constructor === Object) setters = [setters];
+            } else if (setters.constructor === Object) {
+                var keyName = arg;
+                var keyValue = setters[keyName].toString();
 
-                if (setters.constructor === Array) {
-                    var keyName = arg;
+                for (var i = 0; i < elements.length; i++) {
+                    var $element = $(elements[i]);
 
-                    $.each(setters,
-                        function (index, item) {
-                            var keyValue = item[keyName].toString();
+                    var $keyElement = findKeyElement($element, keyName);
 
-                            var i = 0;
-                            for (; i < elements.length; i++) {
-                                var $element = $(elements[i]);
-
-                                var keyElementValue = findKeyElementValue($element, keyName);
-
-                                if (keyElementValue === keyValue) {
-                                    $element.model(item);
-                                    break;
-                                }
-                            }
-
-                            if (i < elements.length) elements.splice(i, 1);
-                        });
-                } else {
-                    var findKey = setters;
-                    var findValue = arg.toString();
-
-                    for (var i = 0; i < elements.length; i++) {
-                        var $element = $(elements[i]);
-
-                        var keyElementValue = findKeyElementValue($element, findKey);
-
-                        if (keyElementValue === findValue) return $element.model();
+                    if ($keyElement.getModelValue() === keyValue) {
+                        $element.model(setters);
+                        break;
                     }
+                }
+            } else if (setters.constructor === Array) {
+                var keyName = arg;
+
+                $.each(setters,
+                    function (index, item) {
+                        var keyValue = item[keyName].toString();
+
+                        var i = 0;
+                        for (; i < elements.length; i++) {
+                            var $element = $(elements[i]);
+
+                            var $keyElement = findKeyElement($element, keyName);
+
+                            if ($keyElement.getModelValue() === keyValue) {
+                                $element.model(item);
+                                break;
+                            }
+                        }
+
+                        if (i < elements.length) elements.splice(i, 1);
+                    });
+            } else {
+                var findKey = setters;
+                var findValue = arg.toString();
+
+                for (var i = 0; i < elements.length; i++) {
+                    var $element = $(elements[i]);
+
+                    var $keyElement = findKeyElement($element, findKey);
+
+                    if ($keyElement.getModelValue() === findValue) return $element.model();
                 }
             }
         }
