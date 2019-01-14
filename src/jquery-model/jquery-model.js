@@ -100,7 +100,7 @@ function findKeyElement($element, keyPropertyName) {
 
                 return obj;
             } else {
-                if (value !== undefined) {
+                if (setter.constructor === String) {
                     var o = {};
 
                     o[setter] = value;
@@ -121,7 +121,11 @@ function findKeyElement($element, keyPropertyName) {
                                 if ($element.is(":input")) {
                                     $element.setModelValue(setter[attr.value]);
                                 } else {
-                                    $element.text(setter[attr.value]);
+                                    if (setter[attr.value].constructor === Function) {
+                                        $element.text(setter[attr.value]());
+                                    } else {
+                                        $element.text(setter[attr.value]);
+                                    }
                                 }
                             }
 
