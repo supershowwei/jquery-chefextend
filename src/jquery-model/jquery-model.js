@@ -78,7 +78,7 @@ function findKeyElement($element, keyPropertyName) {
             }
         },
         model: function (setter, value) {
-            var elements = this.find(":attrStartsWith('c-model')");
+            var elements = this.find(":attrStartsWith('c-model')").addBack(":attrStartsWith('c-model')");
 
             if (elements.length === 0) return undefined;
 
