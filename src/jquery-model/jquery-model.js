@@ -54,7 +54,13 @@ function findKeyElement($element, keyPropertyName) {
         getModelValue: function () {
             if (this.is(":radio")) return $("input[type='radio'][name='" + this.attr("name") + "']:checked").val();
 
-            if (this.is(":checkbox")) return this.prop("checked");
+            if (this.is(":checkbox")) {
+                if (this.attr("value")) {
+                    return this.prop("checked") ? this.val() : undefined;
+                } else {
+                    return this.prop("checked");
+                }
+            }
 
             return this.val();
         },
@@ -62,7 +68,11 @@ function findKeyElement($element, keyPropertyName) {
             if (this.is(":radio")) {
                 $("input[type='radio'][name='" + this.attr("name") + "'][value='" + value + "']").prop("checked", true);
             } else if (this.is(":checkbox")) {
-                this.prop("checked", value);
+                if (this.attr("value")) {
+                    this.prop("checked", this.val() === value);
+                } else {
+                    this.prop("checked", value);
+                }
             } else {
                 this.val(value);
             }
@@ -87,10 +97,14 @@ function findKeyElement($element, keyPropertyName) {
                             if (!attr.name.startsWith("c-model")) continue;
                             
                             if (obj[attr.value] === undefined) {
+                                var objValue = $element.getModelValue();
+
+                                if (objValue === undefined) continue;
+
                                 if (attr.name === "c-model-number") {
-                                    obj[attr.value] = $.jqModel.toNumber($element.getModelValue());
+                                    obj[attr.value] = $.jqModel.toNumber(objValue);
                                 } else {
-                                    obj[attr.value] = $element.getModelValue();
+                                    obj[attr.value] = objValue;
                                 }
                             }
 
