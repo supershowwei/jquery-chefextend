@@ -10,13 +10,13 @@
 
     $.http.post("url", data);
 
-It can also post FormData.
+### formPost
 
     var formData = new FormData();
     
     // append values ...
     
-    $.http.post("url", formData);
+    $.http.formPost("url", formData);
 
 ### put
 

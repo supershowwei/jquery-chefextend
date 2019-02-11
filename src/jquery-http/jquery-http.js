@@ -10,11 +10,10 @@
                 return $.ajax(url, { method: "GET" });
             },
             post: function (url, data) {
-                if (data.constructor === FormData) {
-                    return $.ajax(url, { method: "POST", data: data, cache: false, contentType: false, processData: false });
-                } else {
-                    return $.ajax(url, { method: "POST", data: data });
-                }
+                return $.ajax(url, { method: "POST", data: data });
+            },
+            formPost: function (url, formData) {
+                return $.ajax(url, { method: "POST", data: formData, cache: false, contentType: false, processData: false });
             },
             put: function (url, data) {
                 return $.ajax(url, { method: "PUT", data: data });
