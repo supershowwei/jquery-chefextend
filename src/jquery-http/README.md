@@ -49,7 +49,7 @@ $.http 的 HTTP 方法回傳的是 jqXHR 物件，因此可以直接串 done、f
             // do something when fail.
         })
         .always(function (data|jqXHR, textStatus, jqXHR|errorThrown) {
-            // do something always.
+            // always do something.
         });
 
 ### CDN
