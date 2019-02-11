@@ -30,7 +30,7 @@
 
 ### beforeSend
 
-類似 $.ajax 的 beforeSend，必須是最先呼叫。
+類似 $.ajax 的 beforeSend，必須串接在第一個呼叫。
 
     $.http.beforeSend(function () {
         // do something before send.
