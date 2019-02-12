@@ -1,10 +1,10 @@
 ﻿(function ($) {
     $.fn.extend({
         disable: function () {
-            this.attr("disabled", true);
+            this.prop("disabled", true);
         },
         enable: function () {
-            this.attr("disabled", false);
+            this.prop("disabled", false);
         }
     });
 })(jQuery);
