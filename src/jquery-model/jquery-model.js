@@ -135,10 +135,18 @@ function findKeyElement($element, keyPropertyName) {
                                 if ($element.is(":input")) {
                                     $element.setModelValue(setter[attr.value]);
                                 } else {
+                                    var contents = undefined;
+
                                     if (setter[attr.value].constructor === Function) {
-                                        $element.text(setter[attr.value]());
+                                        contents = setter[attr.value]();
                                     } else {
-                                        $element.text(setter[attr.value]);
+                                        contents = setter[attr.value];
+                                    }
+
+                                    if (attr.name == "c-model-html") {
+                                        $element.html(contents);
+                                    } else {
+                                        $element.text(contents);
                                     }
                                 }
                             }
