@@ -151,13 +151,13 @@ function findKeyElement($element, keyPropertyName) {
                                         $element.text(contents);
                                     }
                                 }
-
-                                if (onSet && onSet.constructor === Function) onSet(element, setter[attr.value], index);
                             }
 
                             break;
                         }
                     });
+                
+                if (onSet && onSet.constructor === Function) onSet(this, setter);
             }
         },
         models: function (setters, arg, onSet) {
