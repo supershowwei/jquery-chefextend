@@ -77,7 +77,7 @@ function findKeyElement($element, keyPropertyName) {
                 this.val(value);
             }
         },
-        model: function (setter, value) {
+        model: function (setter, value, onSet) {
             var elements = this.find(":attrStartsWith('c-model')").addBack(":attrStartsWith('c-model')");
 
             if (elements.length === 0) return undefined;
@@ -120,6 +120,8 @@ function findKeyElement($element, keyPropertyName) {
                     o[setter] = value;
 
                     setter = o;
+                } else if (setter.constructor === Object) {
+                    onSet = value;
                 }
 
                 $.each(elements,
@@ -149,6 +151,8 @@ function findKeyElement($element, keyPropertyName) {
                                         $element.text(contents);
                                     }
                                 }
+
+                                if (onSet && onSet.constructor === Function) onSet(element, setter[attr.value], index);
                             }
 
                             break;
@@ -156,7 +160,7 @@ function findKeyElement($element, keyPropertyName) {
                     });
             }
         },
-        models: function (setters, arg) {
+        models: function (setters, arg, onSet) {
             var elements = this;
             
             if (elements.length === 0) return undefined;
@@ -180,7 +184,7 @@ function findKeyElement($element, keyPropertyName) {
                     var $keyElement = findKeyElement($element, keyName);
 
                     if ($keyElement.getModelValue() === keyValue) {
-                        $element.model(setters);
+                        $element.model(setters, onSet);
                         break;
                     }
                 }
@@ -198,7 +202,7 @@ function findKeyElement($element, keyPropertyName) {
                             var $keyElement = findKeyElement($element, keyName);
 
                             if ($keyElement.getModelValue() === keyValue) {
-                                $element.model(item);
+                                $element.model(item, onSet);
                                 break;
                             }
                         }
