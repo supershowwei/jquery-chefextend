@@ -77,7 +77,7 @@ function findKeyElement($element, keyPropertyName) {
                 this.val(value);
             }
         },
-        model: function (setter, value, onSet) {
+        model: function (setter, value, onBind) {
             var elements = this.find(":attrStartsWith('c-model')").addBack(":attrStartsWith('c-model')");
 
             if (elements.length === 0) return undefined;
@@ -121,7 +121,7 @@ function findKeyElement($element, keyPropertyName) {
 
                     setter = o;
                 } else if (setter.constructor === Object) {
-                    onSet = value;
+                    onBind = value;
                 }
 
                 $.each(elements,
@@ -157,10 +157,12 @@ function findKeyElement($element, keyPropertyName) {
                         }
                     });
                 
-                if (onSet && onSet.constructor === Function) onSet(this, setter);
+                if (onBind && onBind.constructor === Function) onBind(this, setter);
             }
+
+            return this;
         },
-        models: function (setters, arg, onSet) {
+        models: function (setters, arg, onBind) {
             var elements = this;
             
             if (elements.length === 0) return undefined;
@@ -184,7 +186,7 @@ function findKeyElement($element, keyPropertyName) {
                     var $keyElement = findKeyElement($element, keyName);
 
                     if ($keyElement.getModelValue() === keyValue) {
-                        $element.model(setters, onSet);
+                        $element.model(setters, onBind);
                         break;
                     }
                 }
@@ -202,7 +204,7 @@ function findKeyElement($element, keyPropertyName) {
                             var $keyElement = findKeyElement($element, keyName);
 
                             if ($keyElement.getModelValue() === keyValue) {
-                                $element.model(item, onSet);
+                                $element.model(item, onBind);
                                 break;
                             }
                         }
@@ -221,6 +223,8 @@ function findKeyElement($element, keyPropertyName) {
                     if ($keyElement.getModelValue() === findValue) return $element.model();
                 }
             }
+
+            return this;
         }
     });
 })(jQuery);
