@@ -77,7 +77,7 @@ function findKeyElement($element, keyPropertyName) {
                 this.val(value);
             }
         },
-        model: function (setter, value, afterBinding) {
+        model: function (setter, value, afterSet) {
             var elements = this.find(":attrStartsWith('c-model')").addBack(":attrStartsWith('c-model')");
 
             if (elements.length === 0) return undefined;
@@ -121,17 +121,17 @@ function findKeyElement($element, keyPropertyName) {
 
                     setter = o;
                 } else if (setter.constructor === Object) {
-                    afterBinding = value;
+                    afterSet = value;
                 }
 
-                var beforeBinding = undefined;
+                var beforeSet = undefined;
 
-                if (afterBinding && afterBinding.constructor === Object) {
-                    beforeBinding = afterBinding.beforeBinding;
-                    afterBinding = afterBinding.afterBinding;
+                if (afterSet && afterSet.constructor === Object) {
+                    beforeSet = afterSet.beforeSet;
+                    afterSet = afterSet.afterSet;
                 }
 
-                if (beforeBinding && beforeBinding.constructor === Function) beforeBinding(this, setter);
+                if (beforeSet && beforeSet.constructor === Function) beforeSet(this, setter);
 
                 $.each(elements,
                     function (index, element) {
@@ -166,12 +166,12 @@ function findKeyElement($element, keyPropertyName) {
                         }
                     });
                 
-                if (afterBinding && afterBinding.constructor === Function) afterBinding(this, setter);
+                if (afterSet && afterSet.constructor === Function) afterSet(this, setter);
             }
 
             return this;
         },
-        models: function (setters, arg, afterBinding) {
+        models: function (setters, arg, afterSet) {
             var elements = this;
             
             if (elements.length === 0) return undefined;
@@ -195,7 +195,7 @@ function findKeyElement($element, keyPropertyName) {
                     var $keyElement = findKeyElement($element, keyName);
 
                     if ($keyElement.getModelValue() === keyValue) {
-                        $element.model(setters, afterBinding);
+                        $element.model(setters, afterSet);
                         break;
                     }
                 }
@@ -213,7 +213,7 @@ function findKeyElement($element, keyPropertyName) {
                             var $keyElement = findKeyElement($element, keyName);
 
                             if ($keyElement.getModelValue() === keyValue) {
-                                $element.model(item, afterBinding);
+                                $element.model(item, afterSet);
                                 break;
                             }
                         }
