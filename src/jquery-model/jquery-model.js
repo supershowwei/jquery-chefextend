@@ -200,26 +200,35 @@ function findKeyElement($element, keyPropertyName) {
                     }
                 }
             } else if (setters.constructor === Array) {
-                var keyName = arg;
+                if (arg.constructor === String) {
+                    var keyName = arg;
 
-                $.each(setters,
-                    function (index, item) {
-                        var keyValue = item[keyName].toString();
-
-                        var i = 0;
-                        for (; i < elements.length; i++) {
-                            var $element = $(elements[i]);
-
-                            var $keyElement = findKeyElement($element, keyName);
-
-                            if ($keyElement.getModelValue() === keyValue) {
-                                $element.model(item, afterSet);
-                                break;
+                    $.each(setters,
+                        function (index, item) {
+                            var keyValue = item[keyName].toString();
+    
+                            var i = 0;
+                            for (; i < elements.length; i++) {
+                                var $element = $(elements[i]);
+    
+                                var $keyElement = findKeyElement($element, keyName);
+    
+                                if ($keyElement.getModelValue() === keyValue) {
+                                    $element.model(item, afterSet);
+                                    break;
+                                }
                             }
-                        }
+    
+                            if (i < elements.length) elements.splice(i, 1);
+                        });
+                } else if (arg instanceof jQuery) {
+                    var $container = $(elements);
 
-                        if (i < elements.length) elements.splice(i, 1);
-                    });
+                    $.each(setters,
+                        function (index, item) {
+                            arg.clone().model(item, afterSet).appendTo($container);
+                        });
+                }
             } else {
                 var findKey = setters;
                 var findValue = arg.toString();
