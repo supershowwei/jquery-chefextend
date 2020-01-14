@@ -17,6 +17,13 @@ function findKeyElement($element, keyPropertyName) {
     return $element.find("[c-model='" + keyPropertyName + "'],[c-model-number='" + keyPropertyName + "']");
 }
 
+function getContents(obj) {
+    if (obj === undefined) return undefined;
+    if (obj.constructor === Function) return obj();
+
+    return obj;
+}
+
 (function ($) {
     $.expr[":"].attrStartsWith = $.expr.createPseudo(function (filterParam) {
         return function (element, context, isXml) {
@@ -95,7 +102,7 @@ function findKeyElement($element, keyPropertyName) {
                             var attr = element.attributes[i];
 
                             if (!attr.name.startsWith("c-model")) continue;
-                            
+
                             if (obj[attr.value] === undefined) {
                                 var objValue = $element.getModelValue();
 
@@ -140,32 +147,52 @@ function findKeyElement($element, keyPropertyName) {
 
                             if (!attr.name.startsWith("c-model")) continue;
 
-                            if (setter[attr.value] !== undefined) {
-                                var $element = $(element);
+                            var $element = $(element);
 
+                            if (attr.name === "c-model-multi") {
+                                var regexp = /([^:,]+):([^:,]+)/g;
+                                var match = undefined;
+                                do {
+                                    match = regexp.exec(attr.value);
+                                    if (match) {
+                                        var key = match[1];
+                                        var prop = match[2];
+
+                                        switch (key) {
+                                            case "text":
+                                                $element.text(getContents(setter[prop]));
+                                                break;
+                                            case "href":
+                                            case "src":
+                                            case "title":
+                                            case "alt":
+                                                $element.attr(key, getContents(setter[prop]));
+                                                break;
+                                        }
+                                    }
+                                } while (match);
+
+                                break;
+                            }
+
+                            if (attr.name === "c-model-html") {
+                                $element.html(getContents(setter[attr.value]));
+
+                                break;
+                            }
+
+                            if (setter[attr.value] !== undefined) {
                                 if ($element.is(":input")) {
                                     $element.setModelValue(setter[attr.value]);
                                 } else {
-                                    var contents = undefined;
-
-                                    if (setter[attr.value].constructor === Function) {
-                                        contents = setter[attr.value]();
-                                    } else {
-                                        contents = setter[attr.value];
-                                    }
-
-                                    if (attr.name == "c-model-html") {
-                                        $element.html(contents);
-                                    } else {
-                                        $element.text(contents);
-                                    }
+                                    $element.text(getContents(setter[attr.value]));
                                 }
                             }
 
                             break;
                         }
                     });
-                
+
                 if (afterSet && afterSet.constructor === Function) afterSet(this, setter);
             }
 
@@ -173,7 +200,7 @@ function findKeyElement($element, keyPropertyName) {
         },
         models: function (setters, arg, afterSet) {
             var elements = this;
-            
+
             if (elements.length === 0) return undefined;
 
             if (!setters) {
@@ -206,19 +233,19 @@ function findKeyElement($element, keyPropertyName) {
                     $.each(setters,
                         function (index, item) {
                             var keyValue = item[keyName].toString();
-    
+
                             var i = 0;
                             for (; i < elements.length; i++) {
                                 var $element = $(elements[i]);
-    
+
                                 var $keyElement = findKeyElement($element, keyName);
-    
+
                                 if ($keyElement.getModelValue() === keyValue) {
                                     $element.model(item, afterSet);
                                     break;
                                 }
                             }
-    
+
                             if (i < elements.length) elements.splice(i, 1);
                         });
                 } else if (arg instanceof jQuery) {
