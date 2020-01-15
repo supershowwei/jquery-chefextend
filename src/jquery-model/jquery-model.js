@@ -150,7 +150,7 @@ function getContents(obj) {
 
                             var $element = $(element);
 
-                            if (attr.name === "c-model-multi") {
+                            if (attr.name === "c-model-dazzle") {
                                 var regexp = /([^:,]+):([^:,]+)/g;
                                 var match = undefined;
                                 do {

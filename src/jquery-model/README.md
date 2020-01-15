@@ -4,4 +4,4 @@
 
 ### CDN
 
-https://cdn-softkitchen.azureedge.net/jquery-model/0.1.2/jquery-model.min.js
+https://cdn-softkitchen.azureedge.net/jquery-model/0.1.3/jquery-model.min.js
