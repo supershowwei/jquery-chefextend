@@ -18,7 +18,7 @@ function findKeyElement($element, keyPropertyName) {
 }
 
 function getContents(obj) {
-    if (obj === undefined) return undefined;
+    if (!(obj)) return undefined;
     if (obj.constructor === Function) return obj();
 
     return obj;
@@ -103,15 +103,15 @@ function getContents(obj) {
 
                             if (!attr.name.startsWith("c-model")) continue;
 
-                            if (obj[attr.value] === undefined) {
+                            if (!(obj[attr.value])) {
                                 var objValue = $element.getModelValue();
 
-                                if (objValue === undefined) continue;
-
-                                if (attr.name === "c-model-number") {
-                                    obj[attr.value] = $.jqModel.toNumber(objValue);
-                                } else {
-                                    obj[attr.value] = objValue;
+                                if (objValue) {
+                                    if (attr.name === "c-model-number") {
+                                        obj[attr.value] = $.jqModel.toNumber(objValue);
+                                    } else {
+                                        obj[attr.value] = objValue;
+                                    }
                                 }
                             }
 
@@ -158,16 +158,20 @@ function getContents(obj) {
                                         var key = match[1];
                                         var prop = match[2];
 
-                                        switch (key) {
-                                            case "text":
-                                                $element.text(getContents(setter[prop]));
-                                                break;
-                                            case "href":
-                                            case "src":
-                                            case "title":
-                                            case "alt":
-                                                $element.attr(key, getContents(setter[prop]));
-                                                break;
+                                        var contents = getContents(setter[prop]);
+
+                                        if (contents) {
+                                            switch (key) {
+                                                case "text":
+                                                    $element.text(contents);
+                                                    break;
+                                                case "href":
+                                                case "src":
+                                                case "title":
+                                                case "alt":
+                                                    $element.attr(key, contents);
+                                                    break;
+                                            }
                                         }
                                     }
                                 } while (match);
@@ -176,12 +180,16 @@ function getContents(obj) {
                             }
 
                             if (attr.name === "c-model-html") {
-                                $element.html(getContents(setter[attr.value]));
+                                var contents = getContents(setter[prop]);
+
+                                if (contents) {
+                                    $element.html(getContents(setter[attr.value]));                                    
+                                }
 
                                 break;
                             }
 
-                            if (setter[attr.value] !== undefined) {
+                            if (setter[attr.value]) {
                                 if ($element.is(":input")) {
                                     $element.setModelValue(setter[attr.value]);
                                 } else {
