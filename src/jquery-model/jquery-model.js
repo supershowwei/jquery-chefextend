@@ -170,6 +170,7 @@ function getContents(obj) {
                                                 case "src":
                                                 case "title":
                                                 case "alt":
+                                                case "class":
                                                     $element.attr(key, contents);
                                                     break;
                                                 case "style-background-image":
