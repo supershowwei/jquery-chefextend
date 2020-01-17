@@ -166,9 +166,6 @@ function getContents(obj) {
                                                 case "text":
                                                     $element.text(contents);
                                                     break;
-                                                case "style-background-image":
-                                                    $element.css("background-image", "url('" + contents + "')");
-                                                    break;
                                                 default:
                                                     $element.attr(key, contents);
                                                     break;
