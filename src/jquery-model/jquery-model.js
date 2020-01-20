@@ -45,8 +45,7 @@ function buildModelValue(name, value, obj) {
 }
 
 function getContents(obj) {
-    if (obj === undefined) return undefined;
-    if (obj === null) return undefined;
+    if (obj === undefined || obj === null) return undefined;
     if (obj.constructor === Function) return obj();
 
     return obj;
@@ -131,7 +130,29 @@ function getContents(obj) {
 
                             if (!attr.name.startsWith("c-model")) continue;
 
-                            if (obj[attr.value] === undefined) {
+                            if (attr.name === "c-model-dazzle") {
+                                var match = /(value[^:,]*):([^:,]+)/.exec(attr.value);
+                                if (match) {
+                                    var key = match[1];
+                                    var prop = match[2];
+
+                                    if (resolveModelValue(prop, obj) === undefined) {
+                                        var objValue = $element.getModelValue();
+        
+                                        if (objValue !== undefined) {
+                                            if (key === "value-number") {
+                                                buildModelValue(prop, $.jqModel.toNumber(objValue), obj)
+                                            } else {
+                                                buildModelValue(prop, objValue, obj)
+                                            }
+                                        }
+                                    }
+                                }
+
+                                break;
+                            }
+
+                            if (resolveModelValue(attr.value, obj) === undefined) {
                                 var objValue = $element.getModelValue();
 
                                 if (objValue !== undefined) {
@@ -186,15 +207,21 @@ function getContents(obj) {
                                         var key = match[1];
                                         var prop = match[2];
 
-                                        var contents = getContents(resolveModelValue(prop, setter));
+                                        var modelValue = resolveModelValue(prop, setter);
 
-                                        if (contents !== undefined) {
+                                        if (modelValue !== undefined) {
                                             switch (key) {
                                                 case "text":
-                                                    $element.text(contents);
+                                                    $element.text(getContents(modelValue));
+                                                    break;
+                                                case "value":
+                                                case "value-number":
+                                                    if ($element.is(":input")) {
+                                                        $element.setModelValue(modelValue);
+                                                    }
                                                     break;
                                                 default:
-                                                    $element.attr(key, contents);
+                                                    $element.attr(key, getContents(modelValue));
                                                     break;
                                             }
                                         }
@@ -217,7 +244,7 @@ function getContents(obj) {
                             if ($element.is(":input")) {
                                 var modelValue = resolveModelValue(attr.value, setter);
 
-                                if (modelValue !== undefined && modelValue !== null) {
+                                if (modelValue !== undefined) {
                                     $element.setModelValue(modelValue);
                                 }
                             } else {
