@@ -17,6 +17,33 @@ function findKeyElement($element, keyPropertyName) {
     return $element.find("[c-model='" + keyPropertyName + "'],[c-model-number='" + keyPropertyName + "']");
 }
 
+function resolveModelValue(name, obj) {
+    if (obj === undefined || obj === null) return undefined;
+
+    if (/[^\.]\.[^\.]/.test(name)) {
+        var dotIndex = name.indexOf(".");
+
+        return resolveModelValue(name.substr(dotIndex + 1), obj[name.substr(0, dotIndex)]);
+    }
+
+    return obj[name];
+}
+
+function buildModelValue(name, value, obj) {
+    if (/[^\.]\.[^\.]/.test(name)) {
+        var dotIndex = name.indexOf(".");
+        var parentName = name.substr(0, dotIndex);
+
+        if (obj[parentName] === undefined || obj[parentName] === null) {
+            obj[parentName] = {};
+        }
+
+        buildModelValue(name.substr(dotIndex + 1), value, obj[parentName]);
+    } else {
+        obj[name] = value;
+    }
+}
+
 function getContents(obj) {
     if (obj === undefined) return undefined;
     if (obj === null) return undefined;
@@ -109,9 +136,9 @@ function getContents(obj) {
 
                                 if (objValue !== undefined) {
                                     if (attr.name === "c-model-number") {
-                                        obj[attr.value] = $.jqModel.toNumber(objValue);
+                                        buildModelValue(attr.value, $.jqModel.toNumber(objValue), obj)
                                     } else {
-                                        obj[attr.value] = objValue;
+                                        buildModelValue(attr.value, objValue, obj)
                                     }
                                 }
                             }
@@ -159,7 +186,7 @@ function getContents(obj) {
                                         var key = match[1];
                                         var prop = match[2];
 
-                                        var contents = getContents(setter[prop]);
+                                        var contents = getContents(resolveModelValue(prop, setter));
 
                                         if (contents !== undefined) {
                                             switch (key) {
@@ -178,20 +205,26 @@ function getContents(obj) {
                             }
 
                             if (attr.name === "c-model-html") {
-                                var contents = getContents(setter[prop]);
+                                var contents = getContents(resolveModelValue(attr.value, setter));
 
                                 if (contents !== undefined) {
-                                    $element.html(getContents(setter[attr.value]));                                    
+                                    $element.html(contents);
                                 }
 
                                 break;
                             }
 
-                            if (setter[attr.value] !== undefined && setter[attr.value] !== null) {
-                                if ($element.is(":input")) {
-                                    $element.setModelValue(setter[attr.value]);
-                                } else {
-                                    $element.text(getContents(setter[attr.value]));
+                            if ($element.is(":input")) {
+                                var modelValue = resolveModelValue(attr.value, setter);
+
+                                if (modelValue !== undefined && modelValue !== null) {
+                                    $element.setModelValue(modelValue);
+                                }
+                            } else {
+                                var contents = getContents(resolveModelValue(attr.value, setter));
+
+                                if (contents !== undefined) {
+                                    $element.text(contents);
                                 }
                             }
 

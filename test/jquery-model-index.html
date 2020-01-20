@@ -52,6 +52,11 @@
             <input type="checkbox" c-model="f5" />f5
             <input type="checkbox" value="g5" c-model="g5" />g5
         </div>
+        <div>
+            <input type="text" c-model="abc.e5" />e5
+            <input type="text" c-model="abc.bbb.f5" />f5
+            <input type="text" value="g5" c-model="abc.g5" />g5
+        </div>
         <ul>
             <li><input type="checkbox" c-model="ee5" />ee5</li>
             <li><input type="checkbox" c-model="ff5" />ff5</li>
@@ -66,6 +71,8 @@
         <h1><a style="display: none;" c-model-dazzle="href:url">My HyperLink</a></h1>
         <h1><img style="display: none;" c-model-dazzle="src:imgurl,alt:alttext" /></h1>
         <h1><img style="display: none;" alt="My Image" c-model-dazzle="src:imgurl" /></h1>
+        <div c-model="member.name"></div>
+        <div c-model="member.address.value"></div>
     </div>
     <ul id="list">
         <li>
