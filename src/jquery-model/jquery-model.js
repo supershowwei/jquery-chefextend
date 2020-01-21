@@ -13,8 +13,36 @@ if (!String.prototype.endsWith) {
     };
 }
 
+if (!Array.prototype.contains) {
+    Array.prototype.contains = function (func, thisArg) {
+        var self = this;
+        var len = self.length;
+        var i = -1;
+
+        if (thisArg === undefined) {
+            while (++i !== len) {
+                if (i in self) {
+                    if (func(self[i], i, self)) {
+                        return true;
+                    }
+                }
+            }
+        } else {
+            while (++i !== len) {
+                if (i in self) {
+                    if (func.call(thisArg, self[i], i, self)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    };
+}
+
 function findKeyElement($element, keyPropertyName) {
-    return $element.find("[c-model='" + keyPropertyName + "'],[c-model-number='" + keyPropertyName + "']");
+    return $element.find("[c-model='" + keyPropertyName + "'],[c-model-number='" + keyPropertyName + "'],[c-model-dazzle*='value:" + keyPropertyName + "'],[c-model-dazzle*='value-number:" + keyPropertyName + "']");
 }
 
 function resolveModelValue(name, obj) {
@@ -103,7 +131,7 @@ function getContents(obj) {
                 $("input[type='radio'][name='" + this.attr("name") + "'][value='" + value + "']").prop("checked", true);
             } else if (this.is(":checkbox")) {
                 if (this.attr("value")) {
-                    this.prop("checked", this.val() === value);
+                    this.prop("checked", this.val() === value.toString());
                 } else {
                     this.prop("checked", value);
                 }
