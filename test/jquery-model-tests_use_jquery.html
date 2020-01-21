@@ -269,8 +269,6 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="../src/jquery-model/jquery-model.js"></script>
     <script>
         var assert = {
             areEquals: function (expected, actual) {
@@ -984,11 +982,35 @@
             assert.testResults(assertions, containerId);
         });
 
-        //tests[tests.length - 1]();
+        var jqueryVersion = new URLSearchParams(window.location.search).get("jquery-version");
 
-        tests.forEach(function (test) {
-            test();
-        });
+        if (!(jqueryVersion)) {
+            jqueryVersion = "1.12.4";
+        }
+
+        var jqueryScript = document.createElement("script");
+
+        jqueryScript.src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/" + jqueryVersion + "/jquery.min.js";
+
+        jqueryScript.onload = function () {
+            console.log("Load jQuery " + jqueryVersion + ".");
+
+            var jqueryModelScript = document.createElement("script");
+
+            jqueryModelScript.src = "../src/jquery-model/jquery-model.js";
+
+            jqueryModelScript.onload = function () {
+                console.log("Load jquery-model.js.");
+
+                tests.forEach(function (test) {
+                    test();
+                });
+            };
+
+            document.head.appendChild(jqueryModelScript);
+        };
+
+        document.head.appendChild(jqueryScript);
     </script>
 </body>
 
