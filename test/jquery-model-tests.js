@@ -465,4 +465,14 @@ describe("jquery-model test cases", function () {
         expect(models[1].id).toBe(2);
         expect(models[1].name).toBe("Tom2");
     });
+
+    it("Test_Root_Tag_Set_and_Get_Text_value_with_Dazzle", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ id: 1, name: "Johnny", style: "background-color: red;" });
+
+        var model = $container.model();
+
+        expect($container.attr("style")).toBe("background-color: red;");
+    });
 });
