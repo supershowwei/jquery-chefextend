@@ -166,7 +166,7 @@ function getContents(obj) {
 
                                     if (resolveModelValue(prop, obj) === undefined) {
                                         var objValue = $element.getModelValue();
-        
+
                                         if (objValue !== undefined) {
                                             if (key === "value-number") {
                                                 buildModelValue(prop, $.jqModel.toNumber(objValue), obj)
