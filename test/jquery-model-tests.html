@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery-model-test</title>
+
+    <link rel="shortcut icon" type="image/png" href="jasmine/lib/jasmine-3.5.0/jasmine_favicon.png">
+    <link rel="stylesheet" type="text/css" href="jasmine/lib/jasmine-3.5.0/jasmine.css">
+
+    <script type="text/javascript" src="jasmine/lib/jasmine-3.5.0/jasmine.js"></script>
+    <script type="text/javascript" src="jasmine/lib/jasmine-3.5.0/jasmine-html.js"></script>
+    <script type="text/javascript" src="jasmine/lib/jasmine-3.5.0/boot.js"></script>
+</head>
+
+<body>
+    <div id="Test_TextInput_can_Set_and_Get_Text_and_Number_value">
+        <input type="text" c-model-number="id">
+        <input type="text" c-model="name">
+    </div>
+
+    <div id="Test_Set_Model_Values_use_KeyValue">
+        <input type="text" c-model-number="id">
+        <input type="text" c-model="name">
+    </div>
+
+    <div id="Test_Radio_can_Set_and_Get_Text_value">
+        <input type="radio" name="time_Period" value="morning" c-model="timePeriod" />早上
+        <input type="radio" name="time_Period" value="noon" />中午
+        <input type="radio" name="time_Period" value="night" />晚上
+    </div>
+
+    <div id="Test_Radio_can_Set_and_Get_Number_value">
+        <input type="radio" name="amount" value="1" c-model-number="amount" />1
+        <input type="radio" name="amount" value="2" />2
+        <input type="radio" name="amount" value="3" />3
+    </div>
+
+    <div id="Test_Checkbox_can_Set_and_Get_without_value">
+        <input type="checkbox" c-model="creamer" />奶精
+        <input type="checkbox" c-model="sugar" />糖
+        <input type="checkbox" c-model="cinnamonPowder" />肉桂粉
+    </div>
+
+    <div id="Test_Checkbox_can_Set_and_Get_Number_value">
+        <input type="checkbox" value="1" c-model-number="answer1" />1
+        <input type="checkbox" value="2" c-model-number="answer2" />2
+        <input type="checkbox" value="3" c-model-number="answer3" />3
+    </div>
+
+    <div id="Test_Checkbox_can_Set_and_Get_Text_value">
+        <input type="checkbox" value="A" c-model="answer1" />A
+        <input type="checkbox" value="B" c-model="answer2" />B
+        <input type="checkbox" value="C" c-model="answer3" />C
+    </div>
+
+    <div id="Test_Select_can_Set_and_Get_Text_value">
+        <select c-model="drink">
+            <option value="coffee">Coffee</option>
+            <option value="tea">Tea</option>
+            <option value="me">Me</option>
+        </select>
+    </div>
+
+    <div id="Test_Select_can_Set_and_Get_Number_value">
+        <select c-model-number="answer">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+    </div>
+
+    <div id="Test_Textarea_can_Set_and_Get_Text_value">
+        <textarea cols="30" rows="10" c-model="content"></textarea>
+    </div>
+
+    <div id="Test_NonInput_can_Set_value">
+        <span c-model-number="id"></span>
+        <span c-model="name"></span>
+    </div>
+
+    <div id="Test_NonInput_can_Set_HtmlContent">
+        <div c-model="html"></div>
+        <div c-model-html="html"></div>
+    </div>
+
+    <div id="Test_NonInput_can_Set_value_use_Getter_Function">
+        <span c-model-number="id"></span>
+        <span c-model="firstName"></span>
+        <span c-model="lastName"></span>
+        <span c-model="fullName"></span>
+    </div>
+
+    <div id="Test_Dazzle_Syntax_can_Set_value">
+        <a c-model-dazzle="href:url,text:text"></a>
+    </div>
+
+    <div id="Test_Dazzle_Syntax_can_Set_Single_value">
+        <a c-model-dazzle="href:url">軟體主廚的程式料理廚房</a>
+    </div>
+
+    <div id="Test_Dazzle_Syntax_can_Set_and_Get_Text_and_Number_value">
+        <input type="text" c-model-dazzle="value-number:id">
+        <input type="text" c-model-dazzle="value:name,style:style">
+    </div>
+
+    <div id="Test_TextInput_can_Set_and_Get_NestedObject_Text_and_Number_value">
+        <input type="text" c-model-number="member.id">
+        <input type="text" c-model="member.name">
+        <input type="text" c-model="member.address.value">
+    </div>
+
+    <div id="Test_TextInput_can_Set_and_Get_NestedObject_Text_and_Number_value_with_Dazzle">
+        <input type="text" c-model-dazzle="value-number:member.id">
+        <input type="text" c-model-dazzle="value:member.name,style:member.nameStyle">
+        <input type="text" c-model-dazzle="value:member.address.value">
+    </div>
+
+    <div id="Test_Radio_can_Set_and_Get_Text_value_with_Dazzle">
+        <input type="radio" name="time_Period" value="morning" c-model-dazzle="value:timePeriod" />早上
+        <input type="radio" name="time_Period" value="noon" />中午
+        <input type="radio" name="time_Period" value="night" />晚上
+    </div>
+
+    <div id="Test_Radio_can_Set_and_Get_Number_value_with_Dazzle">
+        <input type="radio" name="amount" value="1" c-model-dazzle="value-number:amount" />1
+        <input type="radio" name="amount" value="2" />2
+        <input type="radio" name="amount" value="3" />3
+    </div>
+
+    <div id="Test_Checkbox_can_Set_and_Get_without_value_with_Dazzle">
+        <input type="checkbox" c-model-dazzle="value:creamer" />奶精
+        <input type="checkbox" c-model-dazzle="value:sugar" />糖
+        <input type="checkbox" c-model-dazzle="value:cinnamonPowder" />肉桂粉
+    </div>
+
+    <div id="Test_Checkbox_can_Set_and_Get_Number_value_with_Dazzle">
+        <input type="checkbox" value="1" c-model-dazzle="value-number:answer1" />1
+        <input type="checkbox" value="2" c-model-dazzle="value-number:answer2" />2
+        <input type="checkbox" value="3" c-model-dazzle="value-number:answer3" />3
+    </div>
+
+    <div id="Test_Checkbox_can_Set_and_Get_Text_values_with_Dazzle">
+        <input type="checkbox" value="A" c-model-dazzle="value:answer1" />A
+        <input type="checkbox" value="B" c-model-dazzle="value:answer2" />B
+        <input type="checkbox" value="C" c-model-dazzle="value:answer3" />C
+    </div>
+
+    <div id="Test_Select_can_Set_and_Get_Text_value_with_Dazzle">
+        <select c-model-dazzle="value:drink">
+            <option value="coffee">Coffee</option>
+            <option value="tea">Tea</option>
+            <option value="me">Me</option>
+        </select>
+    </div>
+
+    <div id="Test_Select_can_Set_and_Get_Number_value_with_Dazzle">
+        <select c-model-dazzle="value-number:answer">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+    </div>
+
+    <div id="Test_Textarea_can_Set_and_Get_Text_value_with_Dazzle">
+        <textarea cols="30" rows="10" c-model-dazzle="value:content"></textarea>
+    </div>
+
+    <div id="Test_AfterSet_should_works">
+        <span c-model-number="id"></span>
+        <span c-model="name"></span>
+    </div>
+
+    <div id="Test_AfterSet_and_BeforeSet_should_work">
+        <span c-model-number="id"></span>
+        <span c-model="name"></span>
+    </div>
+
+    <div id="Test_Create_Elements_by_Models">
+        <div class="container">
+            <div style="display: none;">
+                <input type="text" c-model-number="id">
+                <input type="text" c-model="name">
+            </div>
+        </div>
+    </div>
+
+    <div id="Test_Set_and_Get_Models_value_with_AfterSet">
+        <div class="container">
+            <div style="display: none;">
+                <input type="text" c-model-number="id">
+                <input type="text" c-model="name">
+            </div>
+        </div>
+    </div>
+
+    <div id="Test_Set_and_Get_Models_value_with_AfterSet_and_BeforeSet">
+        <div class="container">
+            <div style="display: none;">
+                <input type="text" c-model-number="id">
+                <input type="text" c-model="name">
+            </div>
+        </div>
+    </div>
+
+    <div id="Test_Upsert_Models_value">
+        <div class="container">
+            <div style="display: none;">
+                <input type="text" c-model-number="id">
+                <input type="text" c-model="name">
+            </div>
+        </div>
+    </div>
+
+    <div id="Test_Create_Elements_by_Models_with_Dazzle">
+        <div class="container">
+            <div style="display: none;">
+                <input type="text" c-model-dazzle="value-number:id">
+                <input type="text" c-model-dazzle="value:name">
+            </div>
+        </div>
+    </div>
+
+    <div id="Test_Set_and_Get_Models_value_with_AfterSet_and_Dazzle">
+        <div class="container">
+            <div style="display: none;">
+                <input type="text" c-model-dazzle="value-number:id">
+                <input type="text" c-model-dazzle="value:name">
+            </div>
+        </div>
+    </div>
+
+    <div id="Test_Set_and_Get_Models_value_with_AfterSet_and_BeforeSet_and_Dazzle">
+        <div class="container">
+            <div style="display: none;">
+                <input type="text" c-model-dazzle="value-number:id">
+                <input type="text" c-model-dazzle="value:name">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function loadJQuery(version) {
+            var jqueryScript = document.createElement("script");
+
+            jqueryScript.src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/" + jqueryVersion + "/jquery.min.js";
+
+            jqueryScript.onload = function () {
+                console.log("Load jQuery " + jqueryVersion + ".");
+                loadJQueryModel();
+            }
+
+            document.head.appendChild(jqueryScript);
+        }
+
+        function loadJQueryModel() {
+            var jqueryModelScript = document.createElement("script");
+
+            jqueryModelScript.src = "../src/jquery-model/jquery-model.js";
+
+            jqueryModelScript.onload = function () {
+                console.log("Load jquery-model.js.");
+                loadTestCasesScript();
+            }
+
+            document.head.appendChild(jqueryModelScript);
+        }
+
+        function loadTestCasesScript() {
+            var testCaseScript = document.createElement("script");
+
+            testCaseScript.src = "jquery-model-tests.js";
+
+            document.head.appendChild(testCaseScript);
+        }
+
+        var jqueryVersion = new URLSearchParams(window.location.search).get("jquery-version");
+
+        if (!(jqueryVersion)) {
+            jqueryVersion = "1.12.4";
+        }
+
+        loadJQuery(jqueryVersion);
+    </script>
+</body>
+
+</html>
