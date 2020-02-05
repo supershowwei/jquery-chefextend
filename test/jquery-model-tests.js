@@ -471,8 +471,62 @@ describe("jquery-model test cases", function () {
 
         $container.model({ id: 1, name: "Johnny", style: "background-color: red;" });
 
-        var model = $container.model();
-
         expect($container.attr("style")).toBe("background-color: red;");
     });
+
+    it("Test_can_Set_Html_Content_use_Dazzle", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ description: "<span>test</span>" });
+
+        expect($container.find("div").first().html()).toBe("<span>test</span>");
+    });
+
+    it("Test_Button_can_be_Container", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ id: 1 });
+
+        var model = $container.model();
+
+        expect(model.id).toBe(1);
+        expect($container.find("i").first().text()).toBe("1");
+    });
+
+    it("Test_can_Create_Buttons", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.models([{ id: 1, name: 111 }, { id: 2, name: 222 }, { id: 3, name: 333 }], $container.find("button").remove());
+
+        var models = $container.find("button").models();
+
+        expect(models[0].id).toBe(1);
+        expect(models[1].id).toBe(2);
+        expect(models[2].id).toBe(3);
+        expect($container.find("button:nth-child(1)").text()).toBe("111");
+        expect($container.find("button:nth-child(2)").text()).toBe("222");
+        expect($container.find("button:nth-child(3)").text()).toBe("333");
+    });
+
+    it("Test_can_Create_Buttons_with_i_Tag", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.models([
+            { id: 1, name: 111, count: 11, get formattedCount() { return "(" + this.count + ")"; } },
+            { id: 2, name: 222, count: 22, get formattedCount() { return "(" + this.count + ")"; } },
+            { id: 3, name: 333, count: 33, get formattedCount() { return "(" + this.count + ")"; } }
+        ], $container.find("button").remove());
+
+        var models = $container.find("button").models();
+
+        expect(models[0].id).toBe(1);
+        expect(models[1].id).toBe(2);
+        expect(models[2].id).toBe(3);
+        expect($container.find("button:nth-child(1) span").first().text()).toBe("111");
+        expect($container.find("button:nth-child(2) span").first().text()).toBe("222");
+        expect($container.find("button:nth-child(3) span").first().text()).toBe("333");
+        expect($container.find("button:nth-child(1) i").first().text()).toBe("(11)");
+        expect($container.find("button:nth-child(2) i").first().text()).toBe("(22)");
+        expect($container.find("button:nth-child(3) i").first().text()).toBe("(33)");
+});
 });

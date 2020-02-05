@@ -242,6 +242,9 @@ function getContents(obj) {
                                                 case "text":
                                                     $element.text(getContents(modelValue));
                                                     break;
+                                                case "html":
+                                                    $element.html(getContents(modelValue));
+                                                    break;
                                                 case "value":
                                                 case "value-number":
                                                     if ($element.is(":input")) {

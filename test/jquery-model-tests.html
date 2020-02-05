@@ -246,6 +246,23 @@
         <input type="text" c-model="name">
     </div>
 
+    <div id="Test_can_Set_Html_Content_use_Dazzle" c-model-dazzle="style:style">
+        <div c-model-dazzle="html:description"></div>
+    </div>
+
+    <button id="Test_Button_can_be_Container">
+        <input type="hidden" c-model-number="id">
+        <i c-model="id"></i>
+    </button>
+
+    <div id="Test_can_Create_Buttons">
+        <button c-model-dazzle="value-number:id,text:name"></button>
+    </div>
+
+    <div id="Test_can_Create_Buttons_with_i_Tag">
+        <button c-model-number="id"><span c-model="name"></span><i c-model="formattedCount"></i></button>
+    </div>
+
     <script>
         function loadJQuery(version) {
             var jqueryScript = document.createElement("script");
