@@ -42,9 +42,9 @@ if (!Array.prototype.contains) {
 }
 
 function findKeyElement($element, keyPropertyName) {
-    return $element
-        .find("[c-model='" + keyPropertyName + "'],[c-model-number='" + keyPropertyName + "'],[c-model-dazzle*='value:" + keyPropertyName + "'],[c-model-dazzle*='value-number:" + keyPropertyName + "']")
-        .addBack("[c-model='" + keyPropertyName + "'],[c-model-number='" + keyPropertyName + "'],[c-model-dazzle*='value:" + keyPropertyName + "'],[c-model-dazzle*='value-number:" + keyPropertyName + "']");
+    var selectorPattern = "[c-model='" + keyPropertyName + "'],[c-model-number='" + keyPropertyName + "'],[c-model-dazzle*='value:" + keyPropertyName + "'],[c-model-dazzle*='value-number:" + keyPropertyName + "']";
+
+    return $element.find(selectorPattern).addBack(selectorPattern);
 }
 
 function resolveModelValue(name, obj) {
