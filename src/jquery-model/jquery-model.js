@@ -42,7 +42,9 @@ if (!Array.prototype.contains) {
 }
 
 function findKeyElement($element, keyPropertyName) {
-    return $element.find("[c-model='" + keyPropertyName + "'],[c-model-number='" + keyPropertyName + "'],[c-model-dazzle*='value:" + keyPropertyName + "'],[c-model-dazzle*='value-number:" + keyPropertyName + "']");
+    return $element
+        .find("[c-model='" + keyPropertyName + "'],[c-model-number='" + keyPropertyName + "'],[c-model-dazzle*='value:" + keyPropertyName + "'],[c-model-dazzle*='value-number:" + keyPropertyName + "']")
+        .addBack("[c-model='" + keyPropertyName + "'],[c-model-number='" + keyPropertyName + "'],[c-model-dazzle*='value:" + keyPropertyName + "'],[c-model-dazzle*='value-number:" + keyPropertyName + "']");
 }
 
 function resolveModelValue(name, obj) {
@@ -336,7 +338,7 @@ function getContents(obj) {
                                 var $element = $(elements[i]);
 
                                 var $keyElement = findKeyElement($element, keyName);
-
+                                
                                 if ($keyElement.getModelValue() === keyValue) {
                                     $element.model(item, afterSet);
                                     break;

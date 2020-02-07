@@ -508,6 +508,22 @@ describe("jquery-model test cases", function () {
         expect($container.find("button:nth-child(3)").text()).toBe("333");
     });
 
+    it("Test_can_Update_Models_when_KeyElement_in_Root", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.models([{ id: 1, name: 111 }, { id: 2, name: 222 }, { id: 3, name: 333 }], $container.find("button").remove());
+        $container.find("button").models([{ id: 1, name: 1111 }, { id: 2, name: 2222 }, { id: 3, name: 3333 }], "id");
+        
+        var models = $container.find("button").models();
+
+        expect(models[0].id).toBe(1);
+        expect(models[1].id).toBe(2);
+        expect(models[2].id).toBe(3);
+        expect($container.find("button:nth-child(1)").text()).toBe("1111");
+        expect($container.find("button:nth-child(2)").text()).toBe("2222");
+        expect($container.find("button:nth-child(3)").text()).toBe("3333");
+    });
+
     it("Test_can_Create_Buttons_with_i_Tag", function () {
         var $container = $("#" + jasmine.currentTest.description);
 
