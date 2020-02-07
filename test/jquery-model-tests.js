@@ -469,9 +469,9 @@ describe("jquery-model test cases", function () {
     it("Test_Root_Tag_Set_and_Get_Text_value_with_Dazzle", function () {
         var $container = $("#" + jasmine.currentTest.description);
 
-        $container.model({ id: 1, name: "Johnny", style: "background-color: red;" });
+        $container.model({ id: 1, name: "Johnny", style: "background-color: green;" });
 
-        expect($container.attr("style")).toBe("background-color: red;");
+        expect($container.attr("style")).toBe("background-color: green;");
     });
 
     it("Test_can_Set_Html_Content_use_Dazzle", function () {
