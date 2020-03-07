@@ -10,13 +10,13 @@
 
     $.http.post("url", data);
 
-### postForm
+### post（Form）
 
     var formData = new FormData();
     
     // append values ...
     
-    $.http.postForm("url", formData);
+    $.http.post("url", formData);
 
 ### put
 
@@ -56,4 +56,4 @@ $.http 的 HTTP 方法回傳的是 jqXHR 物件，因此可以直接串 done、f
 
 ### CDN
 
-https://cdn-softkitchen.azureedge.net/jquery-http/0.0.2/jquery-http.min.js
+https://cdn-softkitchen.azureedge.net/jquery-http/lastest/jquery-http.min.js
