@@ -267,6 +267,9 @@
         <button c-model-number="id"><span c-model="name"></span><i c-model="formattedCount"></i></button>
     </div>
 
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../src/jquery-model/jquery-model.js"></script>
+    <script src="jquery-model-tests.js"></script>-->
     <script>
         function loadJQuery(version) {
             var jqueryScript = document.createElement("script");
@@ -303,7 +306,7 @@
         }
 
         var jqueryVersion = new URLSearchParams(window.location.search).get("jquery-version");
-
+        
         if (!(jqueryVersion)) {
             jqueryVersion = "1.12.4";
         }
