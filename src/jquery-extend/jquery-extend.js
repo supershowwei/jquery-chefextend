@@ -8,7 +8,7 @@
         },
         toggleVisibility: function () {
             return this.css("visibility", function(index, visibility) {
-                return (visibility == "visible") ? "hidden" : "visible";
+                return (visibility === "visible") ? "hidden" : "visible";
             });
         },
         disable: function () {
@@ -16,6 +16,11 @@
         },
         enable: function () {
             return this.prop("disabled", false);
+        },
+        toggleActivity: function () {
+            return this.prop("disabled", function (index, activity) {
+                return activity ? false : true;
+            });
         }
     });
 })(jQuery);
