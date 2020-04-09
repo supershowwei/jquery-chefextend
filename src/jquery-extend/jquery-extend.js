@@ -1,14 +1,14 @@
 (function ($) {
     $.fn.extend({
         visible: function () {
-            return this.css("visibility", "visible");
+            return this.css("visibility", "");
         },
         invisible: function () {
             return this.css("visibility", "hidden");
         },
         toggleVisibility: function () {
             return this.css("visibility", function(index, visibility) {
-                return (visibility === "visible") ? "hidden" : "visible";
+                return (visibility === "visible") ? "hidden" : "";
             });
         },
         disable: function () {
