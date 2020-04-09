@@ -21,6 +21,17 @@
             return this.prop("disabled", function (index, activity) {
                 return activity ? false : true;
             });
+        },
+        selected: function () {
+            return this.prop("selected", true);
+        },
+        unselected: function () {
+            return this.prop("selected", false);
+        },
+        toggleSelectivity: function () {
+            return this.prop("selected", function (index, selectivity) {
+                return selectivity ? false : true;
+            });
         }
     });
 })(jQuery);
