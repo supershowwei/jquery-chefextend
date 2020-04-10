@@ -17,9 +17,9 @@
         enable: function () {
             return this.prop("disabled", false);
         },
-        toggleActivity: function () {
-            return this.prop("disabled", function (index, activity) {
-                return activity ? false : true;
+        toggleDisabled: function () {
+            return this.prop("disabled", function (index, disabled) {
+                return disabled ? false : true;
             });
         },
         selected: function () {
@@ -28,9 +28,9 @@
         unselected: function () {
             return this.prop("selected", false);
         },
-        toggleSelectivity: function () {
-            return this.prop("selected", function (index, selectivity) {
-                return selectivity ? false : true;
+        toggleSelected: function () {
+            return this.prop("selected", function (index, selected) {
+                return selected ? false : true;
             });
         }
     });
