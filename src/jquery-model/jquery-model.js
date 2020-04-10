@@ -161,7 +161,7 @@ function getContents(obj) {
                             if (!attr.name.startsWith("c-model")) continue;
 
                             if (attr.name === "c-model-dazzle") {
-                                var match = /(value[^:,]*):([^:,]+)/.exec(attr.value);
+                                var match = /,(value|value-number):([^:,]+)/.exec(attr.value) || /^(value|value-number):([^:,]+)/.exec(attr.value);
                                 if (match) {
                                     var key = match[1];
                                     var prop = match[2];

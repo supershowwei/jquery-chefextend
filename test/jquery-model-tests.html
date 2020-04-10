@@ -267,6 +267,15 @@
         <button c-model-number="id"><span c-model="name"></span><i c-model="formattedCount"></i></button>
     </div>
 
+    <div id="Test_can_not_be_Resolved_Value_without_Value_or_ValueNumber_using_Dazzle">
+        <input type="text" c-model-dazzle="data-slider-value:value,data-slider-min:min,data-slider-max:max,data-slider-step:step">
+        <span c-model="value"></span>
+        <input type="hidden" c-model-number="value">
+        <input type="hidden" c-model-number="min">
+        <input type="hidden" c-model-number="max">
+        <input type="hidden" c-model-number="step">
+    </div>
+
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="../src/jquery-model/jquery-model.js"></script>
     <script src="jquery-model-tests.js"></script>-->

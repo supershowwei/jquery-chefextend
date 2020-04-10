@@ -513,7 +513,7 @@ describe("jquery-model test cases", function () {
 
         $container.models([{ id: 1, name: 111 }, { id: 2, name: 222 }, { id: 3, name: 333 }], $container.find("button").remove());
         $container.find("button").models([{ id: 1, name: 1111 }, { id: 2, name: 2222 }, { id: 3, name: 3333 }], "id");
-        
+
         var models = $container.find("button").models();
 
         expect(models[0].id).toBe(1);
@@ -544,5 +544,18 @@ describe("jquery-model test cases", function () {
         expect($container.find("button:nth-child(1) i").first().text()).toBe("(11)");
         expect($container.find("button:nth-child(2) i").first().text()).toBe("(22)");
         expect($container.find("button:nth-child(3) i").first().text()).toBe("(33)");
-});
+    });
+
+    it("Test_can_not_be_Resolved_Value_without_Value_or_ValueNumber_using_Dazzle", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ value: 1, min: 1, max: 60, step: 1 });
+
+        var model = $container.model();
+
+        expect(model.value).toBe(1);
+        expect(model.min).toBe(1);
+        expect(model.max).toBe(60);
+        expect(model.step).toBe(1);
+    });
 });
