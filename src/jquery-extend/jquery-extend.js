@@ -8,7 +8,7 @@
         },
         toggleVisibility: function () {
             return this.css("visibility", function(index, visibility) {
-                return (visibility === "visible") ? "hidden" : "";
+                return (visibility === "hidden") ? "" : "visible";
             });
         },
         disable: function () {
