@@ -1,14 +1,14 @@
-# jquery-http
+﻿# jquery-http
 
-簡化呼叫 $.ajax 的程式碼，至少可以少打 20 個英文字母。
+簡化呼叫 $.ajax 的程式碼，至少可以少打 20 個英文字母，然後每個方法都有多載一個 `settings` 參數，可以額外傳入其他 $.ajax 可接受的設定。
 
 ### get
 
-    $.http.get("url");
+    $.http.get("url" [, settings]);
 
 ### post
 
-    $.http.post("url", data);
+    $.http.post("url", data [, settings]);
 
 ### post（Form）
 
@@ -16,19 +16,19 @@
     
     // append values ...
     
-    $.http.post("url", formData);
+    $.http.post("url", formData [, settings]);
 
 ### put
 
-    $.http.put("url", data);
+    $.http.put("url", data [, settings]);
 
 ### patch
 
-    $.http.patch("url", data);
+    $.http.patch("url", data [, settings]);
 
 ### delete
 
-    $.http.delete("url");
+    $.http.delete("url" [, settings]);
 
 ### beforeSend
 
