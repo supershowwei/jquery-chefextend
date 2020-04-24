@@ -6,24 +6,51 @@
 
                 return this;
             },
-            get: function (url) {
-                return $.ajax(url, { method: "GET" });
+            get: function (url, settings) {
+                if (!(settings)) settings = {};
+                    
+                settings.method = "GET";
+
+                return $.ajax(url, settings);
             },
-            post: function (url, data) {
+            post: function (url, data, settings) {
+                if (!(settings)) settings = {};
+                    
+                settings.method = "POST";
+                settings.data = data;
+
                 if (data.constructor === FormData) {
-                    return $.ajax(url, { method: "POST", data: data, cache: false, contentType: false, processData: false });
+                    settings.cache = false;
+                    settings.contentType = false;
+                    settings.processData = false;
+
+                    return $.ajax(url, settings);
                 }
 
-                return $.ajax(url, { method: "POST", data: data });
+                return $.ajax(url, settings);
             },
-            put: function (url, data) {
-                return $.ajax(url, { method: "PUT", data: data });
+            put: function (url, data, settings) {
+                if (!(settings)) settings = {};
+                    
+                settings.method = "PUT";
+                settings.data = data;
+
+                return $.ajax(url, settings);
             },
-            patch: function (url, data) {
-                return $.ajax(url, { method: "PATCH", data: data });
+            patch: function (url, data, settings) {
+                if (!(settings)) settings = {};
+                    
+                settings.method = "PATCH";
+                settings.data = data;
+
+                return $.ajax(url, settings);
             },
-            delete: function (url) {
-                return $.ajax(url, { method: "DELETE" });
+            delete: function (url, settings) {
+                if (!(settings)) settings = {};
+                    
+                settings.method = "DELETE";
+
+                return $.ajax(url, settings);
             }
         }
     });
