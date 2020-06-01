@@ -168,7 +168,7 @@ function getContents(obj) {
 
                                     if (resolveModelValue(prop, obj) === undefined) {
                                         var objValue = $element.getModelValue();
-
+                                        
                                         if (objValue !== undefined) {
                                             if (key === "value-number") {
                                                 buildModelValue(prop, $.jqModel.toNumber(objValue), obj)
@@ -251,6 +251,8 @@ function getContents(obj) {
                                                 case "value-number":
                                                     if ($element.is(":input")) {
                                                         $element.setModelValue(modelValue);
+                                                    } else {
+                                                        $element.attr("value", modelValue);
                                                     }
                                                     break;
                                                 default:
@@ -338,7 +340,7 @@ function getContents(obj) {
                                 var $element = $(elements[i]);
 
                                 var $keyElement = findKeyElement($element, keyName);
-                                
+
                                 if ($keyElement.getModelValue() === keyValue) {
                                     $element.model(item, afterSet);
                                     break;

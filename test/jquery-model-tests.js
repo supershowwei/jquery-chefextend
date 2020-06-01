@@ -300,6 +300,24 @@ describe("jquery-model test cases", function () {
         expect(model.answer).toBe(2);
     });
 
+    it("Test_can_Set_Models_to_Select_Options_with_Dazzle", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.find("select").models([{ no: 1, drink: "Coffee" }, { no: 2, drink: "Tea" }, { no: 3, drink: "Me" }], $container.find("select").children().first().remove().show());
+        $container.model({ drinkNo: 2 });
+        
+        $container.find("select").children().each(function (index, optionElement) {
+            $option = $(optionElement);
+
+            expect(["1", "2", "3"]).toContain($option.attr("value"));
+            expect(["Coffee", "Tea", "Me"]).toContain($option.text());
+        });
+
+        var model = $container.model();
+
+        expect(model.drinkNo).toBe(2);
+    });
+
     it("Test_Textarea_can_Set_and_Get_Text_value_with_Dazzle", function () {
         var $container = $("#" + jasmine.currentTest.description);
 
