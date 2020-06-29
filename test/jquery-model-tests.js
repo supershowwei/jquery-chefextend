@@ -577,6 +577,14 @@ describe("jquery-model test cases", function () {
         expect(model.step).toBe(1);
     });
 
+    it("Test_can_use_Literal_Template", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ path: "2020/01/20/083500" });
+
+        expect($container.find("span").text()).toBe("https://dotblogs.com.tw/supershowwei/2020/01/20/083500");
+    });
+
     it("Test_can_use_Literal_Template_in_Dazzle", function () {
         var $container = $("#" + jasmine.currentTest.description);
 
