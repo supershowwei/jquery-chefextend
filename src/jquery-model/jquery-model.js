@@ -51,13 +51,11 @@ function resolveModelValue(name, obj) {
     if (obj === undefined || obj === null) return undefined;
 
     if (/`[^`]+`/.test(name)) {
-        var regexp = /\{([^\{\}]+)\}/g;
         var match = undefined;
-
         var objValue = name.replace(/`/g, "");
         
         do {
-            match = regexp.exec(objValue);
+            match = /\{([^\{\}]+)\}/.exec(objValue);
             if (match) {
                 var prop = match[1];
                 var replacer = new RegExp(match[0], "g");
@@ -249,7 +247,7 @@ function getContents(obj) {
                             var $element = $(element);
 
                             if (attr.name === "c-model-dazzle") {
-                                var regexp = /([^:,]+):(`.+`|[^:,]+)/g;
+                                var regexp = /([^:,]+):(`[^`]+`|[^:,]+)/g;
                                 var match = undefined;
                                 do {
                                     match = regexp.exec(attr.value);
