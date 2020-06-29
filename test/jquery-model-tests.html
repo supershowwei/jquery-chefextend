@@ -282,6 +282,14 @@
         <input type="hidden" c-model-number="step">
     </div>
 
+    <div id="Test_can_use_Literal_Template_in_Dazzle">
+        <a c-model-dazzle="href:`https://dotblogs.com.tw/supershowwei/{path}`,title:title"></a>
+    </div>
+
+    <div id="Test_can_use_Literal_Template_with_Multiple_Terms_in_Dazzle">
+        <a c-model-dazzle="href:`https://dotblogs.com.tw/supershowwei/{path}/{path}`,title:title"></a>
+    </div>
+
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="../src/jquery-model/jquery-model.js"></script>
     <script src="jquery-model-tests.js"></script>-->

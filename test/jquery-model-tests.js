@@ -576,4 +576,22 @@ describe("jquery-model test cases", function () {
         expect(model.max).toBe(60);
         expect(model.step).toBe(1);
     });
+
+    it("Test_can_use_Literal_Template_in_Dazzle", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ path: "2020/01/20/083500", title: "[創意料理] 單純對資料表簡單的 CRUD 讓 Chef.Extensions.DbAccess.SqlServer 來協助我們" });
+
+        expect($container.find("a").attr("href")).toBe("https://dotblogs.com.tw/supershowwei/2020/01/20/083500");
+        expect($container.find("a").attr("title")).toBe("[創意料理] 單純對資料表簡單的 CRUD 讓 Chef.Extensions.DbAccess.SqlServer 來協助我們");
+    });
+
+    it("Test_can_use_Literal_Template_with_Multiple_Terms_in_Dazzle", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ path: "2020/01/20/083500", title: "[創意料理] 單純對資料表簡單的 CRUD 讓 Chef.Extensions.DbAccess.SqlServer 來協助我們" });
+
+        expect($container.find("a").attr("href")).toBe("https://dotblogs.com.tw/supershowwei/2020/01/20/083500/2020/01/20/083500");
+        expect($container.find("a").attr("title")).toBe("[創意料理] 單純對資料表簡單的 CRUD 讓 Chef.Extensions.DbAccess.SqlServer 來協助我們");
+    });
 });

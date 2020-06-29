@@ -50,6 +50,26 @@ function findKeyElement($element, keyPropertyName) {
 function resolveModelValue(name, obj) {
     if (obj === undefined || obj === null) return undefined;
 
+    if (/`[^`]+`/.test(name)) {
+        var regexp = /\{([^\{\}]+)\}/g;
+        var match = undefined;
+
+        var objValue = name.replace(/`/g, "");
+        
+        do {
+            match = regexp.exec(objValue);
+            if (match) {
+                var prop = match[1];
+                var replacer = new RegExp(match[0], "g");
+
+                objValue = objValue.replace(replacer, resolveModelValue(prop, obj));
+            }
+        }
+        while (match);
+
+        return objValue;
+    }
+
     if (/[^\.]\.[^\.]/.test(name)) {
         var dotIndex = name.indexOf(".");
 
@@ -168,7 +188,7 @@ function getContents(obj) {
 
                                     if (resolveModelValue(prop, obj) === undefined) {
                                         var objValue = $element.getModelValue();
-                                        
+
                                         if (objValue !== undefined) {
                                             if (key === "value-number") {
                                                 buildModelValue(prop, $.jqModel.toNumber(objValue), obj)
@@ -229,7 +249,7 @@ function getContents(obj) {
                             var $element = $(element);
 
                             if (attr.name === "c-model-dazzle") {
-                                var regexp = /([^:,]+):([^:,]+)/g;
+                                var regexp = /([^:,]+):(`.+`|[^:,]+)/g;
                                 var match = undefined;
                                 do {
                                     match = regexp.exec(attr.value);
