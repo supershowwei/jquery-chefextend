@@ -585,6 +585,15 @@ describe("jquery-model test cases", function () {
         expect($container.find("span").text()).toBe("https://dotblogs.com.tw/supershowwei/2020/01/20/083500");
     });
 
+    it("Test_can_use_Literal_Template_with_Multiple_Properties_in_Dazzle", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ path: "2020/01/20/083500", title: "軟體主廚的程式料理廚房" });
+
+        expect($container.find("span").text()).toBe("https://dotblogs.com.tw/supershowwei/2020/01/20/083500");
+        expect($container.find("span").attr("title")).toBe("Good軟體主廚的程式料理廚房");
+    });
+
     it("Test_can_use_Literal_Template_in_Dazzle", function () {
         var $container = $("#" + jasmine.currentTest.description);
 
@@ -601,5 +610,14 @@ describe("jquery-model test cases", function () {
 
         expect($container.find("a").attr("href")).toBe("https://dotblogs.com.tw/supershowwei/2020/01/20/083500/2020/01/20/083500");
         expect($container.find("a").attr("title")).toBe("[創意料理] 單純對資料表簡單的 CRUD 讓 Chef.Extensions.DbAccess.SqlServer 來協助我們");
+    });
+
+    it("Test_can_use_Literal_Template_with_Multiple_Terms_in_One_Property", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ id: "2330", name: "台積電" });
+
+        expect($container.find("a").attr("href")).toBe("/stock/2330/news");
+        expect($container.find("a").attr("title")).toBe("台積電(2330)最新消息");
     });
 });

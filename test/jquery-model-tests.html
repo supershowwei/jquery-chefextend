@@ -286,12 +286,20 @@
         <span c-model="`https://dotblogs.com.tw/supershowwei/{path}`"></span>
     </div>
 
+    <div id="Test_can_use_Literal_Template_with_Multiple_Properties_in_Dazzle">
+        <span c-model-dazzle="text:`https://dotblogs.com.tw/supershowwei/{path}`,title:`Good{title}`"></span>
+    </div>
+
     <div id="Test_can_use_Literal_Template_in_Dazzle">
         <a c-model-dazzle="href:`https://dotblogs.com.tw/supershowwei/{path}`,title:title"></a>
     </div>
 
     <div id="Test_can_use_Literal_Template_with_Multiple_Terms_in_Dazzle">
         <a c-model-dazzle="href:`https://dotblogs.com.tw/supershowwei/{path}/{path}`,title:title"></a>
+    </div>
+
+    <div id="Test_can_use_Literal_Template_with_Multiple_Terms_in_One_Property">
+        <a c-model-dazzle="href:`/stock/{id}/news`,title:`{name}({id})最新消息`">最新消息</a>
     </div>
 
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
