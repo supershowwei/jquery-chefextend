@@ -1,0 +1,28 @@
+[
+  {
+    "outputFileName": "jquery-chefextend.min.js",
+    "inputFiles": [
+      "jquery-extend/jquery-extend.js",
+      "jquery-http/jquery-http.js",
+      "jquery-model/jquery-model.js"
+    ]
+  },
+  {
+    "outputFileName": "jquery-extend/jquery-extend.min.js",
+    "inputFiles": [
+      "jquery-extend/jquery-extend.js"
+    ]
+  },
+  {
+    "outputFileName": "jquery-http/jquery-http.min.js",
+    "inputFiles": [
+      "jquery-http/jquery-http.js"
+    ]
+  },
+  {
+    "outputFileName": "jquery-model/jquery-model.min.js",
+    "inputFiles": [
+      "jquery-model/jquery-model.js"
+    ]
+  }
+]

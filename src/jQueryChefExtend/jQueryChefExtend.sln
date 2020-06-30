@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jQueryChefExtend", "jQueryChefExtend\jQueryChefExtend.csproj", "{D044BA82-FBA9-41AD-A680-C96CD8F4C1B1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D044BA82-FBA9-41AD-A680-C96CD8F4C1B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D044BA82-FBA9-41AD-A680-C96CD8F4C1B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D044BA82-FBA9-41AD-A680-C96CD8F4C1B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D044BA82-FBA9-41AD-A680-C96CD8F4C1B1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A5A0A554-70A4-4D53-8596-F855DD1A0599}
+	EndGlobalSection
+EndGlobal
