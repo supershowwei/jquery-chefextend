@@ -620,4 +620,12 @@ describe("jquery-model test cases", function () {
         expect($container.find("a").attr("href")).toBe("/stock/2330/news");
         expect($container.find("a").attr("title")).toBe("台積電(2330)最新消息");
     });
+
+    it("Test_will_be_not_Set_Value_when_Undefined_of_Multiple_Terms", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({});
+        
+        expect($container.find("a").attr("href")).toBe(undefined);
+    });
 });

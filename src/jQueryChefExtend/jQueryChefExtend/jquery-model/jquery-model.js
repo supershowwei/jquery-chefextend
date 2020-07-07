@@ -198,7 +198,7 @@ if (!Array.prototype.contains) {
                                         const prop = match[2];
 
                                         const modelValue = resolveModelValue(prop, setter);
-
+                                        
                                         if (modelValue !== undefined) {
                                             switch (key) {
                                                 case "text":
@@ -353,7 +353,11 @@ function resolveModelValue(name, obj) {
                 const prop = match[1];
                 const replacer = new RegExp(match[0], "g");
 
-                objValue = objValue.replace(replacer, resolveModelValue(prop, obj));
+                const propValue = resolveModelValue(prop, obj);
+
+                if (propValue === undefined) return undefined;
+
+                objValue = objValue.replace(replacer, propValue);
             }
         }
         while (match);
