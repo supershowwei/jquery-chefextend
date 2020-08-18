@@ -101,7 +101,7 @@ if (!Array.prototype.contains) {
                 this.val(value);
             }
         },
-        model: function (setter, value, afterSet) {
+        model: function (setter, value, afterSet, setterIndex) {
             const elements = this.find(":attrStartsWith('c-model')").addBack(":attrStartsWith('c-model')");
 
             if (elements.length === 0) return undefined;
@@ -177,7 +177,7 @@ if (!Array.prototype.contains) {
                     afterSet = afterSet.afterSet;
                 }
 
-                if (beforeSet && beforeSet.constructor === Function) beforeSet(this, setter);
+                if (beforeSet && beforeSet.constructor === Function) beforeSet(this, setter, setterIndex);
 
                 $.each(elements,
                     function (index, element) {
@@ -254,7 +254,7 @@ if (!Array.prototype.contains) {
                         }
                     });
 
-                if (afterSet && afterSet.constructor === Function) afterSet(this, setter);
+                if (afterSet && afterSet.constructor === Function) afterSet(this, setter, setterIndex);
             }
 
             return this;
@@ -302,7 +302,7 @@ if (!Array.prototype.contains) {
                                 const $keyElement = findKeyElement($element, keyName);
 
                                 if ($keyElement.getModelValue() === keyValue) {
-                                    $element.model(item, afterSet);
+                                    $element.model(item, afterSet, undefined, index);
                                     break;
                                 }
                             }
@@ -313,7 +313,7 @@ if (!Array.prototype.contains) {
                     const $container = $(elements);
 
                     $.each(setters, function (index, item) {
-                        arg.clone().model(item, afterSet).appendTo($container);
+                        arg.clone().model(item, afterSet, undefined, index).appendTo($container);
                     });
                 }
             } else {

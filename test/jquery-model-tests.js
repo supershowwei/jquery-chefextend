@@ -305,7 +305,7 @@ describe("jquery-model test cases", function () {
 
         $container.find("select").models([{ no: 1, drink: "Coffee" }, { no: 2, drink: "Tea" }, { no: 3, drink: "Me" }], $container.find("select").children().first().remove().show());
         $container.model({ drinkNo: 2 });
-        
+
         $container.find("select").children().each(function (index, optionElement) {
             $option = $(optionElement);
 
@@ -625,7 +625,32 @@ describe("jquery-model test cases", function () {
         var $container = $("#" + jasmine.currentTest.description);
 
         $container.model({});
-        
+
         expect($container.find("a").attr("href")).toBe(undefined);
+    });
+
+    it("Test_can_Set_Models_to_Select_Options_with_Dazzle", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        var sum = 0;
+        var data = [
+            { no: 1, drink: "Coffee" },
+            { no: 2, drink: "Tea" },
+            { no: 3, drink: "Me" }
+        ];
+
+        $container.find("select").models(
+            data,
+            $container.find("select").children().first().remove().show(),
+            {
+                beforeSet: function ($self, setter, index) {
+                    sum += index;
+                },
+                afterSet: function ($self, setter, index) {
+                    sum += index;
+                }
+            });
+
+        expect(sum).toBe(6);
     });
 });
