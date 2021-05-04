@@ -69,7 +69,11 @@ if (!Array.prototype.contains) {
     $.extend({
         jqModel: {
             toNumber: function (value) {
-                return isNaN(value) ? undefined : Number(value);
+                if (value === "") return undefined;
+                if (value.trim().length < 1) return undefined;
+                if (isNaN(value)) return undefined;
+                
+                return Number(value);
             }
         }
     });
