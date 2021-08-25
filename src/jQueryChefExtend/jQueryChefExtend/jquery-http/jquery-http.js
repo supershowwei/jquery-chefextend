@@ -1,7 +1,13 @@
 ﻿(function ($) {
+    var _defaultSettings;
     var _http = {
         default: {
-            settings: {}
+            get settings() {
+                return typeof _defaultSettings === "function" ? _defaultSettings() : _defaultSettings;
+            },
+            set settings(val) {
+                _defaultSettings = val;
+            }
         }
     };
 
@@ -12,18 +18,14 @@
     }
 
     _http.get = function (url, settings) {
-        var defaultSettings = typeof _http.default.settings === "function" ? _http.default.settings() : _http.default.settings;
-
-        settings = $.extend(true, {}, defaultSettings, settings);
+        settings = $.extend(true, {}, _http.default.settings, settings);
         settings.method = "GET";
 
         return $.ajax(url, settings);
     }
 
     _http.post = function (url, data, settings) {
-        var defaultSettings = typeof _http.default.settings === "function" ? _http.default.settings() : _http.default.settings;
-
-        settings = $.extend(true, {}, defaultSettings, settings);
+        settings = $.extend(true, {}, _http.default.settings, settings);
         settings.method = "POST";
         settings.data = data;
 
@@ -39,9 +41,7 @@
     }
 
     _http.put = function (url, data, settings) {
-        var defaultSettings = typeof _http.default.settings === "function" ? _http.default.settings() : _http.default.settings;
-
-        settings = $.extend(true, {}, defaultSettings, settings);
+        settings = $.extend(true, {}, _http.default.settings, settings);
         settings.method = "PUT";
         settings.data = data;
 
@@ -49,9 +49,7 @@
     }
 
     _http.patch = function (url, data, settings) {
-        var defaultSettings = typeof _http.default.settings === "function" ? _http.default.settings() : _http.default.settings;
-
-        settings = $.extend(true, {}, defaultSettings, settings);
+        settings = $.extend(true, {}, _http.default.settings, settings);
         settings.method = "PATCH";
         settings.data = data;
 
@@ -59,9 +57,7 @@
     }
 
     _http.delete = function (url, settings) {
-        var defaultSettings = typeof _http.default.settings === "function" ? _http.default.settings() : _http.default.settings;
-
-        settings = $.extend(true, {}, defaultSettings, settings);
+        settings = $.extend(true, {}, _http.default.settings, settings);
         settings.method = "DELETE";
 
         return $.ajax(url, settings);
