@@ -12,16 +12,18 @@
     }
 
     _http.get = function (url, settings) {
-        settings = $.extend(true, {}, _http.default.settings, settings);
+        var defaultSettings = typeof _http.default.settings === "function" ? _http.default.settings() : _http.default.settings;
 
+        settings = $.extend(true, {}, defaultSettings, settings);
         settings.method = "GET";
 
         return $.ajax(url, settings);
     }
 
     _http.post = function (url, data, settings) {
-        settings = $.extend(true, {}, _http.default.settings, settings);
+        var defaultSettings = typeof _http.default.settings === "function" ? _http.default.settings() : _http.default.settings;
 
+        settings = $.extend(true, {}, defaultSettings, settings);
         settings.method = "POST";
         settings.data = data;
 
@@ -37,8 +39,9 @@
     }
 
     _http.put = function (url, data, settings) {
-        settings = $.extend(true, {}, _http.default.settings, settings);
+        var defaultSettings = typeof _http.default.settings === "function" ? _http.default.settings() : _http.default.settings;
 
+        settings = $.extend(true, {}, defaultSettings, settings);
         settings.method = "PUT";
         settings.data = data;
 
@@ -46,8 +49,9 @@
     }
 
     _http.patch = function (url, data, settings) {
-        settings = $.extend(true, {}, _http.default.settings, settings);
+        var defaultSettings = typeof _http.default.settings === "function" ? _http.default.settings() : _http.default.settings;
 
+        settings = $.extend(true, {}, defaultSettings, settings);
         settings.method = "PATCH";
         settings.data = data;
 
@@ -55,8 +59,9 @@
     }
 
     _http.delete = function (url, settings) {
-        settings = $.extend(true, {}, _http.default.settings, settings);
+        var defaultSettings = typeof _http.default.settings === "function" ? _http.default.settings() : _http.default.settings;
 
+        settings = $.extend(true, {}, defaultSettings, settings);
         settings.method = "DELETE";
 
         return $.ajax(url, settings);
