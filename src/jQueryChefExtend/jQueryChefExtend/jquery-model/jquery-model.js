@@ -319,6 +319,12 @@ if (!Array.prototype.contains) {
                     $.each(setters, function (index, item) {
                         arg.clone().model(item, afterSet, undefined, index).appendTo($container);
                     });
+                } else if (arg.constructor === Function) {
+                    const $container = $(elements);
+                    
+                    $.each(setters, function (index, item) {
+                        arg(item, index).clone().model(item, afterSet, undefined, index).appendTo($container);
+                    });
                 }
             } else {
                 const findKey = setters;
