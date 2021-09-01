@@ -361,6 +361,16 @@ describe("jquery-model test cases", function () {
         expect($container.find(".container > div").length).toBe(2);
     });
 
+    it("Test_Create_Elements_by_Models_using_Template_Function", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        var $template = $container.find(".container > div").first().remove().show();
+        
+        $container.find(".container").models([{ id: 1, name: "Johnny" }, { id: 2, name: "Tom" }], function (element) { return $template; });
+
+        expect($container.find(".container > div").length).toBe(2);
+    });
+
     it("Test_Set_and_Get_Models_value_with_AfterSet", function () {
         var $container = $("#" + jasmine.currentTest.description);
 
