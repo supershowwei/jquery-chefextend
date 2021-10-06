@@ -33,8 +33,18 @@
                 return selected ? false : true;
             });
         },
-        template: function () {
-            return $(this.html());
+        template: function (selector) {
+            const $template = $(this.html());
+
+            if (selector) {
+                const $filtered = $template.filter(selector);
+
+                if ($filtered.length) return $filtered;
+
+                return $template.find(selector);
+            }
+
+            return $template;
         }
     });
 })(jQuery);
