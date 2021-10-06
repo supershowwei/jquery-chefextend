@@ -32,6 +32,9 @@
             return this.prop("selected", function (index, selected) {
                 return selected ? false : true;
             });
+        },
+        template: function () {
+            return $(this.html());
         }
     });
 })(jQuery);
