@@ -1,6 +1,6 @@
 ﻿(function ($) {
     var isPromise = function (obj) {
-        if (typeof obj === "object" && typeof obj.then !== "function") {
+        if (typeof obj === "undefined" || (typeof obj === "object" && typeof obj.then !== "function")) {
             return false;
         }
         return String(obj.then) === String($.Deferred().then);
