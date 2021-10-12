@@ -1,4 +1,23 @@
 (function ($) {
+    var _script = {
+        load: function (src, place) {
+            var dfd = $.Deferred();
+            var scriptElement = document.createElement("script");
+
+            scriptElement.type = "text/javascript";
+            scriptElement.src = src;
+            scriptElement.onload = function () {
+                dfd.resolve();
+            }
+
+            $(place).append(scriptElement);
+
+            return dfd.promise();
+        }
+    };
+
+    $.extend({ script: _script });
+
     $.fn.extend({
         visible: function () {
             return this.css("visibility", "");
