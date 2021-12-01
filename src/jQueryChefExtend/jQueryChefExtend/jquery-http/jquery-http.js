@@ -30,7 +30,7 @@
         return (isPromise(_http.default.settings) ? _http.default.settings : $.Deferred().resolve(_http.default.settings).promise()).then(function (defaultSettings) {
             settings = $.extend(true, {}, defaultSettings, settings);
             settings.method = "POST";
-            settings.data = data;
+            settings.data = data || {};
 
             if (data.constructor === FormData) {
                 settings.cache = false;
@@ -48,7 +48,7 @@
         return (isPromise(_http.default.settings) ? _http.default.settings : $.Deferred().resolve(_http.default.settings).promise()).then(function (defaultSettings) {
             settings = $.extend(true, {}, defaultSettings, settings);
             settings.method = "PUT";
-            settings.data = data;
+            settings.data = data || {};
 
             return $.ajax(typeof url === "function" ? url() : url, settings);
         });
@@ -58,7 +58,7 @@
         return (isPromise(_http.default.settings) ? _http.default.settings : $.Deferred().resolve(_http.default.settings).promise()).then(function (defaultSettings) {
             settings = $.extend(true, {}, defaultSettings, settings);
             settings.method = "PATCH";
-            settings.data = data;
+            settings.data = data || {};
 
             return $.ajax(typeof url === "function" ? url() : url, settings);
         });
