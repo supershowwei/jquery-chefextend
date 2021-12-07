@@ -19,8 +19,11 @@
     $.extend({ script: _script });
 
     $.fn.extend({
-        visible: function () {
-            return this.css("visibility", "");
+        display: function (show) {
+            return show === false ? this.hide() : this.show();
+        },
+        visible: function (show) {
+            return show === false ? this.css("visibility", "hidden") : this.css("visibility", "");
         },
         invisible: function () {
             return this.css("visibility", "hidden");
@@ -33,8 +36,8 @@
         disable: function () {
             return this.prop("disabled", true);
         },
-        enable: function () {
-            return this.prop("disabled", false);
+        enable: function (active) {
+            return active === false ? this.prop("disabled", true) : this.prop("disabled", false);
         },
         toggleDisabled: function () {
             return this.prop("disabled", function (index, disabled) {
