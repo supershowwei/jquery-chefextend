@@ -48,6 +48,22 @@ describe("jquery-model test cases", function () {
         expect(model.amount).toBe(3);
     });
 
+    it("Test_Radio_can_Set_empty_value", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ timePeriod: "noon" });
+
+        var model = $container.model();
+
+        expect(model.timePeriod).toBe("noon");
+
+        $container.model({ timePeriod: "" });
+
+        model = $container.model();
+        
+        expect(model.timePeriod).toBe(undefined);
+    });
+
     it("Test_Checkbox_can_Set_and_Get_without_value", function () {
         var $container = $("#" + jasmine.currentTest.description);
 

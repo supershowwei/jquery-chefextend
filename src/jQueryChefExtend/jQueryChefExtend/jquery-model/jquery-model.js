@@ -94,7 +94,7 @@ if (!Array.prototype.contains) {
         },
         setModelValue: function (value) {
             if (this.is(":radio")) {
-                $("input[type='radio'][name='" + this.attr("name") + "'][value='" + value + "']").prop("checked", true);
+                $("input[type='radio'][name='" + this.attr("name") + "']").prop("checked", false).filter("[value='" + value + "']").prop("checked", true);
             } else if (this.is(":checkbox")) {
                 if (this.attr("value")) {
                     this.prop("checked", this.val() === value.toString());
