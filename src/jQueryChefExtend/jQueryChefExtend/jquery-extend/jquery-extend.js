@@ -1,23 +1,4 @@
 (function ($) {
-    var _script = {
-        load: function (src, place) {
-            var dfd = $.Deferred();
-            var scriptElement = document.createElement("script");
-
-            scriptElement.type = "text/javascript";
-            scriptElement.src = src;
-            scriptElement.onload = function () {
-                dfd.resolve();
-            }
-
-            $(place).append(scriptElement);
-
-            return dfd.promise();
-        }
-    };
-
-    $.extend({ script: _script });
-
     $.fn.extend({
         display: function (show) {
             return show === false ? this.hide() : this.show();
