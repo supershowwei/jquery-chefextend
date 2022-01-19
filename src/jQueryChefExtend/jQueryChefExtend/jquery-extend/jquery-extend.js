@@ -1,4 +1,21 @@
 (function ($) {
+    var _script = {
+        load: function (src) {
+            var dfd = $.Deferred();
+
+            $.ajax({
+                url: src,
+                dataType: "script",
+                cache: true,
+                success: dfd.resolve
+            });
+
+            return dfd.promise();
+        }
+    };
+
+    $.extend({ script: _script });
+
     $.fn.extend({
         display: function (show) {
             return show === false ? this.hide() : this.show();
@@ -10,7 +27,7 @@
             return this.css("visibility", "hidden");
         },
         toggleVisibility: function () {
-            return this.css("visibility", function(index, visibility) {
+            return this.css("visibility", function (index, visibility) {
                 return (visibility === "hidden") ? "" : "hidden";
             });
         },
