@@ -19,7 +19,9 @@
     };
 
     _http.get = function (url, settings) {
-        return (isPromise(_http.default.settings) ? _http.default.settings : $.Deferred().resolve(_http.default.settings).promise()).then(function (defaultSettings) {
+        var defaultSettings = _http.default.settings;
+
+        return (isPromise(defaultSettings) ? defaultSettings : $.Deferred().resolve(defaultSettings).promise()).then(function (defaultSettings) {
             settings = $.extend(true, {}, defaultSettings, settings);
             settings.method = "GET";
             return $.ajax(typeof url === "function" ? url() : url, settings);
@@ -27,7 +29,9 @@
     }
 
     _http.post = function (url, data, settings) {
-        return (isPromise(_http.default.settings) ? _http.default.settings : $.Deferred().resolve(_http.default.settings).promise()).then(function (defaultSettings) {
+        var defaultSettings = _http.default.settings;
+
+        return (isPromise(defaultSettings) ? defaultSettings : $.Deferred().resolve(defaultSettings).promise()).then(function (defaultSettings) {
             settings = $.extend(true, {}, defaultSettings, settings);
             settings.method = "POST";
             settings.data = data;
@@ -45,7 +49,9 @@
     }
 
     _http.put = function (url, data, settings) {
-        return (isPromise(_http.default.settings) ? _http.default.settings : $.Deferred().resolve(_http.default.settings).promise()).then(function (defaultSettings) {
+        var defaultSettings = _http.default.settings;
+
+        return (isPromise(defaultSettings) ? defaultSettings : $.Deferred().resolve(defaultSettings).promise()).then(function (defaultSettings) {
             settings = $.extend(true, {}, defaultSettings, settings);
             settings.method = "PUT";
             settings.data = data;
@@ -55,7 +61,9 @@
     }
 
     _http.patch = function (url, data, settings) {
-        return (isPromise(_http.default.settings) ? _http.default.settings : $.Deferred().resolve(_http.default.settings).promise()).then(function (defaultSettings) {
+        var defaultSettings = _http.default.settings;
+
+        return (isPromise(defaultSettings) ? defaultSettings : $.Deferred().resolve(defaultSettings).promise()).then(function (defaultSettings) {
             settings = $.extend(true, {}, defaultSettings, settings);
             settings.method = "PATCH";
             settings.data = data;
@@ -65,7 +73,9 @@
     }
 
     _http.delete = function (url, settings) {
-        return (isPromise(_http.default.settings) ? _http.default.settings : $.Deferred().resolve(_http.default.settings).promise()).then(function (defaultSettings) {
+        var defaultSettings = _http.default.settings;
+
+        return (isPromise(defaultSettings) ? defaultSettings : $.Deferred().resolve(defaultSettings).promise()).then(function (defaultSettings) {
             settings = $.extend(true, {}, defaultSettings, settings);
             settings.method = "DELETE";
 
