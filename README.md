@@ -1,5 +1,5 @@
 # jquery-chefextend
 
-- [jquery-extend](../../tree/master/src/jquery-extend)
-- [jquery-http](../../tree/master/src/jquery-http)
-- [jquery-model](../../tree/master/src/jquery-model)
+- [jquery-extend](../../tree/master/src/jQueryChefExtend/jQueryChefExtend/jquery-extend)
+- [jquery-http](../../tree/master/src/jQueryChefExtend/jQueryChefExtend/jquery-http)
+- [jquery-model](../../tree/master/src/jQueryChefExtend/jQueryChefExtend/jquery-model)
