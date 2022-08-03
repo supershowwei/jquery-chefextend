@@ -41,6 +41,18 @@ if (!Array.prototype.contains) {
     };
 }
 
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+const propertyRegex = /[^\.]\.[^\.]/;
+const templateLiteralsRegex = /`([^`]+)`/;
+const stringInterpolationRegex = /\{([^\{\}]+)\}/;
+const filterRegex = /\|[^\|]+/;
+const valueRegex1 = /,(value|value-number):([^:,]+)/;
+const valueRegex2 = /^(value|value-number):([^:,]+)/;
+const dazzleRegex = /([^:,]+):(`[^`]+`|[^:,]+)/g;
+
 (function ($) {
     $.expr[":"].attrStartsWith = $.expr.createPseudo(function (filterParam) {
         return function (element, context, isXml) {
@@ -72,7 +84,7 @@ if (!Array.prototype.contains) {
                 if (value === "") return undefined;
                 if (value.trim().length < 1) return undefined;
                 if (isNaN(value)) return undefined;
-                
+
                 return Number(value);
             }
         }
@@ -125,7 +137,7 @@ if (!Array.prototype.contains) {
                             if (!attr.name.startsWith("c-model")) continue;
 
                             if (attr.name === "c-model-dazzle") {
-                                const match = /,(value|value-number):([^:,]+)/.exec(attr.value) || /^(value|value-number):([^:,]+)/.exec(attr.value);
+                                const match = valueRegex1.exec(attr.value) || valueRegex2.exec(attr.value);
                                 if (match) {
                                     const key = match[1];
                                     const prop = match[2];
@@ -193,16 +205,14 @@ if (!Array.prototype.contains) {
                             const $element = $(element);
 
                             if (attr.name === "c-model-dazzle") {
-                                const regexp = /([^:,]+):(`[^`]+`|[^:,]+)/g;
                                 let match = undefined;
                                 do {
-                                    match = regexp.exec(attr.value);
-                                    if (match) {
+                                    if (match = dazzleRegex.exec(attr.value)) {
                                         const key = match[1];
                                         const prop = match[2];
 
                                         const modelValue = resolveModelValue(prop, setter);
-                                        
+
                                         if (modelValue !== undefined) {
                                             switch (key) {
                                                 case "text":
@@ -321,7 +331,7 @@ if (!Array.prototype.contains) {
                     });
                 } else if (arg.constructor === Function) {
                     const $container = $(elements);
-                    
+
                     $.each(setters, function (index, item) {
                         arg(item, index).clone().model(item, afterSet, undefined, index).appendTo($container);
                     });
@@ -350,24 +360,88 @@ function findKeyElement($element, keyPropertyName) {
     return $element.find(selectorPattern).addBack(selectorPattern);
 }
 
+const filterFunctionRegex = /\|([^\s]+)$/;
+const filterFunctionWithArgumentsRegex = /\|([^\s]+) \? (.+)$/;
+
+function resolveModelFilter(filterExpr) {
+
+    let filterFunctionMatch = undefined;
+
+    if (filterFunctionMatch = filterFunctionRegex.exec(filterExpr)) return { method: filterFunctionMatch[1], arguments: [] };
+
+    if (filterFunctionMatch = filterFunctionWithArgumentsRegex.exec(filterExpr)) {
+        const method = filterFunctionMatch[1];
+        const args = filterFunctionMatch[2].split(" & ").reduce((accu, next) => {
+            if (next.includes("'")) {
+                accu.push(next);
+            } else {
+                accu.push(Number(next));
+            }
+            return accu;
+        }, []);
+
+        return { method, arguments: args };
+    }
+
+    return undefined;
+}
+
 function resolveModelValue(name, obj) {
     if (obj === undefined || obj === null) return undefined;
 
-    if (/`[^`]+`/.test(name)) {
-        let match = undefined;
-        let objValue = name.replace(/`/g, "");
-        
-        do {
-            match = /\{([^\{\}]+)\}/.exec(objValue);
-            if (match) {
-                const prop = match[1];
-                const replacer = new RegExp(match[0], "g");
+    const templateLiteralsMatch = templateLiteralsRegex.exec(name);
 
-                const propValue = resolveModelValue(prop, obj);
+    if (templateLiteralsMatch) {
+        let match = undefined;
+        let objValue = templateLiteralsMatch[1];
+
+        do {
+            if (match = stringInterpolationRegex.exec(objValue)) {
+                let prop = match[1];
+
+                const filters = [];
+
+                let filterMatch = undefined;
+
+                do {
+                    if (filterMatch = filterRegex.exec(prop)) {
+
+                        const filter = resolveModelFilter(filterMatch[0]);
+
+                        if (filter) {
+                            filters.push(filter);
+                        }
+
+                        prop = prop.replace(filterMatch[0], "");
+                    }
+                }
+                while (filterMatch);
+
+                let propValue = resolveModelValue(prop, obj);
 
                 if (propValue === undefined) return undefined;
 
-                objValue = objValue.replace(replacer, propValue);
+                propValue = filters.reduce((result, filter) => {
+                    if (filter.method.includes("(") || filter.method.includes(")")) return result;
+
+                    if (filter.method.startsWith(".")) {
+                        const method = filter.method.substring(1);
+
+                        if (result[method]) {
+                            return result[method].apply(result, filter.arguments);
+                        }
+                    } else {
+                        const func = new Function(`return ${filter.method};`)();
+
+                        if (typeof func === "function") {
+                            return func.call(null, result, ...filter.arguments);
+                        }
+                    }
+
+                    return result;
+                }, propValue);
+
+                objValue = objValue.replace(new RegExp(escapeRegExp(match[0]), "g"), propValue);
             }
         }
         while (match);
@@ -375,7 +449,7 @@ function resolveModelValue(name, obj) {
         return objValue;
     }
 
-    if (/[^\.]\.[^\.]/.test(name)) {
+    if (propertyRegex.test(name)) {
         const dotIndex = name.indexOf(".");
 
         return resolveModelValue(name.substr(dotIndex + 1), obj[name.substr(0, dotIndex)]);
@@ -385,7 +459,7 @@ function resolveModelValue(name, obj) {
 }
 
 function buildModelValue(name, value, obj) {
-    if (/[^\.]\.[^\.]/.test(name)) {
+    if (propertyRegex.test(name)) {
         const dotIndex = name.indexOf(".");
         const parentName = name.substr(0, dotIndex);
 

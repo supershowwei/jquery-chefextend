@@ -327,6 +327,14 @@
         </select>
     </div>
 
+    <div id="Test_Dazzle_Syntax_with_Literal_Template_and_Filters">
+        <a c-model-dazzle="href:url,text:`軟體主廚的程式料理廚房的 {no|add1|.toPercent}`"></a>
+    </div>
+
+    <div id="Test_Dazzle_Syntax_with_Literal_Template_and_Filters_with_Arguments">
+        <a c-model-dazzle="href:url,text:`軟體主廚的程式料理廚房的 {no|add ? 1 & 2 & 3|.toPercent}`"></a>
+    </div>
+
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="../src/jquery-model/jquery-model.js"></script>
     <script src="jquery-model-tests.js"></script>-->

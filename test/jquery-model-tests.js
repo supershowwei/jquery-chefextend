@@ -1,3 +1,20 @@
+
+if (!Number.prototype.toPercent) {
+    Number.prototype.toPercent = function (decimals) {
+        return this.toLocaleString("en-US", { style: "percent", minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+    }
+}
+
+window.add = function () {
+    const args = [...arguments];
+
+    return args[0] + args.slice(1).reduce((sum, num) => sum + num);
+}
+
+window.add1 = function (value) {
+    return value + 1;
+}
+
 jasmine.getEnv().addReporter({
     specStarted: function (result) {
         jasmine.currentTest = result;
@@ -678,5 +695,23 @@ describe("jquery-model test cases", function () {
             });
 
         expect(sum).toBe(6);
+    });
+
+    it("Test_Dazzle_Syntax_with_Literal_Template_and_Filters", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ url: "https://dotblogs.com.tw/supershowwei", no: 0.1 });
+
+        expect($container.find("a[c-model-dazzle]").attr("href")).toBe("https://dotblogs.com.tw/supershowwei");
+        expect($container.find("a[c-model-dazzle]").text()).toBe("軟體主廚的程式料理廚房的 110%");
+    });
+
+    it("Test_Dazzle_Syntax_with_Literal_Template_and_Filters_with_Arguments", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ url: "https://dotblogs.com.tw/supershowwei", no: 0.1 });
+
+        expect($container.find("a[c-model-dazzle]").attr("href")).toBe("https://dotblogs.com.tw/supershowwei");
+        expect($container.find("a[c-model-dazzle]").text()).toBe("軟體主廚的程式料理廚房的 610%");
     });
 });
