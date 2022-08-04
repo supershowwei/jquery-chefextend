@@ -15,6 +15,14 @@ window.add1 = function (value) {
     return value + 1;
 }
 
+window.fixedSuffix = function (value) {
+    return value + "/abctest";
+}
+
+window.suffix = function (value, tail) {
+    return value + tail;
+}
+
 jasmine.getEnv().addReporter({
     specStarted: function (result) {
         jasmine.currentTest = result;
@@ -669,7 +677,7 @@ describe("jquery-model test cases", function () {
 
         $container.model({});
 
-        expect($container.find("a").attr("href")).toBe(undefined);
+        expect($container.find("a").attr("href")).toBe("/stock/undefined/news");
     });
 
     it("Test_can_Set_Models_to_Select_Options_with_Dazzle", function () {
@@ -713,5 +721,30 @@ describe("jquery-model test cases", function () {
 
         expect($container.find("a[c-model-dazzle]").attr("href")).toBe("https://dotblogs.com.tw/supershowwei");
         expect($container.find("a[c-model-dazzle]").text()).toBe("軟體主廚的程式料理廚房的 610%");
+    });
+
+    it("Test_Dazzle_Syntax_with_Literal_Template_and_Filters_with_String_Arguments", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ obj: { url: "https://dotblogs.com.tw/supershowwei" }, no: 0.1 });
+
+        expect($container.find("a[c-model-dazzle]").attr("href")).toBe("https://dotblogs.com.tw/supershowwei/abctest");
+        expect($container.find("a[c-model-dazzle]").text()).toBe("軟體主廚的程式料理廚房的 610%");
+    });
+
+    it("Test_can_use_Filters", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ path: "2020/01/20/083500" });
+
+        expect($container.find("span").text()).toBe("2020/01/20/083500/abctestabctest");
+    });
+
+    it("Test_can_use_Literal_Template_and_Filters", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ path: "2020/01/20/083500" });
+
+        expect($container.find("span").text()).toBe("https://dotblogs.com.tw/supershowwei/2020/01/20/083500/abctestabctest");
     });
 });

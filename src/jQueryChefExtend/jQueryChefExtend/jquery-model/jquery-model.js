@@ -45,15 +45,160 @@ function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-const propertyRegex = /[^\.]\.[^\.]/;
-const templateLiteralsRegex = /`([^`]+)`/;
-const stringInterpolationRegex = /\{([^\{\}]+)\}/;
-const filterRegex = /\|[^\|]+/;
-const valueRegex1 = /,(value|value-number):([^:,]+)/;
-const valueRegex2 = /^(value|value-number):([^:,]+)/;
-const dazzleRegex = /([^:,]+):(`[^`]+`|[^:,]+)/g;
-
 (function ($) {
+    const propertyRegex = /[^\.]\.[^\.]/;
+    const templateLiteralsRegex = /`([^`]+)`/;
+    const stringInterpolationRegex = /\{([^\{\}]+)\}/;
+    const filterRegex = /\|[^\|]+/;
+    const valueRegex1 = /,(value|value-number):([^:,]+)/;
+    const valueRegex2 = /^(value|value-number):([^:,]+)/;
+    const dazzleRegex = /([^:,]+):(`[^`]+`|[^:,]+)/g;
+    const filterFunctionRegex = /\|([^\s]+)$/;
+    const filterFunctionWithArgumentsRegex = /\|([^\s]+) \? (.+)$/;
+    const stringRegex = /^'([^']+)'$/;
+
+    const findKeyElement = function ($element, keyPropertyName) {
+        const selectorPattern = "[c-model='" + keyPropertyName + "'],[c-model-number='" + keyPropertyName + "'],[c-model-dazzle*='value:" + keyPropertyName + "'],[c-model-dazzle*='value-number:" + keyPropertyName + "']";
+
+        return $element.find(selectorPattern).addBack(selectorPattern);
+    }
+
+    const resolveModelFilter = function (filterExpr) {
+
+        let filterFunctionMatch = undefined;
+
+        if (filterFunctionMatch = filterFunctionRegex.exec(filterExpr)) return { method: filterFunctionMatch[1], arguments: [] };
+
+        if (filterFunctionMatch = filterFunctionWithArgumentsRegex.exec(filterExpr)) {
+            const method = filterFunctionMatch[1];
+            const args = filterFunctionMatch[2].split(" & ").reduce((accu, next) => {
+                let stringMatch = undefined;
+
+                if (stringMatch = stringRegex.exec(next)) {
+                    accu.push(stringMatch[1]);
+                } else {
+                    accu.push(Number(next));
+                }
+                return accu;
+            }, []);
+
+            return { method, arguments: args };
+        }
+
+        return undefined;
+    }
+
+    const resolveModelFilters = function (property) {
+
+        let filterMatch = undefined;
+
+        do {
+            if (filterMatch = filterRegex.exec(property.name)) {
+
+                const filter = resolveModelFilter(filterMatch[0]);
+
+                if (filter) {
+                    property.filters.push(filter);
+                }
+
+                property.name = property.name.replace(filterMatch[0], "");
+            }
+        }
+        while (filterMatch);
+    }
+
+    const filterModelByFilters = function (property) {
+        if (property.value === undefined) return;
+        if (property.value === null) return;
+        if (!property.filters.length) return;
+
+        property.value = property.filters.reduce((result, filter) => {
+            if (filter.method.includes("(") || filter.method.includes(")")) return result;
+
+            if (filter.method.startsWith(".")) {
+                const method = filter.method.substring(1);
+
+                if (result[method]) {
+                    return result[method].apply(result, filter.arguments);
+                }
+            } else {
+                const func = new Function(`return ${filter.method};`)();
+
+                if (typeof func === "function") {
+                    return func.call(null, result, ...filter.arguments);
+                }
+            }
+
+            return result;
+        }, property.value);
+    }
+
+    const resolveModelValue = function (name, obj) {
+        if (obj === undefined || obj === null) return undefined;
+
+        const templateLiteralsMatch = templateLiteralsRegex.exec(name);
+
+        if (templateLiteralsMatch) {
+            let match = undefined;
+            let objValue = templateLiteralsMatch[1];
+
+            do {
+                if (match = stringInterpolationRegex.exec(objValue)) {
+                    const prop = { name: match[1], filters: [] };
+
+                    resolveModelFilters(prop);
+
+                    prop.value = resolveModelValue(prop.name, obj);
+
+                    filterModelByFilters(prop);
+
+                    objValue = objValue.replace(new RegExp(escapeRegExp(match[0]), "g"), prop.value);
+                }
+            }
+            while (match);
+
+            return objValue;
+        }
+
+        if (propertyRegex.test(name)) {
+            const dotIndex = name.indexOf(".");
+
+            return resolveModelValue(name.substr(dotIndex + 1), obj[name.substr(0, dotIndex)]);
+        }
+
+        const prop = { name: name, filters: [] };
+
+        resolveModelFilters(prop);
+
+        prop.value = obj[prop.name];
+
+        filterModelByFilters(prop);
+
+        return prop.value;
+    }
+
+    const buildModelValue = function (name, value, obj) {
+        if (propertyRegex.test(name)) {
+            const dotIndex = name.indexOf(".");
+            const parentName = name.substr(0, dotIndex);
+
+            if (obj[parentName] === undefined || obj[parentName] === null) {
+                obj[parentName] = {};
+            }
+
+            buildModelValue(name.substr(dotIndex + 1), value, obj[parentName]);
+        } else {
+            obj[name] = value;
+        }
+    }
+
+    const getContents = function (obj) {
+        if (obj === undefined || obj === null) return undefined;
+        if (obj.constructor === Function) return obj();
+
+        return obj;
+    }
+
     $.expr[":"].attrStartsWith = $.expr.createPseudo(function (filterParam) {
         return function (element, context, isXml) {
             for (let i = element.attributes.length - 1; i >= 0; i--) {
@@ -353,129 +498,3 @@ const dazzleRegex = /([^:,]+):(`[^`]+`|[^:,]+)/g;
         }
     });
 })(jQuery);
-
-function findKeyElement($element, keyPropertyName) {
-    const selectorPattern = "[c-model='" + keyPropertyName + "'],[c-model-number='" + keyPropertyName + "'],[c-model-dazzle*='value:" + keyPropertyName + "'],[c-model-dazzle*='value-number:" + keyPropertyName + "']";
-
-    return $element.find(selectorPattern).addBack(selectorPattern);
-}
-
-const filterFunctionRegex = /\|([^\s]+)$/;
-const filterFunctionWithArgumentsRegex = /\|([^\s]+) \? (.+)$/;
-
-function resolveModelFilter(filterExpr) {
-
-    let filterFunctionMatch = undefined;
-
-    if (filterFunctionMatch = filterFunctionRegex.exec(filterExpr)) return { method: filterFunctionMatch[1], arguments: [] };
-
-    if (filterFunctionMatch = filterFunctionWithArgumentsRegex.exec(filterExpr)) {
-        const method = filterFunctionMatch[1];
-        const args = filterFunctionMatch[2].split(" & ").reduce((accu, next) => {
-            if (next.includes("'")) {
-                accu.push(next);
-            } else {
-                accu.push(Number(next));
-            }
-            return accu;
-        }, []);
-
-        return { method, arguments: args };
-    }
-
-    return undefined;
-}
-
-function resolveModelValue(name, obj) {
-    if (obj === undefined || obj === null) return undefined;
-
-    const templateLiteralsMatch = templateLiteralsRegex.exec(name);
-
-    if (templateLiteralsMatch) {
-        let match = undefined;
-        let objValue = templateLiteralsMatch[1];
-
-        do {
-            if (match = stringInterpolationRegex.exec(objValue)) {
-                let prop = match[1];
-
-                const filters = [];
-
-                let filterMatch = undefined;
-
-                do {
-                    if (filterMatch = filterRegex.exec(prop)) {
-
-                        const filter = resolveModelFilter(filterMatch[0]);
-
-                        if (filter) {
-                            filters.push(filter);
-                        }
-
-                        prop = prop.replace(filterMatch[0], "");
-                    }
-                }
-                while (filterMatch);
-
-                let propValue = resolveModelValue(prop, obj);
-
-                if (propValue === undefined) return undefined;
-
-                propValue = filters.reduce((result, filter) => {
-                    if (filter.method.includes("(") || filter.method.includes(")")) return result;
-
-                    if (filter.method.startsWith(".")) {
-                        const method = filter.method.substring(1);
-
-                        if (result[method]) {
-                            return result[method].apply(result, filter.arguments);
-                        }
-                    } else {
-                        const func = new Function(`return ${filter.method};`)();
-
-                        if (typeof func === "function") {
-                            return func.call(null, result, ...filter.arguments);
-                        }
-                    }
-
-                    return result;
-                }, propValue);
-
-                objValue = objValue.replace(new RegExp(escapeRegExp(match[0]), "g"), propValue);
-            }
-        }
-        while (match);
-
-        return objValue;
-    }
-
-    if (propertyRegex.test(name)) {
-        const dotIndex = name.indexOf(".");
-
-        return resolveModelValue(name.substr(dotIndex + 1), obj[name.substr(0, dotIndex)]);
-    }
-
-    return obj[name];
-}
-
-function buildModelValue(name, value, obj) {
-    if (propertyRegex.test(name)) {
-        const dotIndex = name.indexOf(".");
-        const parentName = name.substr(0, dotIndex);
-
-        if (obj[parentName] === undefined || obj[parentName] === null) {
-            obj[parentName] = {};
-        }
-
-        buildModelValue(name.substr(dotIndex + 1), value, obj[parentName]);
-    } else {
-        obj[name] = value;
-    }
-}
-
-function getContents(obj) {
-    if (obj === undefined || obj === null) return undefined;
-    if (obj.constructor === Function) return obj();
-
-    return obj;
-}
