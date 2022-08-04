@@ -5,6 +5,26 @@ if (!Number.prototype.toPercent) {
     }
 }
 
+window.append_prefix = function (body, arg1, arg2) {
+
+    if (!arg1) return body;
+    if (!arg2) return arg1 + body;
+
+    return arg2 + arg1 + body;
+
+}
+
+window.append_suffix = function (body, arg1, arg2) {
+
+    if (!arg1) return body;
+    if (!arg2) return body + arg1;
+
+    return body + arg1 + arg2;
+
+}
+
+$("#formDiv").model({ abcText: "abc", abcNumber: 0.123456789, defNumber: 0.123456789, ghiHtml: "<h1>ghi</h1>" });
+
 window.add = function () {
     const args = [...arguments];
 
@@ -85,7 +105,7 @@ describe("jquery-model test cases", function () {
         $container.model({ timePeriod: "" });
 
         model = $container.model();
-        
+
         expect(model.timePeriod).toBe(undefined);
     });
 
@@ -406,7 +426,7 @@ describe("jquery-model test cases", function () {
         var $container = $("#" + jasmine.currentTest.description);
 
         var $template = $container.find(".container > div").first().remove().show();
-        
+
         $container.find(".container").models([{ id: 1, name: "Johnny" }, { id: 2, name: "Tom" }], function (element) { return $template; });
 
         expect($container.find(".container > div").length).toBe(2);
@@ -754,5 +774,21 @@ describe("jquery-model test cases", function () {
         $container.model({ path: "2020/01/20/083500" });
 
         expect($container.find("span").text()).toBe("https://dotblogs.com.tw/supershowwei/2020/01/20/083500/abctestabctest");
+    });
+
+    it("Test_can_use_Prototype_Filter", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ no: 0.1 });
+
+        expect($container.find("span").text()).toBe("10%");
+    });
+
+    it("Test_can_Set_Property_with_Prototype_Filter", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ obj: { no: 0.1 } });
+
+        expect($container.find("span").text()).toBe("10%");
     });
 });

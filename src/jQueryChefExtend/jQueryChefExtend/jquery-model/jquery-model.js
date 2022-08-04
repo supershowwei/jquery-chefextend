@@ -46,7 +46,7 @@ function escapeRegExp(string) {
 }
 
 (function ($) {
-    const propertyRegex = /[^\.]\.[^\.]/;
+    const propertyRegex = /[^\.\|]\.[^\.\|]/;
     const templateLiteralsRegex = /`([^`]+)`/;
     const stringInterpolationRegex = /\{([^\{\}]+)\}/;
     const filterRegex = /\|[^\|]+/;
@@ -133,7 +133,7 @@ function escapeRegExp(string) {
         }, property.value);
     }
 
-    const resolveModelValue = function (name, obj) {
+    const resolveModelValue = function (name, obj) {        
         if (obj === undefined || obj === null) return undefined;
 
         const templateLiteralsMatch = templateLiteralsRegex.exec(name);

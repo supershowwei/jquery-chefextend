@@ -16,6 +16,7 @@
 </head>
 
 <body>
+    
     <div id="Test_TextInput_can_Set_and_Get_Text_and_Number_value">
         <input type="text" c-model-number="id">
         <input type="text" c-model="name">
@@ -349,6 +350,14 @@
 
     <div id="Test_can_use_Literal_Template_and_Filters">
         <span c-model="`https://dotblogs.com.tw/supershowwei/{path|fixedSuffix|suffix ? 'abctest'}`"></span>
+    </div>
+
+    <div id="Test_can_use_Prototype_Filter">
+        <span c-model="no|.toPercent"></span>
+    </div>
+
+    <div id="Test_can_Set_Property_with_Prototype_Filter">
+        <span c-model="obj.no|.toPercent"></span>
     </div>
 
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
