@@ -43,6 +43,10 @@ window.suffix = function (value, tail) {
     return value + tail;
 }
 
+window.upDnSign = function (value) {
+    return value > 0 ? "▲" : value < 0 ? "▼" : "";
+}
+
 jasmine.getEnv().addReporter({
     specStarted: function (result) {
         jasmine.currentTest = result;
@@ -790,5 +794,13 @@ describe("jquery-model test cases", function () {
         $container.model({ obj: { no: 0.1 } });
 
         expect($container.find("span").text()).toBe("10%");
+    });
+
+    it("Test_can_use_Repeate_Value_with_Filter", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ change: 0.1 });
+
+        expect($container.find("span").text()).toBe("▲0.1");
     });
 });
