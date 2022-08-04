@@ -150,6 +150,8 @@ function escapeRegExp(string) {
 
                     prop.value = resolveModelValue(prop.name, obj);
 
+                    if (prop.value === undefined) return undefined;
+
                     filterModelByFilters(prop);
 
                     objValue = objValue.replace(new RegExp(escapeRegExp(match[0]), "g"), prop.value);
