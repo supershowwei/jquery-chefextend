@@ -53,7 +53,3 @@ $.http 的 HTTP 方法回傳的是 jqXHR 物件，因此可以直接串 done、f
         .always(function (data|jqXHR, textStatus, jqXHR|errorThrown) {
             // always do something.
         });
-
-### CDN
-
-https://cdn-softkitchen.azureedge.net/jquery-http/lastest/jquery-http.min.js

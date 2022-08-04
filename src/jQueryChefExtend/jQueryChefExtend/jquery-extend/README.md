@@ -49,7 +49,3 @@
 ### toggleSelected
 
     $(...).toggleSelected();
-
-### CDN
-
-https://cdn-softkitchen.azureedge.net/jquery-extend/lastest/jquery-extend.min.js
