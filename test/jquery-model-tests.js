@@ -701,7 +701,7 @@ describe("jquery-model test cases", function () {
 
         $container.model({});
 
-        expect($container.find("a").attr("href")).toBe("/stock/undefined/news");
+        expect($container.find("a").attr("href")).toBe(undefined);
     });
 
     it("Test_can_Set_Models_to_Select_Options_with_Dazzle", function () {
