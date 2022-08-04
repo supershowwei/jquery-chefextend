@@ -740,6 +740,14 @@ describe("jquery-model test cases", function () {
         expect($container.find("span").text()).toBe("2020/01/20/083500/abctestabctest");
     });
 
+    it("Test_can_Set_Property_with_Filters", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ obj: { path: "2020/01/20/083500" } });
+
+        expect($container.find("span").text()).toBe("2020/01/20/083500/abctestabctest");
+    });
+
     it("Test_can_use_Literal_Template_and_Filters", function () {
         var $container = $("#" + jasmine.currentTest.description);
 
