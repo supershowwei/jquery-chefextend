@@ -108,21 +108,22 @@ function escapeRegExp(string) {
     }
 
     const filterModelByFilters = function (property) {
-        if (property.value === undefined) return;
-        if (property.value === null) return;
         if (!property.filters.length) return;
 
         property.value = property.filters.reduce((result, filter) => {
             if (filter.method.includes("(") || filter.method.includes(")")) return result;
 
             if (filter.method.startsWith(".")) {
+                // use '==' for null
+                if (result == undefined) return result;
+
                 const method = filter.method.substring(1);
 
                 if (result[method]) {
                     return result[method].apply(result, filter.arguments);
                 }
             } else {
-                const func = new Function(`return ${filter.method};`)();
+                const func = new Function(`return window.${filter.method};`)();
 
                 if (typeof func === "function") {
                     return func.call(null, result, ...filter.arguments);
@@ -133,8 +134,9 @@ function escapeRegExp(string) {
         }, property.value);
     }
 
-    const resolveModelValue = function (name, obj) {        
-        if (obj === undefined || obj === null) return undefined;
+    const resolveModelValue = function (name, obj) {
+        // use '==' for null
+        if (obj == undefined) return undefined;
 
         const templateLiteralsMatch = templateLiteralsRegex.exec(name);
 
@@ -150,9 +152,10 @@ function escapeRegExp(string) {
 
                     prop.value = resolveModelValue(prop.name, obj);
 
-                    if (prop.value === undefined) return undefined;
-
                     filterModelByFilters(prop);
+
+                    // use '==' for null
+                    if (prop.value == undefined) return undefined;
 
                     objValue = objValue.replace(new RegExp(escapeRegExp(match[0]), "g"), prop.value);
                 }
@@ -184,7 +187,8 @@ function escapeRegExp(string) {
             const dotIndex = name.indexOf(".");
             const parentName = name.substr(0, dotIndex);
 
-            if (obj[parentName] === undefined || obj[parentName] === null) {
+            // use '==' for null
+            if (obj[parentName] == undefined) {
                 obj[parentName] = {};
             }
 
@@ -195,7 +199,8 @@ function escapeRegExp(string) {
     }
 
     const getContents = function (obj) {
-        if (obj === undefined || obj === null) return undefined;
+        // use '==' for null
+        if (obj == undefined) return undefined;
         if (obj.constructor === Function) return obj();
 
         return obj;

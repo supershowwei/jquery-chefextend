@@ -23,6 +23,11 @@ window.append_suffix = function (body, arg1, arg2) {
 
 }
 
+window.default = function (self, value) {
+    // use '==' for null
+    return self == undefined ? value : self;
+}
+
 $("#formDiv").model({ abcText: "abc", abcNumber: 0.123456789, defNumber: 0.123456789, ghiHtml: "<h1>ghi</h1>" });
 
 window.add = function () {
@@ -802,5 +807,21 @@ describe("jquery-model test cases", function () {
         $container.model({ change: 0.1 });
 
         expect($container.find("span").text()).toBe("▲0.1");
+    });
+
+    it("Test_can_use_Set_Undefined_Value_with_Filter", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({});
+
+        expect($container.find("span").text()).toBe("No Change");
+    });
+
+    it("Test_can_use_Set_Value_with_Default_Filter", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ change: 0.1 });
+
+        expect($container.find("span").text()).toBe("10%");
     });
 });

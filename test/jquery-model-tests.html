@@ -364,6 +364,14 @@
         <span c-model="`{change|upDnSign}{change}`"></span>
     </div>
 
+    <div id="Test_can_use_Set_Undefined_Value_with_Filter">
+        <span c-model="`{change|default ? 'No Change'|.toPercent}`"></span>
+    </div>
+
+    <div id="Test_can_use_Set_Value_with_Default_Filter">
+        <span c-model="`{change|default ? 'No Change'|.toPercent}`"></span>
+    </div>
+
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="../src/jquery-model/jquery-model.js"></script>
     <script src="jquery-model-tests.js"></script>-->
