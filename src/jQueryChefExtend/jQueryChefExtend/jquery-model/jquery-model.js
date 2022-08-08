@@ -56,6 +56,7 @@ function escapeRegExp(string) {
     const filterFunctionRegex = /\|([^\s]+)$/;
     const filterFunctionWithArgumentsRegex = /\|([^\s]+) \? (.+)$/;
     const stringRegex = /^'([^']+)'$/;
+    const filterMap = new Map();
 
     const findKeyElement = function ($element, keyPropertyName) {
         const selectorPattern = "[c-model='" + keyPropertyName + "'],[c-model-number='" + keyPropertyName + "'],[c-model-dazzle*='value:" + keyPropertyName + "'],[c-model-dazzle*='value-number:" + keyPropertyName + "']";
@@ -63,14 +64,53 @@ function escapeRegExp(string) {
         return $element.find(selectorPattern).addBack(selectorPattern);
     }
 
+    const generateMethod = function (method) {
+        if (method.includes("(") || method.includes(")")) return undefined;
+
+        if (!method.startsWith(".")) {
+            method = new Function(`return window.${method};`)();
+
+            if (typeof method !== "function") return undefined;
+        }
+
+        return method;
+    }
+
     const resolveModelFilter = function (filterExpr) {
+
+        if (filterMap.has(filterExpr)) return filterMap.get(filterExpr);
 
         let filterFunctionMatch = undefined;
 
-        if (filterFunctionMatch = filterFunctionRegex.exec(filterExpr)) return { method: filterFunctionMatch[1], arguments: [] };
+        if (filterFunctionMatch = filterFunctionRegex.exec(filterExpr)) {
+            let method = filterFunctionMatch[1];
+
+            if (method.includes("(") || method.includes(")")) return undefined;
+
+            if (!method.startsWith(".")) {
+                method = new Function(`return window.${method};`)();
+
+                if (typeof method !== "function") return undefined;
+            }
+
+            const filter = { method, arguments: [] };
+
+            filterMap.set(filterExpr, filter);
+
+            return filter;
+        }
 
         if (filterFunctionMatch = filterFunctionWithArgumentsRegex.exec(filterExpr)) {
-            const method = filterFunctionMatch[1];
+            let method = filterFunctionMatch[1];
+
+            if (method.includes("(") || method.includes(")")) return undefined;
+
+            if (!method.startsWith(".")) {
+                method = new Function(`return window.${method};`)();
+
+                if (typeof method !== "function") return undefined;
+            }
+
             const args = filterFunctionMatch[2].split(" & ").reduce((accu, next) => {
                 let stringMatch = undefined;
 
@@ -82,7 +122,11 @@ function escapeRegExp(string) {
                 return accu;
             }, []);
 
-            return { method, arguments: args };
+            const filter = { method, arguments: args };
+
+            filterMap.set(filterExpr, filter);
+
+            return filter;
         }
 
         return undefined;
@@ -111,9 +155,12 @@ function escapeRegExp(string) {
         if (!property.filters.length) return;
 
         property.value = property.filters.reduce((result, filter) => {
-            if (filter.method.includes("(") || filter.method.includes(")")) return result;
+            if (typeof filter.method === "function") {
 
-            if (filter.method.startsWith(".")) {
+                return filter.method.call(null, result, ...filter.arguments);
+
+            } else if (filter.method.startsWith(".")) {
+
                 // use '==' for null
                 if (result == undefined) return result;
 
@@ -122,12 +169,7 @@ function escapeRegExp(string) {
                 if (result[method]) {
                     return result[method].apply(result, filter.arguments);
                 }
-            } else {
-                const func = new Function(`return window.${filter.method};`)();
 
-                if (typeof func === "function") {
-                    return func.call(null, result, ...filter.arguments);
-                }
             }
 
             return result;
