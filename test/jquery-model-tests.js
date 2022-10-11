@@ -70,6 +70,17 @@ describe("jquery-model test cases", function () {
         expect(model.name).toBe("Johnny");
     });
 
+    it("Test_Contenteditable_can_Set_and_Get_value", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ id: 1, name: "Johnny" });
+
+        var model = $container.model();
+
+        expect(model.id).toBe(1);
+        expect(model.name).toBe("Johnny");
+    });
+
     it("Test_Set_Model_Values_use_KeyValue", function () {
         var $container = $("#" + jasmine.currentTest.description);
 

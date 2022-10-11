@@ -296,6 +296,10 @@ function escapeRegExp(string) {
                 }
             }
 
+            if (this.is("[contenteditable=true]")) {
+                return this.text();
+            }
+
             return this.val();
         },
         setModelValue: function (value) {
@@ -323,7 +327,7 @@ function escapeRegExp(string) {
                     function (index, element) {
                         const $element = $(element);
 
-                        if (!$element.is(":input")) return;
+                        if (!$element.is(":input") && !$element.is("[contenteditable=true]")) return;
 
                         for (let i = element.attributes.length - 1; i >= 0; i--) {
                             const attr = element.attributes[i];
