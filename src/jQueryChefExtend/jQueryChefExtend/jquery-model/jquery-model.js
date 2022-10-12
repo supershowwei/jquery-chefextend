@@ -423,7 +423,7 @@ function escapeRegExp(string) {
                                                 case "value-number":
                                                     if ($element.is(":input")) {
                                                         $element.setModelValue(modelValue);
-                                                    } else {
+                                                    } else if (!$element.is("[contenteditable]")) {
                                                         $element.attr("value", modelValue);
                                                     }
                                                     break;

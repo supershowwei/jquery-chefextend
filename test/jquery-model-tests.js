@@ -84,12 +84,13 @@ describe("jquery-model test cases", function () {
     it("Test_Contenteditable_can_Set_and_Get_value_with_Dazzle", function () {
         var $container = $("#" + jasmine.currentTest.description);
 
-        $container.model({ id: 2, name: "Mary" });
+        $container.model({ id: 2, name: "Mary", age: 23 });
 
         var model = $container.model();
 
         expect(model.id).toBe(2);
-        expect(model.name).toBe("Mary");
+        expect(model.name).toBe("name=Mary");
+        expect(model.age).toBe("age=23");
     });
 
     it("Test_Set_Model_Values_use_KeyValue", function () {
