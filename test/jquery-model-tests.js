@@ -1,4 +1,12 @@
 
+if (!Number.prototype.toThousandth) {
+    Number.prototype.toThousandth = function (decimals) {
+        if (decimals === undefined) decimals = 0;
+
+        return this.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+    }
+}
+
 if (!Number.prototype.toPercent) {
     Number.prototype.toPercent = function (decimals) {
         return this.toLocaleString("en-US", { style: "percent", minimumFractionDigits: decimals, maximumFractionDigits: decimals });
@@ -71,6 +79,17 @@ describe("jquery-model test cases", function () {
     });
 
     it("Test_Contenteditable_can_Set_and_Get_value", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ id: 1, name: "Johnny" });
+
+        var model = $container.model();
+
+        expect(model.id).toBe(1);
+        expect(model.name).toBe("Johnny");
+    });
+
+    it("Test_Contenteditable_can_Set_and_Get_value_with_Filter", function () {
         var $container = $("#" + jasmine.currentTest.description);
 
         $container.model({ id: 1, name: "Johnny" });

@@ -46,7 +46,8 @@ function escapeRegExp(string) {
 }
 
 (function ($) {
-    const propertyRegex = /[^\.\|]\.[^\.\|]/;
+    const variableRegex = /^[^\|]+/;
+    const propertyRegex = /[^\.\|]+\.[^\.\|]+/;
     const templateLiteralsRegex = /`([^`]+)`/;
     const stringInterpolationRegex = /\{([^\{\}]+)\}/;
     const filterRegex = /\|[^\|]+/;
@@ -62,18 +63,6 @@ function escapeRegExp(string) {
         const selectorPattern = "[c-model='" + keyPropertyName + "'],[c-model-number='" + keyPropertyName + "'],[c-model-dazzle*='value:" + keyPropertyName + "'],[c-model-dazzle*='value-number:" + keyPropertyName + "']";
 
         return $element.find(selectorPattern).addBack(selectorPattern);
-    }
-
-    const generateMethod = function (method) {
-        if (method.includes("(") || method.includes(")")) return undefined;
-
-        if (!method.startsWith(".")) {
-            method = new Function(`return window.${method};`)();
-
-            if (typeof method !== "function") return undefined;
-        }
-
-        return method;
     }
 
     const resolveModelFilter = function (filterExpr) {
@@ -358,12 +347,13 @@ function escapeRegExp(string) {
 
                             if (resolveModelValue(attr.value, obj) === undefined) {
                                 const objValue = $element.getModelValue();
+                                const prop = variableRegex.exec(attr.value)[0]
 
                                 if (objValue !== undefined) {
                                     if (attr.name === "c-model-number") {
-                                        buildModelValue(attr.value, $.jqModel.toNumber(objValue), obj)
+                                        buildModelValue(prop, $.jqModel.toNumber(objValue), obj)
                                     } else {
-                                        buildModelValue(attr.value, objValue, obj)
+                                        buildModelValue(prop, objValue, obj)
                                     }
                                 }
                             }
