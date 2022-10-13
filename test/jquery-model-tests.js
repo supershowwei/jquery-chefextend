@@ -78,6 +78,15 @@ describe("jquery-model test cases", function () {
         expect(model.name).toBe("Johnny");
     });
 
+    it("Test_TextInput_can_Get_Text_and_Number_value_with_Comma", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        var model = $container.model();
+
+        expect(model.id).toBe(1000);
+        expect(model.name).toBe("Johnny");
+    });
+
     it("Test_Contenteditable_can_Set_and_Get_value", function () {
         var $container = $("#" + jasmine.currentTest.description);
 
@@ -89,6 +98,15 @@ describe("jquery-model test cases", function () {
         expect(model.name).toBe("Johnny");
     });
 
+    it("Test_Contenteditable_can_Get_value_with_Comma", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        var model = $container.model();
+
+        expect(model.id).toBe(1000);
+        expect(model.name).toBe("Johnny");
+    });
+
     it("Test_Contenteditable_can_Set_and_Get_value_with_Filter", function () {
         var $container = $("#" + jasmine.currentTest.description);
 
@@ -97,6 +115,17 @@ describe("jquery-model test cases", function () {
         var model = $container.model();
 
         expect(model.id).toBe(1);
+        expect(model.name).toBe("Johnny");
+    });
+
+    it("Test_Contenteditable_can_Set_and_Get_value_with_Filter_and_Comma", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ id: 1000, name: "Johnny" });
+
+        var model = $container.model();
+
+        expect(model.id).toBe(1000);
         expect(model.name).toBe("Johnny");
     });
 

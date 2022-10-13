@@ -264,6 +264,8 @@ function escapeRegExp(string) {
     $.extend({
         jqModel: {
             toNumber: function (value) {
+                value = value.replace(/,/g, '');
+                
                 if (value === "") return undefined;
                 if (value.trim().length < 1) return undefined;
                 if (isNaN(value)) return undefined;

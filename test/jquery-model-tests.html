@@ -22,12 +22,27 @@
         <input type="text" c-model="name">
     </div>
     
+    <div id="Test_TextInput_can_Get_Text_and_Number_value_with_Comma">
+        <input type="text" c-model-number="id" value="1,000">
+        <input type="text" c-model="name" value="Johnny">
+    </div>
+    
     <div id="Test_Contenteditable_can_Set_and_Get_value">
         <div contenteditable="true" c-model-number="id"></div>
         <span contenteditable="true" c-model="name"></span>
     </div>
     
+    <div id="Test_Contenteditable_can_Get_value_with_Comma">
+        <div contenteditable="true" c-model-number="id">1,000</div>
+        <span contenteditable="true" c-model="name">Johnny</span>
+    </div>
+    
     <div id="Test_Contenteditable_can_Set_and_Get_value_with_Filter">
+        <div contenteditable="true" c-model-number="id|.toThousandth"></div>
+        <span contenteditable="true" c-model="name"></span>
+    </div>
+    
+    <div id="Test_Contenteditable_can_Set_and_Get_value_with_Filter_and_Comma">
         <div contenteditable="true" c-model-number="id|.toThousandth"></div>
         <span contenteditable="true" c-model="name"></span>
     </div>
