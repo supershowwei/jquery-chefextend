@@ -91,7 +91,6 @@ describe("jquery-model test cases", function () {
         expect(model.id).toBe(2);
         expect(model.name).toBe("name=Mary");
         expect(model.age).toBe("age=23");
-        expect($container.children().filter("[value]").length).toBe(0);
     });
 
     it("Test_Set_Model_Values_use_KeyValue", function () {

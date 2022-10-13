@@ -296,7 +296,7 @@ function escapeRegExp(string) {
                 }
             }
 
-            if (this.is("[contenteditable='true']")) {
+            if (this.is("[contenteditable]")) {
                 return this.text();
             }
 
@@ -327,7 +327,7 @@ function escapeRegExp(string) {
                     function (index, element) {
                         const $element = $(element);
 
-                        if (!$element.is(":input") && !$element.is("[contenteditable='true']")) return;
+                        if (!$element.is(":input") && !$element.is("[contenteditable]")) return;
 
                         for (let i = element.attributes.length - 1; i >= 0; i--) {
                             const attr = element.attributes[i];
