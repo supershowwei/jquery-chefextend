@@ -1,4 +1,21 @@
-﻿(function ($) {
+﻿if (!String.prototype.isJSON) {
+    String.prototype.isJSON = (function () {
+        var rx_one = /^[\],:{}\s]*$/;
+        var rx_two = /\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g;
+        var rx_three = /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g;
+        var rx_four = /(?:^|:|,)(?:\s*\[)+/g;
+
+        return function () {
+            return rx_one.test(
+                this
+                    .replace(rx_two, "@")
+                    .replace(rx_three, "]")
+                    .replace(rx_four, ""));
+        }
+    })();
+}
+
+(function ($) {
     var isPromise = function (obj) {
         if (typeof obj === "undefined" || (typeof obj === "object" && typeof obj.then !== "function")) {
             return false;
@@ -36,6 +53,10 @@
             settings.method = "POST";
             settings.data = data;
 
+            if (typeof data === "string" && data.isJSON()) {
+                settings.contentType = "application/json; charset=utf-8";
+            }
+
             if (data && data.constructor === FormData) {
                 settings.cache = false;
                 settings.contentType = false;
@@ -56,6 +77,10 @@
             settings.method = "PUT";
             settings.data = data;
 
+            if (typeof data === "string" && data.isJSON()) {
+                settings.contentType = "application/json; charset=utf-8";
+            }
+
             return $.ajax(typeof url === "function" ? url() : url, settings);
         });
     }
@@ -67,6 +92,10 @@
             settings = $.extend(true, {}, defaultSettings, settings);
             settings.method = "PATCH";
             settings.data = data;
+
+            if (typeof data === "string" && data.isJSON()) {
+                settings.contentType = "application/json; charset=utf-8";
+            }
 
             return $.ajax(typeof url === "function" ? url() : url, settings);
         });
