@@ -311,9 +311,9 @@ function escapeRegExp(string) {
         model: function (setter, value, afterSet, setterIndex) {
             const elements = this.find(":attrStartsWith('c-model')").addBack(":attrStartsWith('c-model')");
 
-            if (elements.length === 0) return undefined;
-
             if (!setter) {
+                if (elements.length === 0) return undefined;
+                
                 const obj = {};
 
                 $.each(elements,
