@@ -895,4 +895,17 @@ describe("jquery-model test cases", function () {
 
         expect($container.find("span").text()).toBe("10%");
     });
+
+    it("Test_There_Is_No_C_Model_Attribute", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        var model = $container.model();
+
+        $container.model({ id: 1 }, function ($self, setter) {
+            $self.find("span").text(setter.id);
+        });
+
+        expect(model).toBe(undefined);
+        expect($container.find("span").text()).toBe("1");
+    });
 });
