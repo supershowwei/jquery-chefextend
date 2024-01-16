@@ -60,6 +60,10 @@ window.upDnSign = function (value) {
     return value > 0 ? "▲" : value < 0 ? "▼" : "";
 }
 
+window.getId = function (value) {
+    return value.id;
+}
+
 jasmine.getEnv().addReporter({
     specStarted: function (result) {
         jasmine.currentTest = result;
@@ -907,5 +911,14 @@ describe("jquery-model test cases", function () {
 
         expect(model).toBe(undefined);
         expect($container.find("span").text()).toBe("1");
+    });
+
+    it("Test_use_Whole_Object", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ id: 1 });
+
+        expect($container.find("span").text()).toBe("1");
+        expect($container.find("div").text()).toBe("1");
     });
 });

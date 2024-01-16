@@ -206,7 +206,7 @@ function escapeRegExp(string) {
 
         resolveModelFilters(prop);
 
-        prop.value = obj[prop.name];
+        prop.value = prop.name === "__THIS__" ? obj : obj[prop.name];
 
         filterModelByFilters(prop);
 
