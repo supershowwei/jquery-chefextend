@@ -3,12 +3,12 @@
         load: function (src) {
             var dfd = $.Deferred();
 
-            $.ajax({
-                url: src,
-                dataType: "script",
-                cache: true,
-                success: dfd.resolve
-            });
+            var script = document.createElement("script");
+
+            script.src = src;
+            script.onload = dfd.resolve;
+
+            document.body.appendChild(script);
 
             return dfd.promise();
         }
@@ -18,10 +18,14 @@
         load: function (src) {
             var dfd = $.Deferred();
 
-            $("<link>")
-                .attr({ rel: "stylesheet", type: "text/css", href: src })
-                .one("load", dfd.resolve)
-                .appendTo("head");
+            var link = document.createElement("link");
+
+            link.rel = "stylesheet";
+            link.type = "text/css";
+            link.href = src;
+            link.onload = dfd.resolve;
+
+            document.head.appendChild(link);
 
             return dfd.promise();
         }
