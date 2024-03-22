@@ -14,7 +14,21 @@
         }
     };
 
+    var _stylesheet = {
+        load: function (src) {
+            var dfd = $.Deferred();
+
+            $("<link>")
+                .attr({ rel: "stylesheet", type: "text/css", href: src })
+                .one("load", dfd.resolve)
+                .appendTo("head");
+
+            return dfd.promise();
+        }
+    };
+
     $.extend({ script: _script });
+    $.extend({ stylesheet: _stylesheet });
 
     $.fn.extend({
         display: function (show) {
