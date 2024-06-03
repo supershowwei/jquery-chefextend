@@ -83,6 +83,10 @@
             }
 
             return $template;
+        },
+        run: function (fn) {
+            fn(this);
+            return this;
         }
     });
 })(jQuery);
