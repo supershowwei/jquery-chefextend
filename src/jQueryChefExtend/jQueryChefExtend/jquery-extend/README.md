@@ -49,3 +49,10 @@
 ### toggleSelected
 
     $(...).toggleSelected();
+
+### run
+
+    // 縮減 jQuery Selector，少打點字、提升效能。
+    $(...).run($el => {
+        // ...
+    });
