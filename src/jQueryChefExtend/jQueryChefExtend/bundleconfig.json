@@ -8,13 +8,6 @@
     ]
   },
   {
-    "outputFileName": "jquery-chefextend-slim.min.js",
-    "inputFiles": [
-      "jquery-extend/jquery-extend.js",
-      "jquery-model/jquery-model.js"
-    ]
-  },
-  {
     "outputFileName": "jquery-extend/jquery-extend.min.js",
     "inputFiles": [
       "jquery-extend/jquery-extend.js"
