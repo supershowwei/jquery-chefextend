@@ -48,9 +48,9 @@
     </div>
     
     <div id="Test_Contenteditable_can_Set_and_Get_value_with_Dazzle">
-        <div contenteditable="true" c-model-dazzle="text:id,value-number:id"></div>
-        <span contenteditable="true" c-model-dazzle="text:`name={name}`,value:name"></span>
-        <span contenteditable="true" c-model-dazzle="text:`age={age}`,value:age"></span>
+        <div contenteditable="true" c-model="text:id,value-number:id"></div>
+        <span contenteditable="true" c-model="text:`name={name}`,value:name"></span>
+        <span contenteditable="true" c-model="text:`age={age}`,value:age"></span>
     </div>
 
     <div id="Test_Set_Model_Values_use_KeyValue">
@@ -132,16 +132,16 @@
     </div>
 
     <div id="Test_Dazzle_Syntax_can_Set_value">
-        <a c-model-dazzle="href:url,text:text"></a>
+        <a c-model="href:url,text:text"></a>
     </div>
 
     <div id="Test_Dazzle_Syntax_can_Set_Single_value">
-        <a c-model-dazzle="href:url">軟體主廚的程式料理廚房</a>
+        <a c-model="href:url">軟體主廚的程式料理廚房</a>
     </div>
 
     <div id="Test_Dazzle_Syntax_can_Set_and_Get_Text_and_Number_value">
-        <input type="text" c-model-dazzle="value-number:id">
-        <input type="text" c-model-dazzle="value:name,style:style">
+        <input type="text" c-model="value-number:id">
+        <input type="text" c-model="value:name,style:style">
     </div>
 
     <div id="Test_TextInput_can_Set_and_Get_NestedObject_Text_and_Number_value">
@@ -151,43 +151,43 @@
     </div>
 
     <div id="Test_TextInput_can_Set_and_Get_NestedObject_Text_and_Number_value_with_Dazzle">
-        <input type="text" c-model-dazzle="value-number:member.id">
-        <input type="text" c-model-dazzle="value:member.name,style:member.nameStyle">
-        <input type="text" c-model-dazzle="value:member.address.value">
+        <input type="text" c-model="value-number:member.id">
+        <input type="text" c-model="value:member.name,style:member.nameStyle">
+        <input type="text" c-model="value:member.address.value">
     </div>
 
     <div id="Test_Radio_can_Set_and_Get_Text_value_with_Dazzle">
-        <input type="radio" name="time_Period" value="morning" c-model-dazzle="value:timePeriod" />早上
+        <input type="radio" name="time_Period" value="morning" c-model="value:timePeriod" />早上
         <input type="radio" name="time_Period" value="noon" />中午
         <input type="radio" name="time_Period" value="night" />晚上
     </div>
 
     <div id="Test_Radio_can_Set_and_Get_Number_value_with_Dazzle">
-        <input type="radio" name="amount" value="1" c-model-dazzle="value-number:amount" />1
+        <input type="radio" name="amount" value="1" c-model="value-number:amount" />1
         <input type="radio" name="amount" value="2" />2
         <input type="radio" name="amount" value="3" />3
     </div>
 
     <div id="Test_Checkbox_can_Set_and_Get_without_value_with_Dazzle">
-        <input type="checkbox" c-model-dazzle="value:creamer" />奶精
-        <input type="checkbox" c-model-dazzle="value:sugar" />糖
-        <input type="checkbox" c-model-dazzle="value:cinnamonPowder" />肉桂粉
+        <input type="checkbox" c-model="value:creamer" />奶精
+        <input type="checkbox" c-model="value:sugar" />糖
+        <input type="checkbox" c-model="value:cinnamonPowder" />肉桂粉
     </div>
 
     <div id="Test_Checkbox_can_Set_and_Get_Number_value_with_Dazzle">
-        <input type="checkbox" value="1" c-model-dazzle="value-number:answer1" />1
-        <input type="checkbox" value="2" c-model-dazzle="value-number:answer2" />2
-        <input type="checkbox" value="3" c-model-dazzle="value-number:answer3" />3
+        <input type="checkbox" value="1" c-model="value-number:answer1" />1
+        <input type="checkbox" value="2" c-model="value-number:answer2" />2
+        <input type="checkbox" value="3" c-model="value-number:answer3" />3
     </div>
 
     <div id="Test_Checkbox_can_Set_and_Get_Text_values_with_Dazzle">
-        <input type="checkbox" value="A" c-model-dazzle="value:answer1" />A
-        <input type="checkbox" value="B" c-model-dazzle="value:answer2" />B
-        <input type="checkbox" value="C" c-model-dazzle="value:answer3" />C
+        <input type="checkbox" value="A" c-model="value:answer1" />A
+        <input type="checkbox" value="B" c-model="value:answer2" />B
+        <input type="checkbox" value="C" c-model="value:answer3" />C
     </div>
 
     <div id="Test_Select_can_Set_and_Get_Text_value_with_Dazzle">
-        <select c-model-dazzle="value:drink">
+        <select c-model="value:drink">
             <option value="coffee">Coffee</option>
             <option value="tea">Tea</option>
             <option value="me">Me</option>
@@ -195,7 +195,7 @@
     </div>
 
     <div id="Test_Select_can_Set_and_Get_Number_value_with_Dazzle">
-        <select c-model-dazzle="value-number:answer">
+        <select c-model="value-number:answer">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -204,12 +204,12 @@
 
     <div id="Test_can_Set_Models_to_Select_Options_with_Dazzle">
         <select c-model-number="drinkNo">
-            <option style="display: none;" c-model-dazzle="value:no,text:drink"></option>
+            <option style="display: none;" c-model="value:no,text:drink"></option>
         </select>
     </div>
 
     <div id="Test_Textarea_can_Set_and_Get_Text_value_with_Dazzle">
-        <textarea cols="30" rows="10" c-model-dazzle="value:content"></textarea>
+        <textarea cols="30" rows="10" c-model="value:content"></textarea>
     </div>
 
     <div id="Test_AfterSet_should_works">
@@ -270,8 +270,8 @@
     <div id="Test_Create_Elements_by_Models_with_Dazzle">
         <div class="container">
             <div style="display: none;">
-                <input type="text" c-model-dazzle="value-number:id">
-                <input type="text" c-model-dazzle="value:name">
+                <input type="text" c-model="value-number:id">
+                <input type="text" c-model="value:name">
             </div>
         </div>
     </div>
@@ -279,8 +279,8 @@
     <div id="Test_Set_and_Get_Models_value_with_AfterSet_and_Dazzle">
         <div class="container">
             <div style="display: none;">
-                <input type="text" c-model-dazzle="value-number:id">
-                <input type="text" c-model-dazzle="value:name">
+                <input type="text" c-model="value-number:id">
+                <input type="text" c-model="value:name">
             </div>
         </div>
     </div>
@@ -288,19 +288,19 @@
     <div id="Test_Set_and_Get_Models_value_with_AfterSet_and_BeforeSet_and_Dazzle">
         <div class="container">
             <div style="display: none;">
-                <input type="text" c-model-dazzle="value-number:id">
-                <input type="text" c-model-dazzle="value:name">
+                <input type="text" c-model="value-number:id">
+                <input type="text" c-model="value:name">
             </div>
         </div>
     </div>
 
-    <div id="Test_Root_Tag_Set_and_Get_Text_value_with_Dazzle" c-model-dazzle="style:style">
+    <div id="Test_Root_Tag_Set_and_Get_Text_value_with_Dazzle" c-model="style:style">
         <input type="text" c-model-number="id">
         <input type="text" c-model="name">
     </div>
 
-    <div id="Test_can_Set_Html_Content_use_Dazzle" c-model-dazzle="style:style">
-        <div c-model-dazzle="html:description"></div>
+    <div id="Test_can_Set_Html_Content_use_Dazzle" c-model="style:style">
+        <div c-model="html:description"></div>
     </div>
 
     <button id="Test_Button_can_be_Container">
@@ -309,11 +309,11 @@
     </button>
 
     <div id="Test_can_Create_Buttons">
-        <button c-model-dazzle="value-number:id,text:name"></button>
+        <button c-model="value-number:id,text:name"></button>
     </div>
 
     <div id="Test_can_Update_Models_when_KeyElement_in_Root">
-        <button c-model-dazzle="value-number:id,text:name"></button>
+        <button c-model="value-number:id,text:name"></button>
     </div>
 
     <div id="Test_can_Create_Buttons_with_i_Tag">
@@ -321,7 +321,7 @@
     </div>
 
     <div id="Test_can_not_be_Resolved_Value_without_Value_or_ValueNumber_using_Dazzle">
-        <input type="text" c-model-dazzle="data-slider-value:value,data-slider-min:min,data-slider-max:max,data-slider-step:step">
+        <input type="text" c-model="data-slider-value:value,data-slider-min:min,data-slider-max:max,data-slider-step:step">
         <span c-model="value"></span>
         <input type="hidden" c-model-number="value">
         <input type="hidden" c-model-number="min">
@@ -334,41 +334,41 @@
     </div>
 
     <div id="Test_can_use_Literal_Template_with_Multiple_Properties_in_Dazzle">
-        <span c-model-dazzle="text:`https://dotblogs.com.tw/supershowwei/{path}`,title:`Good{title}`"></span>
+        <span c-model="text:`https://dotblogs.com.tw/supershowwei/{path}`,title:`Good{title}`"></span>
     </div>
 
     <div id="Test_can_use_Literal_Template_in_Dazzle">
-        <a c-model-dazzle="href:`https://dotblogs.com.tw/supershowwei/{path}`,title:title"></a>
+        <a c-model="href:`https://dotblogs.com.tw/supershowwei/{path}`,title:title"></a>
     </div>
 
     <div id="Test_can_use_Literal_Template_with_Multiple_Terms_in_Dazzle">
-        <a c-model-dazzle="href:`https://dotblogs.com.tw/supershowwei/{path}/{path}`,title:title"></a>
+        <a c-model="href:`https://dotblogs.com.tw/supershowwei/{path}/{path}`,title:title"></a>
     </div>
 
     <div id="Test_can_use_Literal_Template_with_Multiple_Terms_in_One_Property">
-        <a c-model-dazzle="href:`/stock/{id}/news`,title:`{name}({id})最新消息`">最新消息</a>
+        <a c-model="href:`/stock/{id}/news`,title:`{name}({id})最新消息`">最新消息</a>
     </div>
 
     <div id="Test_will_be_not_Set_Value_when_Undefined_of_Multiple_Terms">
-        <a c-model-dazzle="href:`/stock/{id}/news`">最新消息</a>
+        <a c-model="href:`/stock/{id}/news`">最新消息</a>
     </div>
 
     <div id="Test_Models_can_get_Setter_Index">
         <select>
-            <option style="display: none;" c-model-dazzle="value:no,text:drink"></option>
+            <option style="display: none;" c-model="value:no,text:drink"></option>
         </select>
     </div>
 
     <div id="Test_Dazzle_Syntax_with_Literal_Template_and_Filters">
-        <a c-model-dazzle="href:url,text:`軟體主廚的程式料理廚房的 {no|add1|.toPercent}`"></a>
+        <a c-model="href:url,text:`軟體主廚的程式料理廚房的 {no|add1|.toPercent}`"></a>
     </div>
 
     <div id="Test_Dazzle_Syntax_with_Literal_Template_and_Filters_with_Arguments">
-        <a c-model-dazzle="href:url,text:`軟體主廚的程式料理廚房的 {no|add ? 1 & 2 & 3|.toPercent}`"></a>
+        <a c-model="href:url,text:`軟體主廚的程式料理廚房的 {no|add ? 1 & 2 & 3|.toPercent}`"></a>
     </div>
 
     <div id="Test_Dazzle_Syntax_with_Literal_Template_and_Filters_with_String_Arguments">
-        <a c-model-dazzle="href:`{obj.url|fixedSuffix}`,text:`軟體主廚的程式料理廚房的 {no|add ? 1 & 2 & 3|.toPercent}`"></a>
+        <a c-model="href:`{obj.url|fixedSuffix}`,text:`軟體主廚的程式料理廚房的 {no|add ? 1 & 2 & 3|.toPercent}`"></a>
     </div>
 
     <div id="Test_can_use_Filters">

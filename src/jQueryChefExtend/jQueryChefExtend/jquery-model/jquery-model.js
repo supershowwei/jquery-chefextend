@@ -60,7 +60,7 @@ function escapeRegExp(string) {
     const filterMap = new Map();
 
     const findKeyElement = function ($element, keyPropertyName) {
-        const selectorPattern = "[c-model='" + keyPropertyName + "'],[c-model-number='" + keyPropertyName + "'],[c-model-dazzle*='value:" + keyPropertyName + "'],[c-model-dazzle*='value-number:" + keyPropertyName + "']";
+        const selectorPattern = "[c-model='" + keyPropertyName + "'],[c-model-number='" + keyPropertyName + "'],[c-model*='value:" + keyPropertyName + "'],[c-model*='value-number:" + keyPropertyName + "']";
 
         return $element.find(selectorPattern).addBack(selectorPattern);
     }
@@ -170,6 +170,9 @@ function escapeRegExp(string) {
         if (obj == undefined) return undefined;
 
         const templateLiteralsMatch = templateLiteralsRegex.exec(name);
+
+        console.log(name);
+        console.log(templateLiteralsMatch);
 
         if (templateLiteralsMatch) {
             let match = undefined;
@@ -313,7 +316,7 @@ function escapeRegExp(string) {
 
             if (!setter) {
                 if (elements.length === 0) return undefined;
-                
+
                 const obj = {};
 
                 $.each(elements,
@@ -327,21 +330,20 @@ function escapeRegExp(string) {
 
                             if (!attr.name.startsWith("c-model")) continue;
 
-                            if (attr.name === "c-model-dazzle") {
-                                const match = valueRegex1.exec(attr.value) || valueRegex2.exec(attr.value);
-                                if (match) {
-                                    const key = match[1];
-                                    const prop = match[2];
+                            const match = valueRegex1.exec(attr.value) || valueRegex2.exec(attr.value);
 
-                                    if (resolveModelValue(prop, obj) === undefined) {
-                                        const objValue = $element.getModelValue();
+                            if (match) {
+                                const key = match[1];
+                                const prop = match[2];
 
-                                        if (objValue !== undefined) {
-                                            if (key === "value-number") {
-                                                buildModelValue(prop, $.jqModel.toNumber(objValue), obj)
-                                            } else {
-                                                buildModelValue(prop, objValue, obj)
-                                            }
+                                if (resolveModelValue(prop, obj) === undefined) {
+                                    const objValue = $element.getModelValue();
+
+                                    if (objValue !== undefined) {
+                                        if (key === "value-number") {
+                                            buildModelValue(prop, $.jqModel.toNumber(objValue), obj)
+                                        } else {
+                                            buildModelValue(prop, objValue, obj)
                                         }
                                     }
                                 }
@@ -396,38 +398,37 @@ function escapeRegExp(string) {
 
                             const $element = $(element);
 
-                            if (attr.name === "c-model-dazzle") {
-                                let match = undefined;
+                            let match = dazzleRegex.exec(attr.value);
+
+                            if (match) {
                                 do {
-                                    if (match = dazzleRegex.exec(attr.value)) {
-                                        const key = match[1];
-                                        const prop = match[2];
+                                    const key = match[1];
+                                    const prop = match[2];
 
-                                        const modelValue = resolveModelValue(prop, setter);
+                                    const modelValue = resolveModelValue(prop, setter);
 
-                                        if (modelValue !== undefined) {
-                                            switch (key) {
-                                                case "text":
-                                                    $element.text(getContents(modelValue));
-                                                    break;
-                                                case "html":
-                                                    $element.html(getContents(modelValue));
-                                                    break;
-                                                case "value":
-                                                case "value-number":
-                                                    if ($element.is(":input")) {
-                                                        $element.setModelValue(modelValue);
-                                                    } else {
-                                                        $element.attr("value", modelValue);
-                                                    }
-                                                    break;
-                                                default:
-                                                    $element.attr(key, getContents(modelValue));
-                                                    break;
-                                            }
+                                    if (modelValue !== undefined) {
+                                        switch (key) {
+                                            case "text":
+                                                $element.text(getContents(modelValue));
+                                                break;
+                                            case "html":
+                                                $element.html(getContents(modelValue));
+                                                break;
+                                            case "value":
+                                            case "value-number":
+                                                if ($element.is(":input")) {
+                                                    $element.setModelValue(modelValue);
+                                                } else {
+                                                    $element.attr("value", modelValue);
+                                                }
+                                                break;
+                                            default:
+                                                $element.attr(key, getContents(modelValue));
+                                                break;
                                         }
                                     }
-                                } while (match);
+                                } while (match = dazzleRegex.exec(attr.value));
 
                                 break;
                             }

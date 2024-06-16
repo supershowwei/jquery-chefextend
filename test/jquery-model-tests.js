@@ -315,8 +315,8 @@ describe("jquery-model test cases", function () {
 
         var model = $container.model();
 
-        expect($container.find("a[c-model-dazzle]").attr("href")).toBe("https://dotblogs.com.tw/supershowwei");
-        expect($container.find("a[c-model-dazzle]").text()).toBe("軟體主廚的程式料理廚房");
+        expect($container.find("a[c-model]").attr("href")).toBe("https://dotblogs.com.tw/supershowwei");
+        expect($container.find("a[c-model]").text()).toBe("軟體主廚的程式料理廚房");
         expect(model.url).toBeUndefined();
         expect(model.text).toBeUndefined();
     });
@@ -328,7 +328,7 @@ describe("jquery-model test cases", function () {
 
         var model = $container.model();
 
-        expect($container.find("a[c-model-dazzle]").attr("href")).toBe("https://dotblogs.com.tw/supershowwei");
+        expect($container.find("a[c-model]").attr("href")).toBe("https://dotblogs.com.tw/supershowwei");
         expect(model.url).toBeUndefined();
     });
 
@@ -341,7 +341,7 @@ describe("jquery-model test cases", function () {
 
         expect(model.id).toBe(1);
         expect(model.name).toBe("Johnny");
-        expect($container.find("input[c-model-dazzle*='style']").attr("style")).toBe("font-size: 20pt;");
+        expect($container.find("input[c-model*='style']").attr("style")).toBe("font-size: 20pt;");
     });
 
     it("Test_TextInput_can_Set_and_Get_NestedObject_Text_and_Number_value", function () {
@@ -366,7 +366,7 @@ describe("jquery-model test cases", function () {
         expect(model.member.id).toBe(1);
         expect(model.member.name).toBe("Johnny");
         expect(model.member.address.value).toBe("my address");
-        expect($container.find("input[c-model-dazzle*='nameStyle']").attr("style"), "font-size: 20pt;");
+        expect($container.find("input[c-model*='nameStyle']").attr("style"), "font-size: 20pt;");
     });
 
     it("Test_Radio_can_Set_and_Get_Text_value_with_Dazzle", function () {
@@ -814,8 +814,8 @@ describe("jquery-model test cases", function () {
 
         $container.model({ url: "https://dotblogs.com.tw/supershowwei", no: 0.1 });
 
-        expect($container.find("a[c-model-dazzle]").attr("href")).toBe("https://dotblogs.com.tw/supershowwei");
-        expect($container.find("a[c-model-dazzle]").text()).toBe("軟體主廚的程式料理廚房的 110%");
+        expect($container.find("a[c-model]").attr("href")).toBe("https://dotblogs.com.tw/supershowwei");
+        expect($container.find("a[c-model]").text()).toBe("軟體主廚的程式料理廚房的 110%");
     });
 
     it("Test_Dazzle_Syntax_with_Literal_Template_and_Filters_with_Arguments", function () {
@@ -823,8 +823,8 @@ describe("jquery-model test cases", function () {
 
         $container.model({ url: "https://dotblogs.com.tw/supershowwei", no: 0.1 });
 
-        expect($container.find("a[c-model-dazzle]").attr("href")).toBe("https://dotblogs.com.tw/supershowwei");
-        expect($container.find("a[c-model-dazzle]").text()).toBe("軟體主廚的程式料理廚房的 610%");
+        expect($container.find("a[c-model]").attr("href")).toBe("https://dotblogs.com.tw/supershowwei");
+        expect($container.find("a[c-model]").text()).toBe("軟體主廚的程式料理廚房的 610%");
     });
 
     it("Test_Dazzle_Syntax_with_Literal_Template_and_Filters_with_String_Arguments", function () {
@@ -832,8 +832,8 @@ describe("jquery-model test cases", function () {
 
         $container.model({ obj: { url: "https://dotblogs.com.tw/supershowwei" }, no: 0.1 });
 
-        expect($container.find("a[c-model-dazzle]").attr("href")).toBe("https://dotblogs.com.tw/supershowwei/abctest");
-        expect($container.find("a[c-model-dazzle]").text()).toBe("軟體主廚的程式料理廚房的 610%");
+        expect($container.find("a[c-model]").attr("href")).toBe("https://dotblogs.com.tw/supershowwei/abctest");
+        expect($container.find("a[c-model]").text()).toBe("軟體主廚的程式料理廚房的 610%");
     });
 
     it("Test_can_use_Filters", function () {
@@ -855,6 +855,7 @@ describe("jquery-model test cases", function () {
     it("Test_can_use_Literal_Template_and_Filters", function () {
         var $container = $("#" + jasmine.currentTest.description);
 
+        console.log("Test_can_use_Literal_Template_and_Filters");
         $container.model({ path: "2020/01/20/083500" });
 
         expect($container.find("span").text()).toBe("https://dotblogs.com.tw/supershowwei/2020/01/20/083500/abctestabctest");
