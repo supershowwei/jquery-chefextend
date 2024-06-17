@@ -48,7 +48,7 @@ function escapeRegExp(string) {
 (function ($) {
     const variableRegex = /^[^\|]+/;
     const propertyRegex = /[^\.\|]+\.[^\.\|]+/;
-    const templateLiteralsRegex = /`([^`]+)`/;
+    const templateLiteralsRegex = /^`([^`]+)`$/;
     const stringInterpolationRegex = /\{([^\{\}]+)\}/;
     const filterRegex = /\|[^\|]+/;
     const valueRegex1 = /,(value|value-number):([^:,]+)/;
@@ -170,9 +170,6 @@ function escapeRegExp(string) {
         if (obj == undefined) return undefined;
 
         const templateLiteralsMatch = templateLiteralsRegex.exec(name);
-
-        console.log(name);
-        console.log(templateLiteralsMatch);
 
         if (templateLiteralsMatch) {
             let match = undefined;
@@ -398,7 +395,7 @@ function escapeRegExp(string) {
 
                             const $element = $(element);
 
-                            let match = dazzleRegex.exec(attr.value);
+                            let match = templateLiteralsRegex.test(attr.value) ? undefined : dazzleRegex.exec(attr.value);
 
                             if (match) {
                                 do {
