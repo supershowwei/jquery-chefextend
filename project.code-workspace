@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "bundle"
+		},
+		{
+			"path": "src/jQueryChefExtend/jQueryChefExtend/jquery-extend"
+		},
+		{
+			"path": "src/jQueryChefExtend/jQueryChefExtend/jquery-http"
+		},
+		{
+			"path": "src/jQueryChefExtend/jQueryChefExtend/jquery-model"
+		},
+		{
+			"path": "test"
+		}
+	],
+	"settings": {}
+}

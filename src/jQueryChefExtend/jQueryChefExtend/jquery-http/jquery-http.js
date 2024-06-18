@@ -1,5 +1,5 @@
-﻿if (!String.prototype.isJSON) {
-    String.prototype.isJSON = (function () {
+﻿(function ($) {
+    var isJSON = (function () {
         var rx_one = /^[\],:{}\s]*$/;
         var rx_two = /\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g;
         var rx_three = /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g;
@@ -13,103 +13,67 @@
                     .replace(rx_four, ""));
         }
     })();
-}
 
-(function ($) {
-    var isPromise = function (obj) {
-        if (typeof obj === "undefined" || (typeof obj === "object" && typeof obj.then !== "function")) {
-            return false;
-        }
-        return String(obj.then) === String($.Deferred().then);
-    }
-
-    var _defaultSettings;
-    var _http = {
-        default: {
-            get settings() {
-                return typeof _defaultSettings === "function" ? _defaultSettings() : _defaultSettings;
-            },
-            set settings(val) {
-                _defaultSettings = val;
-            }
-        }
-    };
+    var _http = {};
 
     _http.get = function (url, settings) {
-        var defaultSettings = _http.default.settings;
+        if (typeof url === "function") url = url();
+        if (!(settings)) settings = {};
 
-        return (isPromise(defaultSettings) ? defaultSettings : $.Deferred().resolve(defaultSettings).promise()).then(function (defaultSettings) {
-            settings = $.extend(true, {}, defaultSettings, settings);
-            settings.method = "GET";
-            return $.ajax(typeof url === "function" ? url() : url, settings);
-        });
+        settings.method = "GET";
+
+        return $.ajax(url, settings);
     }
 
     _http.post = function (url, data, settings) {
-        var defaultSettings = _http.default.settings;
+        if (typeof url === "function") url = url();
+        if (!(settings)) settings = {};
 
-        return (isPromise(defaultSettings) ? defaultSettings : $.Deferred().resolve(defaultSettings).promise()).then(function (defaultSettings) {
-            settings = $.extend(true, {}, defaultSettings, settings);
-            settings.method = "POST";
-            settings.data = data;
+        settings.method = "POST";
+        settings.data = data;
 
-            if (typeof data === "string" && data.isJSON()) {
-                settings.contentType = "application/json; charset=utf-8";
-            }
+        if (typeof data === "string" && isJSON.call(data)) {
+            settings.contentType = "application/json; charset=utf-8";
+        }
 
-            if (data && data.constructor === FormData) {
-                settings.cache = false;
-                settings.contentType = false;
-                settings.processData = false;
+        if (data && data.constructor === FormData) {
+            settings.cache = false;
+            settings.contentType = false;
+            settings.processData = false;
 
-                return $.ajax(typeof url === "function" ? url() : url, settings);
-            }
+            return $.ajax(url, settings);
+        }
 
-            return $.ajax(typeof url === "function" ? url() : url, settings);
-        });
+        return $.ajax(url, settings);
     }
 
     _http.put = function (url, data, settings) {
-        var defaultSettings = _http.default.settings;
+        if (typeof url === "function") url = url();
+        if (!(settings)) settings = {};
 
-        return (isPromise(defaultSettings) ? defaultSettings : $.Deferred().resolve(defaultSettings).promise()).then(function (defaultSettings) {
-            settings = $.extend(true, {}, defaultSettings, settings);
-            settings.method = "PUT";
-            settings.data = data;
+        settings.method = "PUT";
+        settings.data = data;
 
-            if (typeof data === "string" && data.isJSON()) {
-                settings.contentType = "application/json; charset=utf-8";
-            }
-
-            return $.ajax(typeof url === "function" ? url() : url, settings);
-        });
+        return $.ajax(url, settings);
     }
 
     _http.patch = function (url, data, settings) {
-        var defaultSettings = _http.default.settings;
+        if (typeof url === "function") url = url();
+        if (!(settings)) settings = {};
 
-        return (isPromise(defaultSettings) ? defaultSettings : $.Deferred().resolve(defaultSettings).promise()).then(function (defaultSettings) {
-            settings = $.extend(true, {}, defaultSettings, settings);
-            settings.method = "PATCH";
-            settings.data = data;
+        settings.method = "PATCH";
+        settings.data = data;
 
-            if (typeof data === "string" && data.isJSON()) {
-                settings.contentType = "application/json; charset=utf-8";
-            }
-
-            return $.ajax(typeof url === "function" ? url() : url, settings);
-        });
+        return $.ajax(url, settings);
     }
 
     _http.delete = function (url, settings) {
-        var defaultSettings = _http.default.settings;
+        if (typeof url === "function") url = url();
+        if (!(settings)) settings = {};
 
-        return (isPromise(defaultSettings) ? defaultSettings : $.Deferred().resolve(defaultSettings).promise()).then(function (defaultSettings) {
-            settings = $.extend(true, {}, defaultSettings, settings);
-            settings.method = "DELETE";
+        settings.method = "DELETE";
 
-            return $.ajax(typeof url === "function" ? url() : url, settings);
-        });
+        return $.ajax(url, settings);
     }
 
     $.extend({ http: _http });
