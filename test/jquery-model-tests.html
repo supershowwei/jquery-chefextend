@@ -412,6 +412,34 @@
         <div c-model="`{__THIS__|getId}`"></div>
     </div>
 
+    <div id="Test_show">
+        <span c-model="text:abcText,show:abcText"></span>
+        <div c-model-show="abcText">
+            <p c-model="abcText"></p>
+        </div>
+    </div>
+
+    <div id="Test_hide">
+        <span c-model="text:abcText,show:abcText"></span>
+        <div c-model-show="abcText">
+            <p c-model="abcText"></p>
+        </div>
+    </div>
+
+    <div id="Test_seen">
+        <span c-model="text:abcText,seen:abcText"></span>
+        <div c-model-seen="abcText">
+            <p c-model="abcText"></p>
+        </div>
+    </div>
+
+    <div id="Test_unseen">
+        <span c-model="text:abcText,seen:abcText"></span>
+        <div c-model-seen="abcText">
+            <p c-model="abcText"></p>
+        </div>
+    </div>
+
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="../src/jquery-model/jquery-model.js"></script>
     <script src="jquery-model-tests.js"></script>-->
