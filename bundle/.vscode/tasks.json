@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Gulp Watcher",
+            "label": "Bundle Watcher",
             "type": "shell",
             "command": "gulp watch",
             "windows": {
