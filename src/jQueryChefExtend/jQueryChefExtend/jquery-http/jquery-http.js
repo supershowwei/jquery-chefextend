@@ -14,10 +14,16 @@
         }
     })();
 
-    var _http = {};
+    var _urlRoot;
+    var _http = {
+        set urlRoot(val) {
+            _urlRoot = val.replace(/\/$/g, "");
+        }
+    };
 
     _http.get = function (url, settings) {
         if (typeof url === "function") url = url();
+        if (_urlRoot) url = _urlRoot + (url.startsWith("/") ? "" : "/") + url;
         if (!(settings)) settings = {};
 
         settings.method = "GET";
@@ -27,6 +33,7 @@
 
     _http.post = function (url, data, settings) {
         if (typeof url === "function") url = url();
+        if (_urlRoot) url = _urlRoot + (url.startsWith("/") ? "" : "/") + url;
         if (!(settings)) settings = {};
 
         settings.method = "POST";
@@ -49,6 +56,7 @@
 
     _http.put = function (url, data, settings) {
         if (typeof url === "function") url = url();
+        if (_urlRoot) url = _urlRoot + (url.startsWith("/") ? "" : "/") + url;
         if (!(settings)) settings = {};
 
         settings.method = "PUT";
@@ -59,6 +67,7 @@
 
     _http.patch = function (url, data, settings) {
         if (typeof url === "function") url = url();
+        if (_urlRoot) url = _urlRoot + (url.startsWith("/") ? "" : "/") + url;
         if (!(settings)) settings = {};
 
         settings.method = "PATCH";
@@ -69,6 +78,7 @@
 
     _http.delete = function (url, settings) {
         if (typeof url === "function") url = url();
+        if (_urlRoot) url = _urlRoot + (url.startsWith("/") ? "" : "/") + url;
         if (!(settings)) settings = {};
 
         settings.method = "DELETE";
