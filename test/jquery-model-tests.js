@@ -921,4 +921,48 @@ describe("jquery-model test cases", function () {
         expect($container.find("span").text()).toBe("1");
         expect($container.find("div").text()).toBe("1");
     });
+
+    it("Test_show", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ abcText: "abc" });
+
+        expect($container.find("span").text()).toBe("abc");
+        expect($container.find("p").text()).toBe("abc");
+        expect($container.find("span").css("display")).toBe("inline");
+        expect($container.find("div").css("display")).toBe("block");
+    });
+
+    it("Test_hide", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ abcText: undefined });
+
+        expect($container.find("span").text()).toBe("");
+        expect($container.find("p").text()).toBe("");
+        expect($container.find("span").css("display")).toBe("none");
+        expect($container.find("div").css("display")).toBe("none");
+    });
+
+    it("Test_seen", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ abcText: "abc" });
+
+        expect($container.find("span").text()).toBe("abc");
+        expect($container.find("p").text()).toBe("abc");
+        expect($container.find("span").css("visibility")).toBe("visible");
+        expect($container.find("div").css("visibility")).toBe("visible");
+    });
+
+    it("Test_unseen", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ abcText: "" });
+
+        expect($container.find("span").text()).toBe("");
+        expect($container.find("p").text()).toBe("");
+        expect($container.find("span").css("visibility")).toBe("hidden");
+        expect($container.find("div").css("visibility")).toBe("hidden");
+    });
 });

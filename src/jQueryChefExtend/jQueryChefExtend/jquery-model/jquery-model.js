@@ -404,13 +404,38 @@ function escapeRegExp(string) {
 
                                     const modelValue = resolveModelValue(prop, setter);
 
-                                    if (modelValue !== undefined) {
+                                    if (modelValue === undefined) {
+                                        switch (key) {
+                                            case "show":
+                                                $element.hide();
+                                                break;
+                                            case "seen":
+                                                $element.css("visibility", "hidden");
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    } else {
                                         switch (key) {
                                             case "text":
                                                 $element.text(getContents(modelValue));
                                                 break;
                                             case "html":
                                                 $element.html(getContents(modelValue));
+                                                break;
+                                            case "show":
+                                                if (getContents(modelValue)) {
+                                                    $element.show();
+                                                } else {
+                                                    $element.hide();
+                                                }
+                                                break;
+                                            case "seen":
+                                                if (getContents(modelValue)) {
+                                                    $element.css("visibility", "visible");
+                                                } else {
+                                                    $element.css("visibility", "hidden");
+                                                }
                                                 break;
                                             case "value":
                                             case "value-number":
@@ -435,6 +460,30 @@ function escapeRegExp(string) {
 
                                 if (contents !== undefined) {
                                     $element.html(contents);
+                                }
+
+                                break;
+                            }
+
+                            if (attr.name === "c-model-show") {
+                                const contents = getContents(resolveModelValue(attr.value, setter));
+
+                                if (contents) {
+                                    $element.show();
+                                } else {
+                                    $element.hide();
+                                }
+
+                                break;
+                            }
+
+                            if (attr.name === "c-model-seen") {
+                                const contents = getContents(resolveModelValue(attr.value, setter));
+
+                                if (contents) {
+                                    $element.css("visibility", "visible");
+                                } else {
+                                    $element.css("visibility", "hidden");
                                 }
 
                                 break;

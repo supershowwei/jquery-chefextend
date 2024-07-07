@@ -24,6 +24,7 @@
     }
 
     var _defaultSettings;
+    var _urlRoot;
     var _http = {
         default: {
             get settings() {
@@ -32,6 +33,9 @@
             set settings(val) {
                 _defaultSettings = val;
             }
+        },
+        set urlRoot(val) {
+            _urlRoot = val.replace(/\/$/g, "");
         }
     };
 
