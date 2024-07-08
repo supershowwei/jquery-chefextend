@@ -40,16 +40,26 @@
     };
 
     _http.get = function (url, settings) {
+        if (typeof url === "function") url = url();
+        if (_urlRoot && /^\/[^\/]/.test(url)) {
+            url = _urlRoot + url;
+        }
+
         var defaultSettings = _http.default.settings;
 
         return (isPromise(defaultSettings) ? defaultSettings : $.Deferred().resolve(defaultSettings).promise()).then(function (defaultSettings) {
             settings = $.extend(true, {}, defaultSettings, settings);
             settings.method = "GET";
-            return $.ajax(typeof url === "function" ? url() : url, settings);
+            return $.ajax(url, settings);
         });
     }
 
     _http.post = function (url, data, settings) {
+        if (typeof url === "function") url = url();
+        if (_urlRoot && /^\/[^\/]/.test(url)) {
+            url = _urlRoot + url;
+        }
+
         var defaultSettings = _http.default.settings;
 
         return (isPromise(defaultSettings) ? defaultSettings : $.Deferred().resolve(defaultSettings).promise()).then(function (defaultSettings) {
@@ -65,15 +75,18 @@
                 settings.cache = false;
                 settings.contentType = false;
                 settings.processData = false;
-
-                return $.ajax(typeof url === "function" ? url() : url, settings);
             }
 
-            return $.ajax(typeof url === "function" ? url() : url, settings);
+            return $.ajax(url, settings);
         });
     }
 
     _http.put = function (url, data, settings) {
+        if (typeof url === "function") url = url();
+        if (_urlRoot && /^\/[^\/]/.test(url)) {
+            url = _urlRoot + url;
+        }
+
         var defaultSettings = _http.default.settings;
 
         return (isPromise(defaultSettings) ? defaultSettings : $.Deferred().resolve(defaultSettings).promise()).then(function (defaultSettings) {
@@ -85,11 +98,16 @@
                 settings.contentType = "application/json; charset=utf-8";
             }
 
-            return $.ajax(typeof url === "function" ? url() : url, settings);
+            return $.ajax(url, settings);
         });
     }
 
     _http.patch = function (url, data, settings) {
+        if (typeof url === "function") url = url();
+        if (_urlRoot && /^\/[^\/]/.test(url)) {
+            url = _urlRoot + url;
+        }
+
         var defaultSettings = _http.default.settings;
 
         return (isPromise(defaultSettings) ? defaultSettings : $.Deferred().resolve(defaultSettings).promise()).then(function (defaultSettings) {
@@ -101,18 +119,23 @@
                 settings.contentType = "application/json; charset=utf-8";
             }
 
-            return $.ajax(typeof url === "function" ? url() : url, settings);
+            return $.ajax(url, settings);
         });
     }
 
     _http.delete = function (url, settings) {
+        if (typeof url === "function") url = url();
+        if (_urlRoot && /^\/[^\/]/.test(url)) {
+            url = _urlRoot + url;
+        }
+
         var defaultSettings = _http.default.settings;
 
         return (isPromise(defaultSettings) ? defaultSettings : $.Deferred().resolve(defaultSettings).promise()).then(function (defaultSettings) {
             settings = $.extend(true, {}, defaultSettings, settings);
             settings.method = "DELETE";
 
-            return $.ajax(typeof url === "function" ? url() : url, settings);
+            return $.ajax(url, settings);
         });
     }
 
