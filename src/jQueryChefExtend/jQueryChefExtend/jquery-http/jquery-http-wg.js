@@ -24,7 +24,7 @@
     }
 
     var _defaultSettings;
-    var _urlRoot;
+    var _pathBase;
     var _http = {
         default: {
             get settings() {
@@ -34,15 +34,15 @@
                 _defaultSettings = val;
             }
         },
-        set urlRoot(val) {
-            _urlRoot = val.replace(/\/$/g, "");
+        set pathBase(val) {
+            _pathBase = val.replace(/\/$/g, "");
         }
     };
 
     _http.get = function (url, settings) {
         if (typeof url === "function") url = url();
-        if (_urlRoot && /^\/[^\/]/.test(url)) {
-            url = _urlRoot + url;
+        if (_pathBase && /^\/[^\/]/.test(url)) {
+            url = _pathBase + url;
         }
 
         var defaultSettings = _http.default.settings;
@@ -56,8 +56,8 @@
 
     _http.post = function (url, data, settings) {
         if (typeof url === "function") url = url();
-        if (_urlRoot && /^\/[^\/]/.test(url)) {
-            url = _urlRoot + url;
+        if (_pathBase && /^\/[^\/]/.test(url)) {
+            url = _pathBase + url;
         }
 
         var defaultSettings = _http.default.settings;
@@ -83,8 +83,8 @@
 
     _http.put = function (url, data, settings) {
         if (typeof url === "function") url = url();
-        if (_urlRoot && /^\/[^\/]/.test(url)) {
-            url = _urlRoot + url;
+        if (_pathBase && /^\/[^\/]/.test(url)) {
+            url = _pathBase + url;
         }
 
         var defaultSettings = _http.default.settings;
@@ -104,8 +104,8 @@
 
     _http.patch = function (url, data, settings) {
         if (typeof url === "function") url = url();
-        if (_urlRoot && /^\/[^\/]/.test(url)) {
-            url = _urlRoot + url;
+        if (_pathBase && /^\/[^\/]/.test(url)) {
+            url = _pathBase + url;
         }
 
         var defaultSettings = _http.default.settings;
@@ -125,8 +125,8 @@
 
     _http.delete = function (url, settings) {
         if (typeof url === "function") url = url();
-        if (_urlRoot && /^\/[^\/]/.test(url)) {
-            url = _urlRoot + url;
+        if (_pathBase && /^\/[^\/]/.test(url)) {
+            url = _pathBase + url;
         }
 
         var defaultSettings = _http.default.settings;
