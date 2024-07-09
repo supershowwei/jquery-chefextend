@@ -1,6 +1,6 @@
 [
   {
-    "outputFileName": "jquery-chefextend.min.js",
+    "outputFileName": "../../../dist/jquery-chefextend.min.js",
     "inputFiles": [
       "jquery-extend/jquery-extend.js",
       "jquery-http/jquery-http.js",
