@@ -17,7 +17,7 @@
     var _pathBase;
     var _http = {
         set pathBase(val) {
-            _pathBase = val.replace(/\/$/g, "");
+            _pathBase = val.replace(/\/$/, "");
         }
     };
 
