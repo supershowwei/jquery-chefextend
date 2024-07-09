@@ -4,7 +4,7 @@
     "inputFiles": [
       "jquery-extend/jquery-extend.js",
       "jquery-http/jquery-http-wg.js",
-      "jquery-model/jquery-model.js"
+      "jquery-model/jquery-model-wg.js"
     ]
   },
   {
