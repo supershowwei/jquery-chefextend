@@ -965,4 +965,17 @@ describe("jquery-model test cases", function () {
         expect($container.find("span").css("visibility")).toBe("hidden");
         expect($container.find("div").css("visibility")).toBe("hidden");
     });
+
+    it("Test_enable_and_disable", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ abcText: "abc", defText: "def" });
+
+        expect($container.find("button[abc]").prop("disabled")).toBe(false);
+        expect($container.find("button[def]").prop("disabled")).toBe(true);
+        expect($container.find("button[abc1]").prop("disabled")).toBe(false);
+        expect($container.find("button[def1]").prop("disabled")).toBe(true);
+        expect($container.find("button[abc2]").prop("disabled")).toBe(true);
+        expect($container.find("button[def2]").prop("disabled")).toBe(false);
+    });
 });
