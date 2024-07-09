@@ -412,6 +412,12 @@ function escapeRegExp(string) {
                                             case "seen":
                                                 $element.css("visibility", "hidden");
                                                 break;
+                                            case "enable":
+                                                $element.prop("disabled", true);
+                                                break;
+                                            case "disable":
+                                                $element.prop("disabled", false);
+                                                break;
                                             default:
                                                 break;
                                         }
@@ -435,6 +441,20 @@ function escapeRegExp(string) {
                                                     $element.css("visibility", "visible");
                                                 } else {
                                                     $element.css("visibility", "hidden");
+                                                }
+                                                break;
+                                            case "enable":
+                                                if (getContents(modelValue)) {
+                                                    $element.prop("disabled", false);
+                                                } else {
+                                                    $element.prop("disabled", true);
+                                                }
+                                                break;
+                                            case "disable":
+                                                if (getContents(modelValue)) {
+                                                    $element.prop("disabled", true);
+                                                } else {
+                                                    $element.prop("disabled", false);
                                                 }
                                                 break;
                                             case "value":
@@ -484,6 +504,30 @@ function escapeRegExp(string) {
                                     $element.css("visibility", "visible");
                                 } else {
                                     $element.css("visibility", "hidden");
+                                }
+
+                                break;
+                            }
+
+                            if (attr.name === "c-model-enable") {
+                                const contents = getContents(resolveModelValue(attr.value, setter));
+
+                                if (contents) {
+                                    $element.prop("disabled", false);
+                                } else {
+                                    $element.prop("disabled", true);
+                                }
+
+                                break;
+                            }
+
+                            if (attr.name === "c-model-disable") {
+                                const contents = getContents(resolveModelValue(attr.value, setter));
+
+                                if (contents) {
+                                    $element.prop("disabled", true);
+                                } else {
+                                    $element.prop("disabled", false);
                                 }
 
                                 break;
