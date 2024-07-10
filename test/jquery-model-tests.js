@@ -13,6 +13,34 @@ if (!Number.prototype.toPercent) {
     }
 }
 
+if (!Array.prototype.contains) {
+    Array.prototype.contains = function (func, thisArg) {
+        const self = this;
+        const len = self.length;
+        let i = -1;
+
+        if (thisArg === undefined) {
+            while (++i !== len) {
+                if (i in self) {
+                    if (func(self[i], i, self)) {
+                        return true;
+                    }
+                }
+            }
+        } else {
+            while (++i !== len) {
+                if (i in self) {
+                    if (func.call(thisArg, self[i], i, self)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    };
+}
+
 window.append_prefix = function (body, arg1, arg2) {
 
     if (!arg1) return body;
@@ -71,6 +99,17 @@ jasmine.getEnv().addReporter({
 });
 
 describe("jquery-model test cases", function () {
+    it("Test_TextInput_can_Set_and_Get_Text_and_String_Number_value", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ id: "1", name: "Johnny" });
+
+        var model = $container.model();
+
+        expect(model.id).toBe("1");
+        expect(model.name).toBe("Johnny");
+    });
+
     it("Test_TextInput_can_Set_and_Get_Text_and_Number_value", function () {
         var $container = $("#" + jasmine.currentTest.description);
 
@@ -266,7 +305,7 @@ describe("jquery-model test cases", function () {
 
         var model = $container.model();
 
-        expect($container.find("span[c-model-number='id']").text()).toBe("1");
+        expect($container.find("span[c-model='id']").text()).toBe("1");
         expect($container.find("span[c-model='name']").text()).toBe("Johnny");
         expect(model.id).toBeUndefined();
         expect(model.name).toBeUndefined();

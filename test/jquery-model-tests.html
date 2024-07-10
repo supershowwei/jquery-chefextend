@@ -17,44 +17,49 @@
 
 <body>
     
+    <div id="Test_TextInput_can_Set_and_Get_Text_and_String_Number_value">
+        <input type="text" c-model-string="id">
+        <input type="text" c-model="name">
+    </div>
+    
     <div id="Test_TextInput_can_Set_and_Get_Text_and_Number_value">
-        <input type="text" c-model-number="id">
+        <input type="text" c-model="id">
         <input type="text" c-model="name">
     </div>
     
     <div id="Test_TextInput_can_Get_Text_and_Number_value_with_Comma">
-        <input type="text" c-model-number="id" value="1,000">
+        <input type="text" c-model="id" value="1,000">
         <input type="text" c-model="name" value="Johnny">
     </div>
     
     <div id="Test_Contenteditable_can_Set_and_Get_value">
-        <div contenteditable="true" c-model-number="id"></div>
+        <div contenteditable="true" c-model="id"></div>
         <span contenteditable="true" c-model="name"></span>
     </div>
     
     <div id="Test_Contenteditable_can_Get_value_with_Comma">
-        <div contenteditable="true" c-model-number="id">1,000</div>
+        <div contenteditable="true" c-model="id">1,000</div>
         <span contenteditable="true" c-model="name">Johnny</span>
     </div>
     
     <div id="Test_Contenteditable_can_Set_and_Get_value_with_Filter">
-        <div contenteditable="true" c-model-number="id|.toThousandth"></div>
+        <div contenteditable="true" c-model="id|.toThousandth"></div>
         <span contenteditable="true" c-model="name"></span>
     </div>
     
     <div id="Test_Contenteditable_can_Set_and_Get_value_with_Filter_and_Comma">
-        <div contenteditable="true" c-model-number="id|.toThousandth"></div>
+        <div contenteditable="true" c-model="id|.toThousandth"></div>
         <span contenteditable="true" c-model="name"></span>
     </div>
     
     <div id="Test_Contenteditable_can_Set_and_Get_value_with_Dazzle">
-        <div contenteditable="true" c-model="text:id,value-number:id"></div>
+        <div contenteditable="true" c-model="text:id,value:id"></div>
         <span contenteditable="true" c-model="text:`name={name}`,value:name"></span>
         <span contenteditable="true" c-model="text:`age={age}`,value:age"></span>
     </div>
 
     <div id="Test_Set_Model_Values_use_KeyValue">
-        <input type="text" c-model-number="id">
+        <input type="text" c-model="id">
         <input type="text" c-model="name">
     </div>
 
@@ -65,7 +70,7 @@
     </div>
 
     <div id="Test_Radio_can_Set_and_Get_Number_value">
-        <input type="radio" name="amount" value="1" c-model-number="amount" />1
+        <input type="radio" name="amount" value="1" c-model="amount" />1
         <input type="radio" name="amount" value="2" />2
         <input type="radio" name="amount" value="3" />3
     </div>
@@ -83,9 +88,9 @@
     </div>
 
     <div id="Test_Checkbox_can_Set_and_Get_Number_value">
-        <input type="checkbox" value="1" c-model-number="answer1" />1
-        <input type="checkbox" value="2" c-model-number="answer2" />2
-        <input type="checkbox" value="3" c-model-number="answer3" />3
+        <input type="checkbox" value="1" c-model="answer1" />1
+        <input type="checkbox" value="2" c-model="answer2" />2
+        <input type="checkbox" value="3" c-model="answer3" />3
     </div>
 
     <div id="Test_Checkbox_can_Set_and_Get_Text_value">
@@ -103,7 +108,7 @@
     </div>
 
     <div id="Test_Select_can_Set_and_Get_Number_value">
-        <select c-model-number="answer">
+        <select c-model="answer">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -115,7 +120,7 @@
     </div>
 
     <div id="Test_NonInput_can_Set_value">
-        <span c-model-number="id"></span>
+        <span c-model="id"></span>
         <span c-model="name"></span>
     </div>
 
@@ -125,7 +130,7 @@
     </div>
 
     <div id="Test_NonInput_can_Set_value_use_Getter_Function">
-        <span c-model-number="id"></span>
+        <span c-model="id"></span>
         <span c-model="firstName"></span>
         <span c-model="lastName"></span>
         <span c-model="fullName"></span>
@@ -140,18 +145,18 @@
     </div>
 
     <div id="Test_Dazzle_Syntax_can_Set_and_Get_Text_and_Number_value">
-        <input type="text" c-model="value-number:id">
+        <input type="text" c-model="value:id">
         <input type="text" c-model="value:name,style:style">
     </div>
 
     <div id="Test_TextInput_can_Set_and_Get_NestedObject_Text_and_Number_value">
-        <input type="text" c-model-number="member.id">
+        <input type="text" c-model="member.id">
         <input type="text" c-model="member.name">
         <input type="text" c-model="member.address.value">
     </div>
 
     <div id="Test_TextInput_can_Set_and_Get_NestedObject_Text_and_Number_value_with_Dazzle">
-        <input type="text" c-model="value-number:member.id">
+        <input type="text" c-model="value:member.id">
         <input type="text" c-model="value:member.name,style:member.nameStyle">
         <input type="text" c-model="value:member.address.value">
     </div>
@@ -163,7 +168,7 @@
     </div>
 
     <div id="Test_Radio_can_Set_and_Get_Number_value_with_Dazzle">
-        <input type="radio" name="amount" value="1" c-model="value-number:amount" />1
+        <input type="radio" name="amount" value="1" c-model="value:amount" />1
         <input type="radio" name="amount" value="2" />2
         <input type="radio" name="amount" value="3" />3
     </div>
@@ -175,9 +180,9 @@
     </div>
 
     <div id="Test_Checkbox_can_Set_and_Get_Number_value_with_Dazzle">
-        <input type="checkbox" value="1" c-model="value-number:answer1" />1
-        <input type="checkbox" value="2" c-model="value-number:answer2" />2
-        <input type="checkbox" value="3" c-model="value-number:answer3" />3
+        <input type="checkbox" value="1" c-model="value:answer1" />1
+        <input type="checkbox" value="2" c-model="value:answer2" />2
+        <input type="checkbox" value="3" c-model="value:answer3" />3
     </div>
 
     <div id="Test_Checkbox_can_Set_and_Get_Text_values_with_Dazzle">
@@ -195,7 +200,7 @@
     </div>
 
     <div id="Test_Select_can_Set_and_Get_Number_value_with_Dazzle">
-        <select c-model="value-number:answer">
+        <select c-model="value:answer">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -203,7 +208,7 @@
     </div>
 
     <div id="Test_can_Set_Models_to_Select_Options_with_Dazzle">
-        <select c-model-number="drinkNo">
+        <select c-model="drinkNo">
             <option style="display: none;" c-model="value:no,text:drink"></option>
         </select>
     </div>
@@ -213,19 +218,19 @@
     </div>
 
     <div id="Test_AfterSet_should_works">
-        <span c-model-number="id"></span>
+        <span c-model="id"></span>
         <span c-model="name"></span>
     </div>
 
     <div id="Test_AfterSet_and_BeforeSet_should_work">
-        <span c-model-number="id"></span>
+        <span c-model="id"></span>
         <span c-model="name"></span>
     </div>
 
     <div id="Test_Create_Elements_by_Models">
         <div class="container">
             <div style="display: none;">
-                <input type="text" c-model-number="id">
+                <input type="text" c-model="id">
                 <input type="text" c-model="name">
             </div>
         </div>
@@ -234,7 +239,7 @@
     <div id="Test_Create_Elements_by_Models_using_Template_Function">
         <div class="container">
             <div style="display: none;">
-                <input type="text" c-model-number="id">
+                <input type="text" c-model="id">
                 <input type="text" c-model="name">
             </div>
         </div>
@@ -243,7 +248,7 @@
     <div id="Test_Set_and_Get_Models_value_with_AfterSet">
         <div class="container">
             <div style="display: none;">
-                <input type="text" c-model-number="id">
+                <input type="text" c-model="id">
                 <input type="text" c-model="name">
             </div>
         </div>
@@ -252,7 +257,7 @@
     <div id="Test_Set_and_Get_Models_value_with_AfterSet_and_BeforeSet">
         <div class="container">
             <div style="display: none;">
-                <input type="text" c-model-number="id">
+                <input type="text" c-model="id">
                 <input type="text" c-model="name">
             </div>
         </div>
@@ -261,7 +266,7 @@
     <div id="Test_Upsert_Models_value">
         <div class="container">
             <div style="display: none;">
-                <input type="text" c-model-number="id">
+                <input type="text" c-model="id">
                 <input type="text" c-model="name">
             </div>
         </div>
@@ -270,7 +275,7 @@
     <div id="Test_Create_Elements_by_Models_with_Dazzle">
         <div class="container">
             <div style="display: none;">
-                <input type="text" c-model="value-number:id">
+                <input type="text" c-model="value:id">
                 <input type="text" c-model="value:name">
             </div>
         </div>
@@ -279,7 +284,7 @@
     <div id="Test_Set_and_Get_Models_value_with_AfterSet_and_Dazzle">
         <div class="container">
             <div style="display: none;">
-                <input type="text" c-model="value-number:id">
+                <input type="text" c-model="value:id">
                 <input type="text" c-model="value:name">
             </div>
         </div>
@@ -288,14 +293,14 @@
     <div id="Test_Set_and_Get_Models_value_with_AfterSet_and_BeforeSet_and_Dazzle">
         <div class="container">
             <div style="display: none;">
-                <input type="text" c-model="value-number:id">
+                <input type="text" c-model="value:id">
                 <input type="text" c-model="value:name">
             </div>
         </div>
     </div>
 
     <div id="Test_Root_Tag_Set_and_Get_Text_value_with_Dazzle" c-model="style:style">
-        <input type="text" c-model-number="id">
+        <input type="text" c-model="id">
         <input type="text" c-model="name">
     </div>
 
@@ -304,29 +309,29 @@
     </div>
 
     <button id="Test_Button_can_be_Container">
-        <input type="hidden" c-model-number="id">
+        <input type="hidden" c-model="id">
         <i c-model="id"></i>
     </button>
 
     <div id="Test_can_Create_Buttons">
-        <button c-model="value-number:id,text:name"></button>
+        <button c-model="value:id,text:name"></button>
     </div>
 
     <div id="Test_can_Update_Models_when_KeyElement_in_Root">
-        <button c-model="value-number:id,text:name"></button>
+        <button c-model="value:id,text:name"></button>
     </div>
 
     <div id="Test_can_Create_Buttons_with_i_Tag">
-        <button c-model-number="id"><span c-model="name"></span><i c-model="formattedCount"></i></button>
+        <button c-model="id"><span c-model="name"></span><i c-model="formattedCount"></i></button>
     </div>
 
     <div id="Test_can_not_be_Resolved_Value_without_Value_or_ValueNumber_using_Dazzle">
         <input type="text" c-model="data-slider-value:value,data-slider-min:min,data-slider-max:max,data-slider-step:step">
         <span c-model="value"></span>
-        <input type="hidden" c-model-number="value">
-        <input type="hidden" c-model-number="min">
-        <input type="hidden" c-model-number="max">
-        <input type="hidden" c-model-number="step">
+        <input type="hidden" c-model="value">
+        <input type="hidden" c-model="min">
+        <input type="hidden" c-model="max">
+        <input type="hidden" c-model="step">
     </div>
 
     <div id="Test_can_use_Literal_Template">

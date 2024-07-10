@@ -1,66 +1,39 @@
-﻿if (!String.prototype.startsWith) {
-    String.prototype.startsWith = function (search, pos) {
-        return this.substring(!pos || pos < 0 ? 0 : +pos, search.length) === search;
-    };
-}
-
-if (!String.prototype.endsWith) {
-    String.prototype.endsWith = function (search, this_len) {
-        if (this_len === undefined || this_len > this.length) {
-            this_len = this.length;
-        }
-        return this.substring(this_len - search.length, this_len) === search;
-    };
-}
-
-if (!Array.prototype.contains) {
-    Array.prototype.contains = function (func, thisArg) {
-        const self = this;
-        const len = self.length;
-        let i = -1;
-
-        if (thisArg === undefined) {
-            while (++i !== len) {
-                if (i in self) {
-                    if (func(self[i], i, self)) {
-                        return true;
-                    }
-                }
-            }
-        } else {
-            while (++i !== len) {
-                if (i in self) {
-                    if (func.call(thisArg, self[i], i, self)) {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
-    };
-}
-
-function escapeRegExp(string) {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-(function ($) {
+﻿(function ($) {
     const variableRegex = /^[^\|]+/;
     const propertyRegex = /[^\.\|]+\.[^\.\|]+/;
     const templateLiteralsRegex = /^`([^`]+)`$/;
     const stringInterpolationRegex = /\{([^\{\}]+)\}/;
     const filterRegex = /\|[^\|]+/;
-    const valueRegex1 = /,(value|value-number):([^:,]+)/;
-    const valueRegex2 = /^(value|value-number):([^:,]+)/;
+    const valueRegex1 = /,(value|value-string):([^:,]+)/;
+    const valueRegex2 = /^(value|value-string):([^:,]+)/;
     const dazzleRegex = /([^:,]+):(`[^`]+`|[^:,]+)/g;
     const filterFunctionRegex = /\|([^\s]+)$/;
     const filterFunctionWithArgumentsRegex = /\|([^\s]+) \? (.+)$/;
     const stringRegex = /^'([^']+)'$/;
+    const commaNumberRegex = /\d{1},\d{3}$/;
     const filterMap = new Map();
 
+    const escapeRegExp = function (str) {
+        return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    const isNumber = function (value) {
+        // use '==' for null
+        if (value == undefined) return false;
+        if (typeof value !== "string") return false;
+        if (value === "") return false;
+        if (value.trim().length < 1) return false;
+        if (!commaNumberRegex.test(value) && isNaN(value)) return false;
+
+        return true;
+    }
+
+    const toNumber = function (value) {
+        return Number(value.replace(/,/g, ""));
+    }
+
     const findKeyElement = function ($element, keyPropertyName) {
-        const selectorPattern = "[c-model='" + keyPropertyName + "'],[c-model-number='" + keyPropertyName + "'],[c-model*='value:" + keyPropertyName + "'],[c-model*='value-number:" + keyPropertyName + "']";
+        const selectorPattern = "[c-model='" + keyPropertyName + "'],[c-model-string='" + keyPropertyName + "'],[c-model*='value:" + keyPropertyName + "'],[c-model*='value-string:" + keyPropertyName + "']";
 
         return $element.find(selectorPattern).addBack(selectorPattern);
     }
@@ -240,9 +213,7 @@ function escapeRegExp(string) {
     $.expr[":"].attrStartsWith = $.expr.createPseudo(function (filterParam) {
         return function (element, context, isXml) {
             for (let i = element.attributes.length - 1; i >= 0; i--) {
-                if (element.attributes[i].name.startsWith(filterParam)) {
-                    return true;
-                }
+                if (element.attributes[i].name.startsWith(filterParam)) return true;
             }
 
             return false;
@@ -252,29 +223,11 @@ function escapeRegExp(string) {
     $.expr[":"].attrEndsWith = $.expr.createPseudo(function (filterParam) {
         return function (element, context, isXml) {
             for (let i = element.attributes.length - 1; i >= 0; i--) {
-                if (element.attributes[i].name.endsWith(filterParam)) {
-                    return true;
-                }
+                if (element.attributes[i].name.endsWith(filterParam)) return true;
             }
 
             return false;
         };
-    });
-
-    $.extend({
-        jqModel: {
-            toNumber: function (value) {
-                if (!(value)) return undefined;
-
-                value = value.replace(/,/g, "");
-
-                if (value === "") return undefined;
-                if (value.trim().length < 1) return undefined;
-                if (isNaN(value)) return undefined;
-
-                return Number(value);
-            }
-        }
     });
 
     $.fn.extend({
@@ -337,8 +290,8 @@ function escapeRegExp(string) {
                                     const objValue = $element.getModelValue();
 
                                     if (objValue !== undefined) {
-                                        if (key === "value-number") {
-                                            buildModelValue(prop, $.jqModel.toNumber(objValue), obj)
+                                        if (key !== "value-string" && isNumber(objValue)) {
+                                            buildModelValue(prop, toNumber(objValue), obj)
                                         } else {
                                             buildModelValue(prop, objValue, obj)
                                         }
@@ -353,8 +306,8 @@ function escapeRegExp(string) {
                                 const prop = variableRegex.exec(attr.value)[0]
 
                                 if (objValue !== undefined) {
-                                    if (attr.name === "c-model-number") {
-                                        buildModelValue(prop, $.jqModel.toNumber(objValue), obj)
+                                    if (attr.name !== "c-model-string" && isNumber(objValue)) {
+                                        buildModelValue(prop, toNumber(objValue), obj)
                                     } else {
                                         buildModelValue(prop, objValue, obj)
                                     }
@@ -458,7 +411,7 @@ function escapeRegExp(string) {
                                                 }
                                                 break;
                                             case "value":
-                                            case "value-number":
+                                            case "value-string":
                                                 if ($element.is(":input")) {
                                                     $element.setModelValue(modelValue);
                                                 } else {
