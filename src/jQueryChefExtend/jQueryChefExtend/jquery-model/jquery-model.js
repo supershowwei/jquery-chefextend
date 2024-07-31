@@ -301,6 +301,11 @@
                                 break;
                             }
 
+                            if (dazzleRegex.test(attr.value)) {
+                                dazzleRegex.lastIndex = 0;
+                                continue;
+                            }
+
                             if (resolveModelValue(attr.value, obj) === undefined) {
                                 const objValue = $element.getModelValue();
                                 const prop = variableRegex.exec(attr.value)[0]

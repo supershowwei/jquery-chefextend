@@ -1017,4 +1017,14 @@ describe("jquery-model test cases", function () {
         expect($container.find("button[abc2]").prop("disabled")).toBe(true);
         expect($container.find("button[def2]").prop("disabled")).toBe(false);
     });
+
+    it("Test_input_name_of_value_should_not_be_dazzle_style", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        var model = $container.model();
+
+        expect(Object.keys(model).length).toBe(1);
+        expect(Object.keys(model)[0]).toBe("id");
+        expect(model.id).toBe(1);
+    });
 });
