@@ -1,4 +1,3 @@
-
 if (!Number.prototype.toThousandth) {
     Number.prototype.toThousandth = function (decimals) {
         if (decimals === undefined) decimals = 0;
@@ -11,6 +10,34 @@ if (!Number.prototype.toPercent) {
     Number.prototype.toPercent = function (decimals) {
         return this.toLocaleString("en-US", { style: "percent", minimumFractionDigits: decimals, maximumFractionDigits: decimals });
     }
+}
+
+if (!Array.prototype.contains) {
+    Array.prototype.contains = function (func, thisArg) {
+        const self = this;
+        const len = self.length;
+        let i = -1;
+
+        if (thisArg === undefined) {
+            while (++i !== len) {
+                if (i in self) {
+                    if (func(self[i], i, self)) {
+                        return true;
+                    }
+                }
+            }
+        } else {
+            while (++i !== len) {
+                if (i in self) {
+                    if (func.call(thisArg, self[i], i, self)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    };
 }
 
 window.append_prefix = function (body, arg1, arg2) {
