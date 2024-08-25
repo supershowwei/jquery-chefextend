@@ -17,7 +17,7 @@
     var _pathBase;
     var _http = {
         set pathBase(val) {
-            _pathBase = val.replace(/\/$/g, "");
+            _pathBase = val.replace(/\/$/, "");
         }
     };
 
@@ -68,6 +68,10 @@
         settings.method = "PUT";
         settings.data = data;
 
+        if (typeof data === "string" && isJSON.call(data)) {
+            settings.contentType = "application/json; charset=utf-8";
+        }
+
         return $.ajax(url, settings);
     }
 
@@ -80,6 +84,10 @@
 
         settings.method = "PATCH";
         settings.data = data;
+
+        if (typeof data === "string" && isJSON.call(data)) {
+            settings.contentType = "application/json; charset=utf-8";
+        }
 
         return $.ajax(url, settings);
     }
