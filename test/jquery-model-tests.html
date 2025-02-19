@@ -412,6 +412,15 @@
         <div c-model="`{__THIS__|getId}`"></div>
     </div>
 
+    <div id="Test_use_Whole_Object">
+        <span c-model="__THIS__|getId"></span>
+        <div c-model="`{__THIS__|getId}`"></div>
+    </div>
+
+    <div id="Test_escape_Backslash_and_Comma">
+        <span c-model-dazzle="text:time|.dayjsFormat ? 'YYYY-MM-DD,HH:mm'"></span>
+    </div>
+
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="../src/jquery-model/jquery-model.js"></script>
     <script src="jquery-model-tests.js"></script>-->

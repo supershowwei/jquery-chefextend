@@ -13,6 +13,12 @@ if (!Number.prototype.toPercent) {
     }
 }
 
+if (!Number.prototype.dayjsFormat) {
+    Number.prototype.dayjsFormat = function (pattern) {
+        return pattern;
+    }
+}
+
 window.append_prefix = function (body, arg1, arg2) {
 
     if (!arg1) return body;
@@ -920,5 +926,13 @@ describe("jquery-model test cases", function () {
 
         expect($container.find("span").text()).toBe("1");
         expect($container.find("div").text()).toBe("1");
+    });
+
+    it("Test_escape_Backslash_and_Comma", function () {
+        var $container = $("#" + jasmine.currentTest.description);
+
+        $container.model({ time: 0 });
+
+        expect($container.find("span").text()).toBe("YYYY-MM-DD,HH:mm");
     });
 });

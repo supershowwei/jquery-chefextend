@@ -313,7 +313,7 @@ function escapeRegExp(string) {
 
             if (!setter) {
                 if (elements.length === 0) return undefined;
-                
+
                 const obj = {};
 
                 $.each(elements,
@@ -399,9 +399,13 @@ function escapeRegExp(string) {
                             if (attr.name === "c-model-dazzle") {
                                 let match = undefined;
                                 do {
-                                    if (match = dazzleRegex.exec(attr.value)) {
+                                    let attrVal = attr.value;
+
+                                    while (/'([^']+):([^']+)'/.test(attrVal)) { attrVal = attrVal.replace(/'([^']+):([^']+)'/, "'$1꞉$2'"); }
+
+                                    if (match = dazzleRegex.exec(attrVal)) {
                                         const key = match[1];
-                                        const prop = match[2];
+                                        const prop = match[2].replace(/꞉/g, ":").replace(/،/g, ",");
 
                                         const modelValue = resolveModelValue(prop, setter);
 
