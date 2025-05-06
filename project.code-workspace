@@ -7,6 +7,9 @@
 			"path": "src/jQueryChefExtend/jQueryChefExtend/jquery-extend"
 		},
 		{
+			"path": "src/jQueryChefExtend/jQueryChefExtend/jquery-extendify"
+		},
+		{
 			"path": "src/jQueryChefExtend/jQueryChefExtend/jquery-http"
 		},
 		{
