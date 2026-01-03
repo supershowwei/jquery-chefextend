@@ -14,8 +14,12 @@
         }
     })();
 
+    var _baseUrl;
     var _pathBase;
     var _http = {
+        set baseUrl(val) {
+            _baseUrl = val.replace(/\/$/, "");
+        },
         set pathBase(val) {
             _pathBase = val.replace(/\/$/, "");
         }
@@ -25,6 +29,9 @@
         if (typeof url === "function") url = url();
         if (_pathBase && /^\/[^\/]/.test(url)) {
             url = _pathBase + url;
+        }
+        if (_baseUrl && /^\/[^\/]/.test(url)) {
+            url = _baseUrl + url;
         }
         if (!(settings)) settings = {};
 
@@ -37,6 +44,9 @@
         if (typeof url === "function") url = url();
         if (_pathBase && /^\/[^\/]/.test(url)) {
             url = _pathBase + url;
+        }
+        if (_baseUrl && /^\/[^\/]/.test(url)) {
+            url = _baseUrl + url;
         }
         if (!(settings)) settings = {};
 
@@ -63,6 +73,9 @@
         if (_pathBase && /^\/[^\/]/.test(url)) {
             url = _pathBase + url;
         }
+        if (_baseUrl && /^\/[^\/]/.test(url)) {
+            url = _baseUrl + url;
+        }
         if (!(settings)) settings = {};
 
         settings.method = "PUT";
@@ -80,6 +93,9 @@
         if (_pathBase && /^\/[^\/]/.test(url)) {
             url = _pathBase + url;
         }
+        if (_baseUrl && /^\/[^\/]/.test(url)) {
+            url = _baseUrl + url;
+        }
         if (!(settings)) settings = {};
 
         settings.method = "PATCH";
@@ -96,6 +112,9 @@
         if (typeof url === "function") url = url();
         if (_pathBase && /^\/[^\/]/.test(url)) {
             url = _pathBase + url;
+        }
+        if (_baseUrl && /^\/[^\/]/.test(url)) {
+            url = _baseUrl + url;
         }
         if (!(settings)) settings = {};
 
