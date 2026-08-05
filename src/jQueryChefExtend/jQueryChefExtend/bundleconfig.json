@@ -14,6 +14,12 @@
     ]
   },
   {
+    "outputFileName": "jquery-extendify/jquery-extendify.min.js",
+    "inputFiles": [
+      "jquery-extendify/jquery-extendify.js"
+    ]
+  },
+  {
     "outputFileName": "jquery-http/jquery-http.min.js",
     "inputFiles": [
       "jquery-http/jquery-http.js"
