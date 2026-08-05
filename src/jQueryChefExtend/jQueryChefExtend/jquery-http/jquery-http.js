@@ -24,6 +24,8 @@
     }
 
     var _defaultSettings;
+    var _baseUrl;
+    var _pathBase;
     var _http = {
         default: {
             get settings() {
@@ -32,6 +34,12 @@
             set settings(val) {
                 _defaultSettings = val;
             }
+        },
+        set baseUrl(val) {
+            _baseUrl = val.replace(/\/$/, "");
+        },
+        set pathBase(val) {
+            _pathBase = val.replace(/\/$/, "");
         }
     };
 
@@ -39,9 +47,18 @@
         var defaultSettings = _http.default.settings;
 
         return (isPromise(defaultSettings) ? defaultSettings : $.Deferred().resolve(defaultSettings).promise()).then(function (defaultSettings) {
+            if (typeof url === "function") url = url();
+            if (_pathBase && /^\/[^\/]/.test(url)) {
+                url = _pathBase + url;
+            }
+            if (_baseUrl && /^\/[^\/]/.test(url)) {
+                url = _baseUrl + url;
+            }
+
             settings = $.extend(true, {}, defaultSettings, settings);
             settings.method = "GET";
-            return $.ajax(typeof url === "function" ? url() : url, settings);
+
+            return $.ajax(url, settings);
         });
     }
 
@@ -49,6 +66,14 @@
         var defaultSettings = _http.default.settings;
 
         return (isPromise(defaultSettings) ? defaultSettings : $.Deferred().resolve(defaultSettings).promise()).then(function (defaultSettings) {
+            if (typeof url === "function") url = url();
+            if (_pathBase && /^\/[^\/]/.test(url)) {
+                url = _pathBase + url;
+            }
+            if (_baseUrl && /^\/[^\/]/.test(url)) {
+                url = _baseUrl + url;
+            }
+
             settings = $.extend(true, {}, defaultSettings, settings);
             settings.method = "POST";
             settings.data = data;
@@ -62,10 +87,10 @@
                 settings.contentType = false;
                 settings.processData = false;
 
-                return $.ajax(typeof url === "function" ? url() : url, settings);
+                return $.ajax(url, settings);
             }
 
-            return $.ajax(typeof url === "function" ? url() : url, settings);
+            return $.ajax(url, settings);
         });
     }
 
@@ -73,6 +98,14 @@
         var defaultSettings = _http.default.settings;
 
         return (isPromise(defaultSettings) ? defaultSettings : $.Deferred().resolve(defaultSettings).promise()).then(function (defaultSettings) {
+            if (typeof url === "function") url = url();
+            if (_pathBase && /^\/[^\/]/.test(url)) {
+                url = _pathBase + url;
+            }
+            if (_baseUrl && /^\/[^\/]/.test(url)) {
+                url = _baseUrl + url;
+            }
+
             settings = $.extend(true, {}, defaultSettings, settings);
             settings.method = "PUT";
             settings.data = data;
@@ -81,7 +114,7 @@
                 settings.contentType = "application/json; charset=utf-8";
             }
 
-            return $.ajax(typeof url === "function" ? url() : url, settings);
+            return $.ajax(url, settings);
         });
     }
 
@@ -89,6 +122,14 @@
         var defaultSettings = _http.default.settings;
 
         return (isPromise(defaultSettings) ? defaultSettings : $.Deferred().resolve(defaultSettings).promise()).then(function (defaultSettings) {
+            if (typeof url === "function") url = url();
+            if (_pathBase && /^\/[^\/]/.test(url)) {
+                url = _pathBase + url;
+            }
+            if (_baseUrl && /^\/[^\/]/.test(url)) {
+                url = _baseUrl + url;
+            }
+
             settings = $.extend(true, {}, defaultSettings, settings);
             settings.method = "PATCH";
             settings.data = data;
@@ -97,7 +138,7 @@
                 settings.contentType = "application/json; charset=utf-8";
             }
 
-            return $.ajax(typeof url === "function" ? url() : url, settings);
+            return $.ajax(url, settings);
         });
     }
 
@@ -105,10 +146,18 @@
         var defaultSettings = _http.default.settings;
 
         return (isPromise(defaultSettings) ? defaultSettings : $.Deferred().resolve(defaultSettings).promise()).then(function (defaultSettings) {
+            if (typeof url === "function") url = url();
+            if (_pathBase && /^\/[^\/]/.test(url)) {
+                url = _pathBase + url;
+            }
+            if (_baseUrl && /^\/[^\/]/.test(url)) {
+                url = _baseUrl + url;
+            }
+
             settings = $.extend(true, {}, defaultSettings, settings);
             settings.method = "DELETE";
 
-            return $.ajax(typeof url === "function" ? url() : url, settings);
+            return $.ajax(url, settings);
         });
     }
 
