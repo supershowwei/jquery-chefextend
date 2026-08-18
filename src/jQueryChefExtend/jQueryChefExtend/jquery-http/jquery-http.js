@@ -1,5 +1,11 @@
-﻿if (!String.prototype.isJSON) {
-    String.prototype.isJSON = (function () {
+﻿(function ($) {
+    var isPromise = function (obj) {
+        if (typeof obj === "undefined" || (typeof obj === "object" && typeof obj.then !== "function")) {
+            return false;
+        }
+        return String(obj.then) === String($.Deferred().then);
+    }
+    var isJSON = (function (str) {
         var rx_one = /^[\],:{}\s]*$/;
         var rx_two = /\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g;
         var rx_three = /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g;
@@ -7,21 +13,12 @@
 
         return function () {
             return rx_one.test(
-                this
+                str
                     .replace(rx_two, "@")
                     .replace(rx_three, "]")
                     .replace(rx_four, ""));
         }
     })();
-}
-
-(function ($) {
-    var isPromise = function (obj) {
-        if (typeof obj === "undefined" || (typeof obj === "object" && typeof obj.then !== "function")) {
-            return false;
-        }
-        return String(obj.then) === String($.Deferred().then);
-    }
 
     var _defaultSettings;
     var _baseUrl;
@@ -78,7 +75,7 @@
             settings.method = "POST";
             settings.data = data;
 
-            if (typeof data === "string" && data.isJSON()) {
+            if (typeof data === "string" && isJSON(data)) {
                 settings.contentType = "application/json; charset=utf-8";
             }
 
@@ -110,7 +107,7 @@
             settings.method = "PUT";
             settings.data = data;
 
-            if (typeof data === "string" && data.isJSON()) {
+            if (typeof data === "string" && isJSON(data)) {
                 settings.contentType = "application/json; charset=utf-8";
             }
 
@@ -134,7 +131,7 @@
             settings.method = "PATCH";
             settings.data = data;
 
-            if (typeof data === "string" && data.isJSON()) {
+            if (typeof data === "string" && isJSON(data)) {
                 settings.contentType = "application/json; charset=utf-8";
             }
 

@@ -8,6 +8,13 @@
     ]
   },
   {
+    "outputFileName": "../../../dist/jquery-chefkit.min.js",
+    "inputFiles": [
+      "jquery-extendify/jquery-extendify.js",
+      "jquery-http/jquery-http.js"
+    ]
+  },
+  {
     "outputFileName": "jquery-extend/jquery-extend.min.js",
     "inputFiles": [
       "jquery-extend/jquery-extend.js"
