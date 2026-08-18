@@ -2,15 +2,16 @@
   {
     "outputFileName": "../../../dist/jquery-chefextend.min.js",
     "inputFiles": [
-      "jquery-extend/jquery-extend.js",
+      "jquery-extendify/jquery-extendify.js",
       "jquery-http/jquery-http.js",
       "jquery-model/jquery-model.js"
     ]
   },
   {
-    "outputFileName": "jquery-extend/jquery-extend.min.js",
+    "outputFileName": "../../../dist/jquery-chefkit.min.js",
     "inputFiles": [
-      "jquery-extend/jquery-extend.js"
+      "jquery-extendify/jquery-extendify.js",
+      "jquery-http/jquery-http.js"
     ]
   },
   {
